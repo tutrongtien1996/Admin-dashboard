@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="./css/login.css">
+</head>
+<body>
+    <div class="center">
+        <h1>Login</h1>
+        <form action="index.html">
+            <span id="error" style="color: red"></span>
+            <div class="txt_field">
+                <input type="text" name="company_code" value="UDO">
+                <span></span>
+                <label>Company code</label>
+            </div>
+            <div class="txt_field">
+                <input type="text" name="username" value="admin">
+                <span></span>
+                <label>Username</label>
+            </div>
+            <div class="txt_field">
+                <input type="password" name="password" value="abc@1234">
+                <span></span>
+                <label>Password</label>
+            </div>
+            <div class="pass"><a href="">Forgot Password?</a></div>
+            <input type="submit" value="login" onclick="login(event)">
+            <div class="signup_link">
+                Not a member?
+                <a href="#">Signup</a>
+            </div>
+
+        </form>
+    </div>
+    <script src="./js/login.js"></script>
+</body>
+</html>

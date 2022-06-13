@@ -1,0 +1,27 @@
+[
+    {
+        "title": "Brand Name",
+        "icon": "logo-apple",
+        "link": "/index.html"
+    },
+    {
+        "title": "Dashboard",
+        "icon": "home-outline",
+        "link": "/index.html"
+    },
+    {
+        "title": "Customer",
+        "icon": "people-outline",
+        "link": "/customer.html"
+    },
+    {
+        "title": "Orders",
+        "icon": "home-outline",
+        "link": "/order.html"
+    },
+    {
+        "title": "Setting",
+        "icon": "log-out-outline",
+        "link": "/login.html"
+    }
+]
