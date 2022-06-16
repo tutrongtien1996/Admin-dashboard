@@ -51,7 +51,7 @@ function initMenu() {
         var html = '';
         result.forEach(menu => {
             html += '<li>'+
-                    '<a href="'+menu.link+'">'+
+                    '<a href="'+menu.link+'" id = "'+menu.id+'">'+
                         '<span class="icon"><ion-icon name="'+menu.icon+'"></ion-icon></span>'+
                         '<span class="title">'+menu.title+'</span>'+
                     '</a>'+
@@ -60,3 +60,13 @@ function initMenu() {
         document.getElementById("menu").innerHTML = html;
     })
 }
+
+
+
+setTimeout(
+    function(){
+        var logOut = document.getElementById("logout");
+        logOut.onclick = function(){
+        localStorage.removeItem('access_token');
+        window.location.href = '/login.html';}
+    }, 1000)

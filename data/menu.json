@@ -20,8 +20,19 @@
         "link": "/order.html"
     },
     {
+        "title": "product",
+        "icon": "home-outline",
+        "link": "/product.html"
+    },
+    {
         "title": "Setting",
         "icon": "log-out-outline",
         "link": "/login.html"
+    },
+    {
+        "title": "Logout",
+        "icon": "log-out-outline",
+        "link": "#",
+        "id": "logout"
     }
 ]

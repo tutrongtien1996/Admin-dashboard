@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost/opensourcepos';
+
 function start() {
     getListOrders(renderListOrders);
 }

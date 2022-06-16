@@ -5,11 +5,6 @@ function start() {
 
 start();
 
-// function start1(){
-//     getListOrders();
-//     // handleCreateForm();
-// }
-// start1();
 
 function getListOrders(callback) {
     fetch(API_URL+'/public/source/api_orders?offset=0&limit=25&start_date=2022-06-01&end_date=2022-06-30&filters%5B%5D=', 
