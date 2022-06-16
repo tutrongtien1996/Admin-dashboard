@@ -1,9 +1,9 @@
 
 function start() {
     initMenu();
-    // if (!checkIfUserLogged()) {
-    //     window.location.href = '/login.html';
-    // }
+    if (!checkIfUserLogged()) {
+        window.location.href = '/login.html';
+    }
     initUI();
 }
 
