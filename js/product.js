@@ -1,24 +1,76 @@
 
 
+// 
+
 var option = {
-    method: "GET",
     headers: {
         'Authorization': "Bearer "+localStorage.getItem('access_token')
     }
 };
+
 function start(){
-    getListProduct(result =>{
-        return result;
-    });
+    getListProduct(renderListProduct)
 }
-start()
+start();
 
 function getListProduct(callback){
-    fetch(API_URL + '/public/source/api_items', option)
-        .then(reponse => {
-            return reponse.json()
+    axios.get(API_URL + '/public/source/api_items', option)
+        .then((reponse) => {
+            var productEntity = new Product();
+            var listProducts = productEntity.parseFromAPI(reponse.data.data)
+            callback(listProducts)
         })
-        .then(callback)
+        .catch(function (error) {
+            console.log(error)
+        })
 }
 
 
+function renderListProduct(listProducts){
+    var html = "";
+    listProducts.forEach(element => {
+
+        html += `<li class="item">
+                <div data-product="${element.toJson()}">
+                    ${renderImage(element.image)}
+                    <h3>${element.name}</h3>
+                    <h4>${Util.formatNumber(element.price)}đ / kg</span></h4>
+                    </div>
+                </li>`
+        });
+    document.getElementsByClassName("listProducts")[0].innerHTML = html;
+
+    // document.getElementsByClassName('listProducts').innerHTML = html;
+}
+const renderImage = (image) => {
+    if (image != "") {
+       return `<img src="${image}" onerror="this.src='/img/products/quan_ao_thong_thuong.jpeg'"/>`;
+    } 
+    return `<img src="/img/products/quan_ao_thong_thuong.jpeg"/>`;
+
+}
+setTimeout(function(){
+    var listItems = document.querySelectorAll(".listProducts .item div");
+    renderCustomer(listItems);
+    
+    
+}, 1000)
+
+function renderCustomer(listItems){
+    var html = "";
+    listItems.forEach(item => {
+        item.onclick = () =>{
+        //     html += `<li class="item">
+        //     <div class="content_item">
+        //         <span class="item_name"></span>
+        //         <div class="item_quantity"><input type="number"></div>
+        //         <span class="item_price">130000</span>
+        //     </div>
+        // </li>`
+        // document.getElementsByClassName("recentCustomers")[0].innerHTML = `<ul>${html}</ul>`
+        
+        }
+        
+    });
+    
+}
