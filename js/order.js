@@ -7,7 +7,7 @@ start();
 
 
 function getListOrders(callback) {
-    fetch(API_URL+'/public/source/api_orders?offset=0&limit=25&start_date=2022-06-01&end_date=2022-06-30&filters%5B%5D=', 
+    fetch(API_URL+'/public/source/api_orders?offset=0&limit=-1&start_date=2022-06-01&end_date=2022-06-30&filters%5B%5D=', 
         {
             method: "GET",
             headers: {
