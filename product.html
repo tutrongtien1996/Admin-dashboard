@@ -7,6 +7,7 @@
     <title>UDO Dashboard | Sales</title>
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/product.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -40,8 +41,8 @@
 
             <!--order list  -->
             <div class="details">
-                <div class="listProducts">
-                    <ul>
+                <div>
+                    <ul class="listProducts">
                         <li class="item">
                             <div>
                                 <img src="/img/products/quan_ao_thong_thuong.jpeg"/>
@@ -49,104 +50,34 @@
                                 <h4>12,000đ<span> / kg</span></h4>
                             </div>
                         </li>
-                        <li class="item">
-                            <div>
-                                <img src="/img/products/quan_ao_thong_thuong.jpeg"/>
-                                <h3>Giặt ủi thông thường</h3>
-                                <h4>12,000đ<span> / kg</span></h4>
-                            </div>
-                        </li>
-                        <li class="item">
-                            <div>
-                                <img src="/img/products/quan_ao_thong_thuong.jpeg"/>
-                                <h3>Giặt ủi thông thường</h3>
-                                <h4>12,000đ<span> / kg</span></h4>
-                            </div>
-                        </li>
-                        <li class="item">
-                            <div>
-                                <img src="/img/products/quan_ao_thong_thuong.jpeg"/>
-                                <h3>Giặt ủi thông thường</h3>
-                                <h4>12,000đ<span> / kg</span></h4>
-                            </div>
-                        </li>
-                        <li class="item">
-                            <div>
-                                <img src="/img/products/quan_ao_thong_thuong.jpeg"/>
-                                <h3>Giặt ủi thông thường</h3>
-                                <h4>12,000đ<span> / kg</span></h4>
-                            </div>
-                        </li>
-                        <li class="item">
-                            <div>
-                                <img src="/img/products/quan_ao_thong_thuong.jpeg"/>
-                                <h3>Giặt ủi thông thường</h3>
-                                <h4>12,000đ<span> / kg</span></h4>
-                            </div>
-                        </li>
-                        <li class="item">
-                            <div>
-                                <img src="/img/products/quan_ao_thong_thuong.jpeg"/>
-                                <h3>Giặt ủi thông thường</h3>
-                                <h4>12,000đ<span> / kg</span></h4>
-                            </div>
-                        </li>
-                        <li class="item">
-                            <div>
-                                <img src="/img/products/quan_ao_thong_thuong.jpeg"/>
-                                <h3>Giặt ủi thông thường</h3>
-                                <h4>12,000đ<span> / kg</span></h4>
-                            </div>
-                        </li>
-                        <li class="item">
-                            <div>
-                                <img src="/img/products/quan_ao_thong_thuong.jpeg"/>
-                                <h3>Giặt ủi thông thường</h3>
-                                <h4>12,000đ<span> / kg</span></h4>
-                            </div>
-                        </li>
-                        <li class="item">
-                            <div>
-                                <img src="/img/products/quan_ao_thong_thuong.jpeg"/>
-                                <h3>Giặt ủi thông thường</h3>
-                                <h4>12,000đ<span> / kg</span></h4>
-                            </div>
-                        </li>
-                        <li class="item">
-                            <div>
-                                <img src="/img/products/quan_ao_thong_thuong.jpeg"/>
-                                <h3>Giặt ủi thông thường</h3>
-                                <h4>12,000đ<span> / kg</span></h4>
-                            </div>
-                        </li>
-                        <li class="item">
-                            <div>
-                                <img src="/img/products/quan_ao_thong_thuong.jpeg"/>
-                                <h3>Giặt ủi thông thường</h3>
-                                <h4>12,000đ<span> / kg</span></h4>
-                            </div>
-                        </li>
-                        <li class="item">
-                            <div>
-                                <img src="/img/products/quan_ao_thong_thuong.jpeg"/>
-                                <h3>Giặt ủi thông thường</h3>
-                                <h4>12,000đ<span> / kg</span></h4>
-                            </div>
-                        </li>
+                        
                     </ul>
                 </div>
                 <!-- new customers -->
                 <div class="recentCustomers">
+                    <ul>
+                        <li class="item">
+                            <div class="content_item">
+                                <span class="item_name">Giặt ủi thông thường</span>
+                                <div class="item_quantity"><input type="number"></div>
+                                <span class="item_price">130000</span>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
 
     </div>
+    
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="./js/util.js"></script>
     <script src="./js/app.js"></script>
-    <script src="./js/index.js"></script>
-    <script src="./js/logout.js"></script>
+    <script src="./js/entities/product.js"></script>
+    <script src="./js/product.js"></script>
+    
+    
 </body>
 </html>
 
