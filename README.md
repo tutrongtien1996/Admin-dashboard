@@ -2,7 +2,7 @@
 Technical: HTML, CSS, Javascript only
 
 ## Screen Shots
-**1 Login screen **
+**1 Login screen**
 
 ![Login](./img/github/login_page.png?raw=true "Login screen")
 
