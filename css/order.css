@@ -1,6 +1,9 @@
 .details {
     width: 100%;
-    padding: 20px;
     display: block;
     overflow: scroll;
+}
+.listBtn{
+    display: flex;
+    /* flex-direction: row-reverse */
 }
