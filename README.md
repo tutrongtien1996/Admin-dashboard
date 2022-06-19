@@ -1,4 +1,4 @@
-# udo-admin
+# POS system for UDO Laundry
 Technical: HTML, CSS, Javascript only
 
 ## Screen Shots
