@@ -31,7 +31,7 @@ function renderListProduct(listProducts){
     listProducts.forEach(element => {
 
         html += `<li class="item">
-                <div data-product="${element.toJson()}">
+                <div data-product='${element.toJson()}'>
                     ${renderImage(element.image)}
                     <h3>${element.name}</h3>
                     <h4>${Util.formatNumber(element.price)}đ / kg</span></h4>
@@ -52,23 +52,22 @@ const renderImage = (image) => {
 setTimeout(function(){
     var listItems = document.querySelectorAll(".listProducts .item div");
     renderCustomer(listItems);
-    
-    
 }, 1000)
 
 function renderCustomer(listItems){
     var html = "";
     listItems.forEach(item => {
         item.onclick = () =>{
-        //     html += `<li class="item">
-        //     <div class="content_item">
-        //         <span class="item_name"></span>
-        //         <div class="item_quantity"><input type="number"></div>
-        //         <span class="item_price">130000</span>
-        //     </div>
-        // </li>`
-        // document.getElementsByClassName("recentCustomers")[0].innerHTML = `<ul>${html}</ul>`
+        var result = JSON.parse(item.dataset.product);
+        html += `<li class="item">
+            <div class="content_item">
+                <span class="item_name">${result.name}</span>
+                <div class="item_quantity"><input type="number"></div>
+                <span class="item_price">${result.price}</span>
+            </div>
+        </li>`
         
+        document.getElementsByClassName("listCustomers")[0].innerHTML = html;
         }
         
     });
