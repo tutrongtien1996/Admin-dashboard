@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost/opensourcepos';
+const API_URL = "http://localhost/opensourcepos";
 async function login(event) {
     event.preventDefault();
     if (await processLogin()) {

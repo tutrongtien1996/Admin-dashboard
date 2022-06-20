@@ -7,7 +7,7 @@ start();
 
 
 function getListOrders(callback) {
-    fetch(API_URL+'/public/source/api_orders?offset=0&limit=25&start_date=2022-06-01&end_date=2022-06-30&filters%5B%5D=', 
+    fetch(API_URL+'/public/source/api_orders?offset=0&limit=-1&start_date=2022-06-01&end_date=2022-06-30&filters%5B%5D=', 
         {
             method: "GET",
             headers: {
@@ -31,11 +31,20 @@ function renderListOrders(result){
     var html ='';
     result.data.rows.forEach(function(item){
         html += `<tr>
-        <td>${item.sale_time}</td>
-        <td>${item.customer_name}</td>
-        <td>${item.amount_tendered}</td>
-        <td>${item.payment_type}</td>
-        <td><span class="status delivered">xong</span></td>
+        <td>${item.sale_time}</td>`;
+        if (item.customer_name != undefined) {
+            html += `<td>${item.customer_name}</td>`;
+        } else {
+            html += `<td></td>`;
+        }
+        html += `<td style="text-align: right;">${Util.formatNumber(item.amount_tendered)}đ</td>`;
+
+        if (item.payment_type != undefined) {
+            html += `<td>${item.payment_type}</td>`;
+        } else {
+            html += `<td></td>`;
+        }
+        html += `<td><span class="status delivered">xong</span></td>
     </tr>`
     });
     document.getElementById('list_order').innerHTML = html;
