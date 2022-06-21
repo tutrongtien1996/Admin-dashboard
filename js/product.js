@@ -110,5 +110,22 @@ function showOrder(html){
             </div>
         </li>`
         document.getElementsByClassName("listCustomers")[0].innerHTML = html;
+        var productQuantitys = document.querySelectorAll(".item .content_item .item_quantity input");
+        initOnchangeProducts(productQuantitys, order.products);
+        
+    })
+}
+
+
+function initOnchangeProducts(productQuantitys, products){
+    productQuantitys.forEach(productQuantity => {
+        productQuantity.onchange = quantity => {
+            productQuantity.value = quantity.target.value;
+            products.forEach(product => {
+                if(product.id == productQuantity.getAttribute("data-product-id")){
+                    product.quantity = Number(quantity.target.value);
+                }
+            })
+        }
     })
 }
