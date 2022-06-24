@@ -1,4 +1,4 @@
-const API_URL = "https://ab75-112-197-223-206.ap.ngrok.io/opensourcepos/public/";
+const API_URL = "https://ab75-112-197-223-206.ap.ngrok.io/opensourcepos";
 async function login(event) {
     event.preventDefault();
     if (await processLogin()) {
