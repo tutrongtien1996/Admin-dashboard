@@ -16,6 +16,9 @@ var order = {
     },
     products: []
 }
+var total = [];
+var totalPrice = 0;
+
 
 function start(){
     getListProduct(renderListProduct)
@@ -112,7 +115,9 @@ function showOrder(html){
         document.getElementsByClassName("listCustomers")[0].innerHTML = html;
         var productQuantitys = document.querySelectorAll(".item .content_item .item_quantity input");
         initOnchangeProducts(productQuantitys, order.products);
-        
+        totalPrice += product.quantity * product.price;
+        console.log(totalPrice);
+        getProductQuantitys(product.quantity, product.price)   
     })
 }
 
@@ -128,4 +133,11 @@ function initOnchangeProducts(productQuantitys, products){
             })
         }
     })
+}
+
+function getProductQuantitys(quantity, price){
+    handleTotal(quantity, price)
+}
+
+function handleTotal(quantity, price){
 }
