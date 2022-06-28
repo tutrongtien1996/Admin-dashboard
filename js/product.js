@@ -110,8 +110,10 @@ function showOrder(html){
         var tong = product.quantity * product.price;
         html += `<li class="item">
             <div class="content_item">
-                <span class="item_name">${product.name}</span>
+                <div class="item_name"><span >${product.name}</span></br>
                 <span class="item_price">${Util.formatNumber(product.price)}đ</span>
+                </div>
+                
                 <div class="item_quantity"><input type="number" data-product-id="${product.id}" value="${product.quantity}"></div>
                 <span class="item_price" data-product-tong="${tong}">${Util.formatNumber(tong)}đ</span>
             </div>

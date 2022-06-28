@@ -81,7 +81,10 @@ ul {
 }
 
 .recentCustomers .products .listCustomers li {
-    margin-top: 4px;
+    margin-top: 6px;
+    background-color: hsl(121, 69%, 82%);
+    padding: 3px  3px;
+    border-radius: 5px;
 }
 
 .recentCustomers .content_item {
@@ -99,8 +102,8 @@ ul {
     flex: 1;
 }
 .recentCustomers .content_item .item_quantity input{
-    width: 100%;
-    border: 1px solid;
+    width: 80%;
+    border: 1px solid rgb(36, 34, 34);
     background: #ebebeb;
     border-radius: 15px;
     font-size: 12px;
@@ -110,6 +113,7 @@ ul {
     outline: none;
     text-align: right;
     height: 25px;
+    float: right;
 }
 .recentCustomers .content_item .item_price{
     flex: 1;
