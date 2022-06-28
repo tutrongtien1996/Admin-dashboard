@@ -64,6 +64,7 @@ ul {
     padding: 10px 0;
 }
 
+
 .recentCustomers .products .title .item_name{
     flex: 2;
 }
@@ -75,6 +76,14 @@ ul {
     flex: 1;
     text-align: right;
 }
+.recentCustomers .products .listCustomers input {
+    margin-left: 4px;
+}
+
+.recentCustomers .products .listCustomers li {
+    margin-top: 4px;
+}
+
 .recentCustomers .content_item {
     display: flex;
     flex-direction: row;
@@ -115,4 +124,26 @@ ul {
     justify-content: space-between;
     border-top: 1px solid black;
     padding-top: 10px;
+}
+
+.recentCustomers input[type="submit"] {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: 30px;
+    border: 1px solid;
+    background: #28922a;
+    border-radius: 25px;
+    font-size: 18px;
+    color: #e9f4fb;
+    font-weight: 700;
+    cursor: pointer;
+    outline: none;
+    margin-top: 20px;
+}
+
+.recentCustomers input[type="submit"]:hover {
+    border-color: #28922a;
+    transition: .5s;
 }

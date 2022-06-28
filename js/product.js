@@ -12,12 +12,12 @@ var order = {
     total: 0,
     customer: {
         name: "",
-        phone_number: ""
+        phone_number: "",
+        id: ""
     },
     products: []
 }
-var total = [];
-var totalPrice = 0;
+
 
 
 function start(){
@@ -89,6 +89,7 @@ function initOnclickProducts(listItems){
                 })
             }
             showOrder(html);
+            handleTotal();
         }  
     });    
 }
@@ -104,40 +105,85 @@ function checkIfProductIxist(product){
 };
 
 function showOrder(html){
+
     order.products.forEach(product => {
+        var tong = product.quantity * product.price;
         html += `<li class="item">
             <div class="content_item">
                 <span class="item_name">${product.name}</span>
+                <span class="item_price">${Util.formatNumber(product.price)}đ</span>
                 <div class="item_quantity"><input type="number" data-product-id="${product.id}" value="${product.quantity}"></div>
-                <span class="item_price">${product.price}</span>
+                <span class="item_price" data-product-tong="${tong}">${Util.formatNumber(tong)}đ</span>
             </div>
         </li>`
         document.getElementsByClassName("listCustomers")[0].innerHTML = html;
         var productQuantitys = document.querySelectorAll(".item .content_item .item_quantity input");
-        initOnchangeProducts(productQuantitys, order.products);
-        totalPrice += product.quantity * product.price;
-        console.log(totalPrice);
-        getProductQuantitys(product.quantity, product.price)   
+        initOnchangeProducts(productQuantitys); 
+
     })
+   
 }
 
 
-function initOnchangeProducts(productQuantitys, products){
+function initOnchangeProducts(productQuantitys){
     productQuantitys.forEach(productQuantity => {
         productQuantity.onchange = quantity => {
             productQuantity.value = quantity.target.value;
-            products.forEach(product => {
+            order.products.forEach((product, index) => {
                 if(product.id == productQuantity.getAttribute("data-product-id")){
-                    product.quantity = Number(quantity.target.value);
+                    order.products[index].quantity = Number(quantity.target.value);
                 }
             })
+            handleTotal();
         }
+    }) 
+}
+
+function handleTotal(){
+    order.total = 0;
+    order.products.forEach(product => {
+        order.total += product.quantity * product.price;
     })
+    var html = `<h3 style="color: orange">${Util.formatNumber(order.total)}đ</h3>`;
+    document.querySelector(".recentCustomers .total .order_total").innerHTML = html
 }
 
-function getProductQuantitys(quantity, price){
-    handleTotal(quantity, price)
+
+//tao ham post order product
+function createOrders(order){
+    var options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+          },
+        body: JSON.stringify(order)
+    }
+    fetch(API_URL+'/public/source/api_orders', options)
+        .then(function(response){
+            return response.json();
+        })
+        .then(callback)
 }
 
-function handleTotal(quantity, price){
+function handleCreateDataOrder(){
+    var createOder = document.querySelector(".recentCustomers #btn");
+    
+    createOder.onclick = function(){
+        order.products.forEach((item, index) => {
+            delete order.products[index].name;
+            delete order.products[index].image;
+        })
+         order = {
+            total: order.total,
+            customer: {
+                name: "TRONG TIEN",
+                phone_number: "0901916121",
+                id: 1
+            },
+            products : order.products
+        }
+        console.log(order)
+    }
+    
 }
+handleCreateDataOrder()
