@@ -1,4 +1,4 @@
-const API_URL = "http://localhost/opensourcepos";
+const API_URL = "https://9aeb-112-197-193-18.ap.ngrok.io/opensourcepos";
 
 function start() {
     initMenu();
