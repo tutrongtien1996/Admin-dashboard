@@ -1,3 +1,8 @@
-- Update menu
-- Add list products
-- Add list orders
+- Update menu (done)
+- Add list products (done)
+- Add list orders (done)
+- Make pagination (khi không có order thì ẩn pagination)
+- Complete order
+- Fix bug
+- Update index using api
+- Make the offline mode

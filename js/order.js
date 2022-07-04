@@ -1,34 +1,37 @@
 
+var orderFilter = {  
+    limit: 5, //số lượng orders trên mỗi trang: mặc định 20
+    offset: 0, //vị trí đầu tiên trong danh sách order của mỗi trang, (trạng hiện tại - 1)*limit
+    start_date: Util.getCurrentDay(), //lọc order theo ngày bắt đầu, mặc địch là ngày hiện tại
+    end_date: Util.getCurrentDay() //lọc order theo ngày kết thúc, mặc định là ngày hiện tại
+}
+
+
 function start() {
-    getListOrders(renderListOrders);
+    getListOrders(renderListOrders, orderFilter);
 }
 
 start();
 
-
-function getListOrders(callback) {
-    fetch(API_URL+'/public/source/api_orders?offset=0&limit=-1&start_date=2022-06-01&end_date=2022-06-30&filters%5B%5D=', 
-        {
-            method: "GET",
-            headers: {
-                'Authorization': "Bearer "+localStorage.getItem('access_token')
-            }
-        })
-        .then(function(response){
-            return response.json();
-        })
-        .then(callback)
-        // .then(function(result){
-        //     console.log(result.data.rows)
-        // })
-        .catch(function (error) {
-            console.log(error)
-        })
-
+function getListOrders(callback, filter) {
+    axios.get(API_URL+'/public/source/api_orders', {
+        params: filter,
+        headers: option.headers
+    })
+    .then((response) => {
+        return callback(response.data)
+    })
+    .catch(function (error) {
+        console.log(error)
+    })
 };
+
+
 
 function renderListOrders(result){
     var html ='';
+    
+    //render data row
     result.data.rows.forEach(function(item){
         html += `<tr>
         <td>${item.sale_time}</td>`;
@@ -48,11 +51,29 @@ function renderListOrders(result){
     </tr>`
     });
     document.getElementById('list_order').innerHTML = html;
+    getOderpages(result);
 }
 
 
-
-
+function getOderpages(result){
+    var htmlBtn ='';
+    var number_of_pages = Math.floor(result.data.total / orderFilter.limit);
+    var numberMod = result.data.total % orderFilter.limit;
+    if(numberMod > 0){
+        number_of_pages +=1;
+    }
+    for(var i = 0; i < number_of_pages; i++){
+        htmlBtn += `<button class="btn">${i + 1}</button>`
+    }
+    document.querySelector(".details .recentOrders .pages").innerHTML = htmlBtn;
+    var pages =  document.querySelectorAll(".details .recentOrders .pages .btn");
+    pages.forEach((page, index) =>{
+        page.onclick = function(){
+            orderFilter.offset = orderFilter.limit * index;
+            getListOrders(renderListOrders, orderFilter);
+        }
+    })
+}
 
 
 

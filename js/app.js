@@ -8,6 +8,11 @@ function start() {
     initUI();
 }
 
+var option = {
+    headers: {
+        'Authorization': "Bearer "+localStorage.getItem('access_token')
+    }
+};
 
 
 start();

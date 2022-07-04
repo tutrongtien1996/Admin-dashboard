@@ -1,26 +1,20 @@
+var order = {}
 
-
-// 
-
-var option = {
-    headers: {
-        'Authorization': "Bearer "+localStorage.getItem('access_token')
+function initOrder() {
+    order = {
+        total: 0,
+        customer: {
+            name: "",
+            phone_number: "",
+            id: ""
+        },
+        products: []
     }
-};
-
-var order = {
-    total: 0,
-    customer: {
-        name: "",
-        phone_number: "",
-        id: ""
-    },
-    products: []
 }
 
 
-
 function start(){
+    initOrder();
     getListProduct(renderListProduct)
 }
 start();
@@ -108,31 +102,33 @@ function showOrder(html){
 
     order.products.forEach(product => {
         var tong = product.quantity * product.price;
-        html += `<li class="item">
+        html += `<li class="item"  data-product-id="${product.id}">
             <div class="content_item">
-                <div class="item_name"><span >${product.name}</span></br>
-                <span class="item_price">${Util.formatNumber(product.price)}đ</span>
+                <div class="item_name" ><span >${product.name}</span></br>
+                <span class="item_price" data-product-price="${product.price}">${Util.formatNumber(product.price)}đ</span>
                 </div>
                 
-                <div class="item_quantity"><input type="number" data-product-id="${product.id}" value="${product.quantity}"></div>
+                <div class="item_quantity"><input type="number"  value="${product.quantity}"></div>
                 <span class="item_price" data-product-tong="${tong}">${Util.formatNumber(tong)}đ</span>
             </div>
         </li>`
         document.getElementsByClassName("listCustomers")[0].innerHTML = html;
-        var productQuantitys = document.querySelectorAll(".item .content_item .item_quantity input");
-        initOnchangeProducts(productQuantitys); 
-
+       
     })
-   
+    var productItems = document.querySelectorAll(".listCustomers .item");
+    initOnchangeProducts(productItems);  
+    handleCreateDataOrder(productItems)
 }
 
 
-function initOnchangeProducts(productQuantitys){
-    productQuantitys.forEach(productQuantity => {
+function initOnchangeProducts(productItems){
+   
+    productItems.forEach(productItem => {
+        var productQuantity = productItem.querySelector(".content_item .item_quantity input");
         productQuantity.onchange = quantity => {
             productQuantity.value = quantity.target.value;
             order.products.forEach((product, index) => {
-                if(product.id == productQuantity.getAttribute("data-product-id")){
+                if(product.id == productItem.getAttribute("data-product-id")){
                     order.products[index].quantity = Number(quantity.target.value);
                 }
             })
@@ -152,40 +148,56 @@ function handleTotal(){
 
 
 //tao ham post order product
-function createOrders(order){
-    var options = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-          },
-        body: JSON.stringify(order)
-    }
-    fetch(API_URL+'/public/source/api_orders', options)
-        .then(function(response){
-            return response.json();
+// function createOrders(order){
+//     var options = {
+//         method: "post",
+//         headers: {
+//             'Authorization': "Bearer "+localStorage.getItem('access_token'),
+//             'Content-Type': "application/json"
+//         },
+//         body: JSON.stringify(order)
+//     }
+//     fetch(API_URL+'/public/source/api_orders/create', options)
+//         .then(function (response) {
+         
+//         return response.json();
+//         })
+//         .then(function(){
+//             alert("Tạo đơn thànhh công!")
+//         })
+//         .catch(function (error) {
+//         console.log(error);
+//         });
+// }
+
+function createOrders() {
+    axios.post(API_URL + '/public/source/api_orders/create', order, option)
+        .then((reponse) => {
+            alert("Tạo đơn thànhh công!")
         })
-        .then(callback)
+        .catch(function (error) {
+            console.log(error)
+        })
 }
 
 function handleCreateDataOrder(){
     var createOder = document.querySelector(".recentCustomers #btn");
-    
     createOder.onclick = function(){
-        order.products.forEach((item, index) => {
-            delete order.products[index].name;
-            delete order.products[index].image;
-        })
-         order = {
-            total: order.total,
-            customer: {
-                name: "TRONG TIEN",
-                phone_number: "0901916121",
-                id: 1
-            },
-            products : order.products
-        }
+        order.customer.name = document.querySelector(".recentCustomers .search .name_customer").value;
+        order.customer.phone_number = document.querySelector(".recentCustomers .search .phone_number").value;
         console.log(order)
+        createOrders()
     }
     
 }
-handleCreateDataOrder()
+
+function handleDeleteDataOrder(){
+    var deleteOrder = document.querySelector(".recentCustomers .delete");
+
+    deleteOrder.onclick = function(){
+        initOrder();
+        document.getElementsByClassName("listCustomers")[0].innerHTML = '';
+
+    }
+}
+handleDeleteDataOrder();
