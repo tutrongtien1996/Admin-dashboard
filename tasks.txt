@@ -1,8 +1,9 @@
 - Update menu (done)
 - Add list products (done)
 - Add list orders (done)
-- Make pagination (khi không có order thì ẩn pagination)
+- Make pagination (khi không có order thì ẩn pagination) (done)
+- Filter by date (start_date & end_date) + View all (done)
 - Complete order
-- Fix bug
-- Update index using api
+- Fix bug (quantity can not be negavtive)
 - Make the offline mode
+- Make URL links for each of page

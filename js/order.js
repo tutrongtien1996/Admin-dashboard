@@ -1,6 +1,6 @@
 
 var orderFilter = {  
-    limit: 5, //số lượng orders trên mỗi trang: mặc định 20
+    limit: 10, //số lượng orders trên mỗi trang: mặc định 20
     offset: 0, //vị trí đầu tiên trong danh sách order của mỗi trang, (trạng hiện tại - 1)*limit
     start_date: Util.getCurrentDay(), //lọc order theo ngày bắt đầu, mặc địch là ngày hiện tại
     end_date: Util.getCurrentDay() //lọc order theo ngày kết thúc, mặc định là ngày hiện tại
@@ -9,6 +9,7 @@ var orderFilter = {
 
 function start() {
     getListOrders(renderListOrders, orderFilter);
+    initOnclickViewall();
 }
 
 start();
@@ -25,7 +26,6 @@ function getListOrders(callback, filter) {
         console.log(error)
     })
 };
-
 
 
 function renderListOrders(result){
@@ -54,27 +54,50 @@ function renderListOrders(result){
     getOderpages(result);
 }
 
-
 function getOderpages(result){
     var htmlBtn ='';
-    var number_of_pages = Math.floor(result.data.total / orderFilter.limit);
-    var numberMod = result.data.total % orderFilter.limit;
-    if(numberMod > 0){
-        number_of_pages +=1;
+    try {
+        var number_of_pages = _getNumberOfPage(result.data.total, orderFilter.limit)
+    } catch (error) {
+        var number_of_pages = 1;
     }
     for(var i = 0; i < number_of_pages; i++){
         htmlBtn += `<button class="btn">${i + 1}</button>`
     }
     document.querySelector(".details .recentOrders .pages").innerHTML = htmlBtn;
     var pages =  document.querySelectorAll(".details .recentOrders .pages .btn");
+
     pages.forEach((page, index) =>{
         page.onclick = function(){
-            orderFilter.offset = orderFilter.limit * index;
+            console.log('clicked')
+            orderFilter.offset = orderFilter.limit * index;  
+            console.log(index)
+            // console.log(orderFilter.offset)
             getListOrders(renderListOrders, orderFilter);
-        }
+        } 
     })
 }
 
+function _getNumberOfPage(total, limit) {
+    if (limit == 0) {
+        throw("Limit can not be zero");
+    }
+    var number_of_pages = Math.floor(total / limit);
+    var numberMod = total % limit;
+    if(numberMod > 0){
+        number_of_pages +=1;
+    }
+    return number_of_pages;
+}
+
+function initOnclickViewall(){
+    var btnViewAll = document.querySelector(".recentOrders .btn.viewall");
+    btnViewAll.onclick = () => {  
+        orderFilter.offset = 0;
+        orderFilter.limit = 0;
+        getListOrders(renderListOrders, orderFilter);
+    }
+}
 
 
 
