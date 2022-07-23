@@ -12,7 +12,6 @@ function initOrder() {
     }
 }
 
-
 function start(){
     initOrder();
     getListProduct(renderListProduct)
@@ -120,19 +119,29 @@ function showOrder(html){
     handleCreateDataOrder(productItems)
 }
 
+function checkInputQuantity(productQuantity,  quantityValue){
+    productQuantity.value = quantityValue;
+    order.products.forEach((product, index) => {
+    if(product.id == productItem.getAttribute("data-product-id")){
+        order.products[index].quantity = Number(quantity.target.value);
+        }
+    })
+    handleTotal();
+}
 
 function initOnchangeProducts(productItems){
-   
     productItems.forEach(productItem => {
         var productQuantity = productItem.querySelector(".content_item .item_quantity input");
         productQuantity.onchange = quantity => {
-            productQuantity.value = quantity.target.value;
-            order.products.forEach((product, index) => {
-                if(product.id == productItem.getAttribute("data-product-id")){
-                    order.products[index].quantity = Number(quantity.target.value);
-                }
-            })
-            handleTotal();
+            
+            if(quantity.target.value > 0){
+                var quantityValue = quantity.target.value;
+                checkInputQuantity(productQuantity, quantityValue);
+            }  
+            else {
+                alert("Vui lòng nhập giá trị lớn hơn 0");
+                checkInputQuantity(productQuantity, 1)     
+            }
         }
     }) 
 }
@@ -147,33 +156,13 @@ function handleTotal(){
 }
 
 
-//tao ham post order product
-// function createOrders(order){
-//     var options = {
-//         method: "post",
-//         headers: {
-//             'Authorization': "Bearer "+localStorage.getItem('access_token'),
-//             'Content-Type': "application/json"
-//         },
-//         body: JSON.stringify(order)
-//     }
-//     fetch(API_URL+'/public/source/api_orders/create', options)
-//         .then(function (response) {
-         
-//         return response.json();
-//         })
-//         .then(function(){
-//             alert("Tạo đơn thànhh công!")
-//         })
-//         .catch(function (error) {
-//         console.log(error);
-//         });
-// }
-
 function createOrders() {
     axios.post(API_URL + '/public/source/api_orders/create', order, option)
-        .then((reponse) => {
-            alert("Tạo đơn thànhh công!")
+        .then((response) => {
+            initOrder();
+            document.getElementsByClassName("listCustomers")[0].innerHTML = '';
+            document.querySelector(".recentCustomers .total .order_total").innerHTML = '';
+            alert("Đã tạo đơn hàng!")
         })
         .catch(function (error) {
             console.log(error)
@@ -185,10 +174,8 @@ function handleCreateDataOrder(){
     createOder.onclick = function(){
         order.customer.name = document.querySelector(".recentCustomers .search .name_customer").value;
         order.customer.phone_number = document.querySelector(".recentCustomers .search .phone_number").value;
-        console.log(order)
         createOrders()
     }
-    
 }
 
 function handleDeleteDataOrder(){
@@ -197,7 +184,8 @@ function handleDeleteDataOrder(){
     deleteOrder.onclick = function(){
         initOrder();
         document.getElementsByClassName("listCustomers")[0].innerHTML = '';
-
+        document.querySelector(".recentCustomers .total .order_total").innerHTML = '';
     }
 }
 handleDeleteDataOrder();
+
