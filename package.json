@@ -1,0 +1,22 @@
+{
+  "name": "udo-admin",
+  "version": "1.0.0",
+  "description": "Technical: HTML, CSS, Javascript only",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phuongdanh/udo-admin.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/phuongdanh/udo-admin/issues"
+  },
+  "homepage": "https://github.com/phuongdanh/udo-admin#readme",
+  "dependencies": {
+    "axios": "^0.27.2"
+  }
+}
