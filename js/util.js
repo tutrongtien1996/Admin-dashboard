@@ -11,10 +11,19 @@ var Util = {
     },
     getCurrentDay: () => {
         var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0'); 
-        var yyyy = today.getFullYear();
-        today = yyyy+'-'+mm+'-'+dd;
-        return today;
+        return Util.formatDate(today);
+    },
+
+    formatDate: (date) => {
+        var dd = String(date.getDate()).padStart(2, '0');
+        var mm = String(date.getMonth() + 1).padStart(2, '0'); 
+        var yyyy = date.getFullYear();
+        return  yyyy+'-'+mm+'-'+dd;
+    },
+    FormatVNDate: (date) => {
+        var dd = String(date.getDate()).padStart(2, '0');
+        var mm = String(date.getMonth() + 1).padStart(2, '0'); 
+        var yyyy = date.getFullYear();
+        return  dd+'/'+mm+'/'+yyyy;
     }
 }

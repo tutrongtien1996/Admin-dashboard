@@ -12,43 +12,41 @@ function initOrder() {
     }
 }
 
+
 function start(){
     initOrder();
-    getListProduct(renderListProduct)
+    displayProducts(renderListProduct)
 }
 start();
 
-function getListProduct(callback){
-    axios.get(API_URL + '/public/source/api_items', option)
-        .then((reponse) => {
-            var productEntity = new Product();
-            var listProducts = productEntity.parseFromAPI(reponse.data.data)
-            callback(listProducts)
-        })
-        .catch(function (error) {
-            console.log(error)
-        })
+function displayProducts(callback){
+    var productsLocal = localStorage.getItem('products');
+    var listProducts = JSON.parse(productsLocal);
+    console.log(listProducts)
+    callback(listProducts)
 }
 
 
 function renderListProduct(listProducts){
     var html = "";
     listProducts.forEach(element => {
-
+        var productEntity = new Product();
+        var item = productEntity.parseFromJson(element);
+        console.log(renderImage(item.image));
         html += `<li class="item">
-                <div data-product='${element.toJson()}'>
-                    ${renderImage(element.image)}
-                    <h3>${element.name}</h3>
-                    <h4>${Util.formatNumber(element.price)}đ / kg</span></h4>
+                <div data-product='${item.toJson()}'>
+                    ${renderImage(item.image)}
+                    <h3>${item.name}</h3>
+                    <h4>${Util.formatNumber(item.price)}đ / kg</span></h4>
                     </div>
                 </li>`
         });
     document.getElementsByClassName("listProducts")[0].innerHTML = html;
-    getListItemProduct()
+    getListItemProduct();
 
     // document.getElementsByClassName('listProducts').innerHTML = html;
 }
-const renderImage = (image) => {
+function renderImage(image) {
     if (image != "") {
        return `<img src="${image}" onerror="this.src='/img/products/quan_ao_thong_thuong.jpeg'"/>`;
     } 
