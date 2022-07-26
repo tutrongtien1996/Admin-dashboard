@@ -7,7 +7,7 @@
     <title>UDO Dashboard | Sales</title>
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/product.css">
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./node_modules/axios/dist/axios.js"></script>
 </head>
 <body>
     <div class="container">
@@ -57,11 +57,15 @@
                 
                 <div class="recentCustomers">
                     
-                    <h1 style="color: rgb(119, 119, 241)">Customers</h1>
+                    <h1 style="color: rgb(119, 119, 241)">Order Menu</h1>
                     
                     <div class="search">
                         <label>
                             <input type="text" placeholder="name customer" class="name_customer">
+                            <ion-icon name="search-outline"></ion-icon>
+                        </label>
+                        <label>
+                            <input type="text" placeholder="name customer" class="phone_number">
                             <ion-icon name="search-outline"></ion-icon>
                         </label>
                         <h3>Name: Trong Tien</h3>
@@ -70,9 +74,10 @@
                     <div class="products">
                         <h3>Products</h3>
                         <div class="title">
-                            <h5 class="item_name">San pham</h5>
-                            <h5 class="item_quantity">so luong</h5>
-                            <h5 class="item_price">don gia</h5>
+                            <h5 class="item_name">Tên SP</h5>
+                            <!-- <h5 class="item_price">Giá</h5> -->
+                            <h5 class="item_quantity">SL</h5>
+                            <h5 class="item_price">Tổng</h5>
                         </div>
                             
                         <ul class="listCustomers">
@@ -80,8 +85,10 @@
                     </div>
                     <div class="total">
                         <h3>Total:</h3>
-                        <h3 style="color: orange">678,8247vnd</h3>
+                        <span class="order_total"></span>
                     </div>
+                    <input type="submit" value="Tạo đơn" id="btn">
+                    <button class="delete">Delete</button>
                 </div>
             </div>
         </div>
@@ -90,9 +97,10 @@
     
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <script src="./js/util.js"></script>
-    <script src="./js/app.js"></script>
+    <script src="./node_modules/tienformater/tienformater,js"></script>
     <script src="./js/entities/product.js"></script>
+    <script src="./js/app.js"></script>
+    
     <script src="./js/product.js"></script>
     
     

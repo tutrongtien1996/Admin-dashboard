@@ -1,58 +1,52 @@
+var order = {}
 
-
-// 
-
-var option = {
-    headers: {
-        'Authorization': "Bearer "+localStorage.getItem('access_token')
+function initOrder() {
+    order = {
+        total: 0,
+        customer: {
+            name: "",
+            phone_number: "",
+            id: ""
+        },
+        products: []
     }
-};
-
-var order = {
-    total: 0,
-    customer: {
-        name: "",
-        phone_number: ""
-    },
-    products: []
 }
 
+
 function start(){
-    getListProduct(renderListProduct)
+    initOrder();
+    displayProducts(renderListProduct)
 }
 start();
 
-function getListProduct(callback){
-    axios.get(API_URL + '/public/source/api_items', option)
-        .then((reponse) => {
-            var productEntity = new Product();
-            var listProducts = productEntity.parseFromAPI(reponse.data.data)
-            callback(listProducts)
-        })
-        .catch(function (error) {
-            console.log(error)
-        })
+function displayProducts(callback){
+    var productsLocal = localStorage.getItem('products');
+    var listProducts = JSON.parse(productsLocal);
+    console.log(listProducts)
+    callback(listProducts)
 }
 
 
 function renderListProduct(listProducts){
     var html = "";
     listProducts.forEach(element => {
-
+        var productEntity = new Product();
+        var item = productEntity.parseFromJson(element);
+        console.log(renderImage(item.image));
         html += `<li class="item">
-                <div data-product='${element.toJson()}'>
-                    ${renderImage(element.image)}
-                    <h3>${element.name}</h3>
-                    <h4>${Util.formatNumber(element.price)}đ / kg</span></h4>
+                <div data-product='${item.toJson()}'>
+                    ${renderImage(item.image)}
+                    <h3>${item.name}</h3>
+                    <h4>${Util.formatNumber(item.price)}đ / kg</span></h4>
                     </div>
                 </li>`
         });
     document.getElementsByClassName("listProducts")[0].innerHTML = html;
-    getListItemProduct()
+    getListItemProduct();
 
     // document.getElementsByClassName('listProducts').innerHTML = html;
 }
-const renderImage = (image) => {
+function renderImage(image) {
     if (image != "") {
        return `<img src="${image}" onerror="this.src='/img/products/quan_ao_thong_thuong.jpeg'"/>`;
     } 
@@ -86,6 +80,7 @@ function initOnclickProducts(listItems){
                 })
             }
             showOrder(html);
+            handleTotal();
         }  
     });    
 }
@@ -101,31 +96,94 @@ function checkIfProductIxist(product){
 };
 
 function showOrder(html){
+
     order.products.forEach(product => {
-        html += `<li class="item">
+        var tong = product.quantity * product.price;
+        html += `<li class="item"  data-product-id="${product.id}">
             <div class="content_item">
-                <span class="item_name">${product.name}</span>
-                <div class="item_quantity"><input type="number" data-product-id="${product.id}" value="${product.quantity}"></div>
-                <span class="item_price">${product.price}</span>
+                <div class="item_name" ><span >${product.name}</span></br>
+                <span class="item_price" data-product-price="${product.price}">${Util.formatNumber(product.price)}đ</span>
+                </div>
+                
+                <div class="item_quantity"><input type="number"  value="${product.quantity}"></div>
+                <span class="item_price" data-product-tong="${tong}">${Util.formatNumber(tong)}đ</span>
             </div>
         </li>`
         document.getElementsByClassName("listCustomers")[0].innerHTML = html;
-        var productQuantitys = document.querySelectorAll(".item .content_item .item_quantity input");
-        initOnchangeProducts(productQuantitys, order.products);
-        
+       
     })
+    var productItems = document.querySelectorAll(".listCustomers .item");
+    initOnchangeProducts(productItems);  
+    handleCreateDataOrder(productItems)
 }
 
-
-function initOnchangeProducts(productQuantitys, products){
-    productQuantitys.forEach(productQuantity => {
-        productQuantity.onchange = quantity => {
-            productQuantity.value = quantity.target.value;
-            products.forEach(product => {
-                if(product.id == productQuantity.getAttribute("data-product-id")){
-                    product.quantity = Number(quantity.target.value);
-                }
-            })
+function checkInputQuantity(productQuantity,  quantityValue){
+    productQuantity.value = quantityValue;
+    order.products.forEach((product, index) => {
+    if(product.id == productItem.getAttribute("data-product-id")){
+        order.products[index].quantity = Number(quantity.target.value);
         }
     })
+    handleTotal();
 }
+
+function initOnchangeProducts(productItems){
+    productItems.forEach(productItem => {
+        var productQuantity = productItem.querySelector(".content_item .item_quantity input");
+        productQuantity.onchange = quantity => {
+            
+            if(quantity.target.value > 0){
+                var quantityValue = quantity.target.value;
+                checkInputQuantity(productQuantity, quantityValue);
+            }  
+            else {
+                alert("Vui lòng nhập giá trị lớn hơn 0");
+                checkInputQuantity(productQuantity, 1)     
+            }
+        }
+    }) 
+}
+
+function handleTotal(){
+    order.total = 0;
+    order.products.forEach(product => {
+        order.total += product.quantity * product.price;
+    })
+    var html = `<h3 style="color: orange">${Util.formatNumber(order.total)}đ</h3>`;
+    document.querySelector(".recentCustomers .total .order_total").innerHTML = html
+}
+
+
+function createOrders() {
+    axios.post(API_URL + '/public/source/api_orders/create', order, option)
+        .then((response) => {
+            initOrder();
+            document.getElementsByClassName("listCustomers")[0].innerHTML = '';
+            document.querySelector(".recentCustomers .total .order_total").innerHTML = '';
+            alert("Đã tạo đơn hàng!")
+        })
+        .catch(function (error) {
+            console.log(error)
+        })
+}
+
+function handleCreateDataOrder(){
+    var createOder = document.querySelector(".recentCustomers #btn");
+    createOder.onclick = function(){
+        order.customer.name = document.querySelector(".recentCustomers .search .name_customer").value;
+        order.customer.phone_number = document.querySelector(".recentCustomers .search .phone_number").value;
+        createOrders()
+    }
+}
+
+function handleDeleteDataOrder(){
+    var deleteOrder = document.querySelector(".recentCustomers .delete");
+
+    deleteOrder.onclick = function(){
+        initOrder();
+        document.getElementsByClassName("listCustomers")[0].innerHTML = '';
+        document.querySelector(".recentCustomers .total .order_total").innerHTML = '';
+    }
+}
+handleDeleteDataOrder();
+

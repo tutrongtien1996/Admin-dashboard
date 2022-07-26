@@ -6,8 +6,14 @@ function start() {
         window.location.href = '/login.html';
     }
     initUI();
+    getListProduct();
 }
 
+var option = {
+    headers: {
+        'Authorization': "Bearer "+localStorage.getItem('access_token')
+    }
+};
 
 
 start();
@@ -59,8 +65,17 @@ function initMenu() {
         document.getElementById("menu").innerHTML = html;
     })
 }
-
-
+function getListProduct(){
+    axios.get(API_URL + '/public/source/api_items', option)
+        .then((reponse) => {
+            var productEntity = new Product();
+            var listProducts = productEntity.parseFromAPI(reponse.data.data);
+            localStorage.setItem('products', JSON.stringify(listProducts));
+        })
+        .catch(function (error) {
+            console.log(error)
+        })
+}
 
 setTimeout(
     function(){

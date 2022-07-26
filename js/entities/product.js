@@ -15,6 +15,10 @@ var Product = function(id = '', name = '', price = 0, image = null) {
         return JSON.stringify(this)
     }
 }
+
+Product.prototype.parseFromJson = function (objectData) {
+    return new Product(objectData.id, objectData.name, objectData.price, objectData.image);
+}
 Product.prototype.parseFromAPI = function (dataFormAPI) {
     var listProducts = [];
     dataFormAPI.forEach(element => {
