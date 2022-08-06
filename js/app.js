@@ -1,4 +1,4 @@
-const API_URL = "http://localhost/opensourcepos/public";
+const API_URL = "http://54.254.213.100:2300";
 
 function start() {
     initMenu();
@@ -66,7 +66,7 @@ function initMenu() {
     })
 }
 function getListProduct(){
-    axios.get(API_URL + '/source/api_items', option)
+    axios.get(API_URL + '/source/Api_Items', option)
         .then((reponse) => {
             var productEntity = new Product();
             var listProducts = productEntity.parseFromAPI(reponse.data.data);
