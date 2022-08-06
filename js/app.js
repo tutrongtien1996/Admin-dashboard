@@ -1,4 +1,4 @@
-const API_URL = "http://localhost/opensourcepos";
+const API_URL = "http://localhost/opensourcepos/public";
 
 function start() {
     initMenu();
