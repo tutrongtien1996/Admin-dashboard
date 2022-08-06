@@ -46,7 +46,7 @@ function getValueFromUrl(param) {
 }
 
 function getListOrders(callback, filter) {
-    axios.get(API_URL+'/public/source/api_orders', {
+    axios.get(API_URL+'/source/api_orders', {
         params: filter,
         headers: option.headers
     })

@@ -18,7 +18,7 @@ async function processLogin() {
         username: username,
         password: password        
     };
-    const response = await fetch(API_URL+"/public/source/login", {
+    const response = await fetch(API_URL+"/source/login", {
         method: "POST",
         headers: {
             // 'Authorization': "Bearer ____TOKEN____",

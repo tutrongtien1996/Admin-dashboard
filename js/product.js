@@ -155,7 +155,7 @@ function handleTotal(){
 
 
 function createOrders() {
-    axios.post(API_URL + '/public/source/api_orders/create', order, option)
+    axios.post(API_URL + '/source/api_orders/create', order, option)
         .then((response) => {
             initOrder();
             document.getElementsByClassName("listCustomers")[0].innerHTML = '';

@@ -66,7 +66,7 @@ function initMenu() {
     })
 }
 function getListProduct(){
-    axios.get(API_URL + '/public/source/api_items', option)
+    axios.get(API_URL + '/source/api_items', option)
         .then((reponse) => {
             var productEntity = new Product();
             var listProducts = productEntity.parseFromAPI(reponse.data.data);
