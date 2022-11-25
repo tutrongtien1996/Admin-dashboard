@@ -1,4 +1,8 @@
+
+
+
 var order = {}
+
 
 function initOrder() {
     order = {
@@ -12,58 +16,65 @@ function initOrder() {
     }
 }
 
+var option = {
+    headers: {
+        'Authorization': "Bearer "+"SMgddqJL10tlwrQTTrIMjZkrf8uJXhs70wE9pcBBCSOyIuqYmPTWzx4qtwoK"
+    }
+};
+
 
 function start(){
+    // popup()
     initOrder();
-    displayProducts(renderListProduct)
+    getListProducts(renderListProduct)
+   
 }
 start();
 
-function displayProducts(callback){
-    var productsLocal = localStorage.getItem('products');
-    var listProducts = JSON.parse(productsLocal);
-    console.log(listProducts)
-    callback(listProducts)
+
+function getListProducts (callback) {
+    axios.get(API_URL + "/admin/products", option)
+    .then((response) => {
+        callback(response.data.data)
+    })
+    .catch((err) => {
+        if (err) throw err
+    })
 }
 
+function renderListProduct(data){
+    var list_products = document.getElementsByClassName("listProducts")[0];
 
-function renderListProduct(listProducts){
-    var html = "";
-    listProducts.forEach(element => {
-        var productEntity = new Product();
-        var item = productEntity.parseFromJson(element);
-        console.log(renderImage(item.image));
+    let html = "";
+    data.forEach(product => {
+        product.image = API_URL +"/"+ product.image;
+        const mydata = JSON.stringify(product);
         html += `<li class="item">
-                <div data-product='${item.toJson()}'>
-                    ${renderImage(item.image)}
-                    <h3>${item.name}</h3>
-                    <h4>${Util.formatNumber(item.price)}đ / kg</span></h4>
+                    <div class="content" data-product='${mydata}'>
+                        <div class="img"><img src="${product.image}"/></div>
+                        <div class="name_price">
+                            <h3>${product.name}</h3>
+                            <h4>${product.price}</span></h4>
+                        </div>
                     </div>
                 </li>`
-        });
-    document.getElementsByClassName("listProducts")[0].innerHTML = html;
+    })
+    list_products.innerHTML = html;
     getListItemProduct();
-
-    // document.getElementsByClassName('listProducts').innerHTML = html;
 }
-function renderImage(image) {
-    if (image != "") {
-       return `<img src="${image}" onerror="this.src='/img/products/quan_ao_thong_thuong.jpeg'"/>`;
-    } 
-    return `<img src="/img/products/quan_ao_thong_thuong.jpeg"/>`;
 
-}
 function getListItemProduct(){
-    var listItems = document.querySelectorAll(".listProducts .item div");
-    initOnclickProducts(listItems);
+    var listElements = document.querySelectorAll(".listProducts .item .content");
+    if (listElements){
+        initOnclickProducts(listElements);
+    }
 }
 
-
-function initOnclickProducts(listItems){
+function initOnclickProducts(listElements){
     var html = "";
-    listItems.forEach(item => {
-        item.onclick = () =>{
-            var product = JSON.parse(item.dataset.product); 
+    listElements.forEach(element => {
+        element.onclick = () =>{
+            var product = JSON.parse(element.dataset.product); 
             if(order.products.length == 0){
                 product.quantity = 1;
                 order.products.push(product);
@@ -96,94 +107,122 @@ function checkIfProductIxist(product){
 };
 
 function showOrder(html){
+    if(order.products){
+        var productElements = document.querySelector(".content_order .cart_items .items");
+        order.products.forEach(product => {
+            html = `<div class="item_product" data_product_id="${product.id}">
+                        <div class="left">
+                            <img src="${product.image}" alt="product name">
 
-    order.products.forEach(product => {
-        var tong = product.quantity * product.price;
-        html += `<li class="item"  data-product-id="${product.id}">
-            <div class="content_item">
-                <div class="item_name" ><span >${product.name}</span></br>
-                <span class="item_price" data-product-price="${product.price}">${Util.formatNumber(product.price)}đ</span>
-                </div>
-                
-                <div class="item_quantity"><input type="number"  value="${product.quantity}"></div>
-                <span class="item_price" data-product-tong="${tong}">${Util.formatNumber(tong)}đ</span>
-            </div>
-        </li>`
-        document.getElementsByClassName("listCustomers")[0].innerHTML = html;
-       
-    })
-    var productItems = document.querySelectorAll(".listCustomers .item");
-    initOnchangeProducts(productItems);  
-    handleCreateDataOrder(productItems)
-}
-
-function checkInputQuantity(productQuantity,  quantityValue){
-    productQuantity.value = quantityValue;
-    order.products.forEach((product, index) => {
-    if(product.id == productItem.getAttribute("data-product-id")){
-        order.products[index].quantity = Number(quantity.target.value);
-        }
-    })
-    handleTotal();
-}
-
-function initOnchangeProducts(productItems){
-    productItems.forEach(productItem => {
-        var productQuantity = productItem.querySelector(".content_item .item_quantity input");
-        productQuantity.onchange = quantity => {
-            
-            if(quantity.target.value > 0){
-                var quantityValue = quantity.target.value;
-                checkInputQuantity(productQuantity, quantityValue);
-            }  
-            else {
-                alert("Vui lòng nhập giá trị lớn hơn 0");
-                checkInputQuantity(productQuantity, 1)     
-            }
-        }
-    }) 
+                        </div>
+                        <div class="center">
+                            <p class="name">${product.name}</p>
+                            <p class="price">${product.price}</p>
+                        </div>
+                        <div class="right">
+                            <button class="plus_minus minus">-</button>
+                            <button class="number">${product.quantity}</button>
+                            <button class="plus_minus plus">+</button>
+                        </div>
+                    </div>` + html
+            productElements.innerHTML = html;
+        })
+        initOnchangeProducts(productElements);  
+        handleCreateDataOrder()
+    }
 }
 
 function handleTotal(){
     order.total = 0;
-    order.products.forEach(product => {
+    order.products.forEach((product, index) => {
+        order.products[index].quantity = product.quantity;
         order.total += product.quantity * product.price;
     })
-    var html = `<h3 style="color: orange">${Util.formatNumber(order.total)}đ</h3>`;
-    document.querySelector(".recentCustomers .total .order_total").innerHTML = html
+    var html = `<div class="price_total" style="color: orange">${order.total}</div>`;
+    document.querySelector(".content_order .price_total").innerHTML = html
 }
 
+function initOnchangeProducts(productElements){
+    var elements = productElements.querySelectorAll(".item_product");
 
-function createOrders() {
-    axios.post(API_URL + '/public/source/api_orders/create', order, option)
-        .then((response) => {
-            initOrder();
-            document.getElementsByClassName("listCustomers")[0].innerHTML = '';
-            document.querySelector(".recentCustomers .total .order_total").innerHTML = '';
-            alert("Đã tạo đơn hàng!")
+    elements.forEach(item => {
+        var plus_minusElements = item.querySelectorAll(".plus_minus")
+        plus_minusElements.forEach((btn, btnIndex) => {
+            btn.onclick = () => {
+                order.products.forEach((product, index) => {
+                    if(product.id == item.getAttribute("data_product_id")){
+                        if(btnIndex == 1){
+                            order.products[index].quantity += 1
+                        }
+                        else {order.products[index].quantity -= 1}
+                        var numberElement = btn.parentElement.querySelector(".number");
+                        numberElement.innerText = order.products[index].quantity
+                    }
+                    handleTotal()
+                })
+            }
         })
-        .catch(function (error) {
-            console.log(error)
-        })
+       
+    }) 
 }
 
 function handleCreateDataOrder(){
-    var createOder = document.querySelector(".recentCustomers #btn");
-    createOder.onclick = function(){
-        order.customer.name = document.querySelector(".recentCustomers .search .name_customer").value;
-        order.customer.phone_number = document.querySelector(".recentCustomers .search .phone_number").value;
+    var createOder = document.querySelector(".container_order #submit_data");
+    createOder.onclick = () => {
+        order.customer.name = document.querySelector(".recentCustomers .payment_info .customer_name input").value;
+        document.querySelector(".container_bill").style.display = "block"
+        create_bill();
+    }
+}
+function createOrders() {
+        axios.post(API_URL + '/admin/orders/', order, option)
+            .then((response) => {
+                initOrder();
+                document.querySelector(".content_order .cart_items .items").innerHTML = '';
+                document.querySelector(".payment_info .price_total").innerHTML = '';
+                document.querySelector(".customer_name input").value = '';
+
+                alert("Đã tạo đơn hàng!")
+
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
+    }
+
+function create_bill() {
+    order.date = formatDate(new Date())
+    order.code = "company" + Math.floor(Math.random() * 1000000);
+    var table = "";
+    order.products.forEach((element, index) => {
+        table += `<tr>
+                    <td>${index + 1}</td>
+                    <td><p>${element.name}</p><span>${element.price}</span></td>
+                    <td>${element.quantity}</td>
+                    <td>${element.quantity * element.price}</td>
+                </tr>`
+    })
+    document.querySelector(".container_bill .customer_bill h5:nth-child(2)").innerText = order.customer.name;
+    document.querySelector(".container_bill .number_bill p:nth-child(2)").innerText = order.date;
+    document.querySelector(".container_bill .number_bill p:nth-child(1)").innerText = order.code;
+    document.querySelector(".container_bill .bill_content tbody").innerHTML = table;
+    document.querySelector(".container_bill .total_bill .total h3:nth-child(2)").innerText = order.total;
+    var cancel = document.querySelector(".container_bill .cancel");
+    cancel.onclick = () => {
+        document.querySelector(".container_bill").style.display = "none"
+    }
+    let proceed = document.querySelector(".proceed");
+    proceed.onclick = () => {
+        console.log(order)
         createOrders()
+        document.querySelector(".container_bill").style.display = "none"
     }
 }
+let trash = document.querySelector(".trash")
 
-function handleDeleteDataOrder(){
-    var deleteOrder = document.querySelector(".recentCustomers .delete");
-
-    deleteOrder.onclick = function(){
-        initOrder();
-        document.getElementsByClassName("listCustomers")[0].innerHTML = '';
-        document.querySelector(".recentCustomers .total .order_total").innerHTML = '';
-    }
+trash.onclick = () => {
+    initOrder();
+    document.querySelector(".content_order .cart_items .items").innerHTML = '';
+    document.querySelector(".payment_info .price_total").innerHTML = '';
+    document.querySelector(".customer_name input").value = '';
 }
-handleDeleteDataOrder();
-

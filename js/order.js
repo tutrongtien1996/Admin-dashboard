@@ -1,6 +1,10 @@
-
+var option = {
+    headers: {
+        'Authorization': "Bearer "+"SMgddqJL10tlwrQTTrIMjZkrf8uJXhs70wE9pcBBCSOyIuqYmPTWzx4qtwoK"
+    }
+};
 var orderFilter = {  
-    limit: 20, //số lượng orders trên mỗi trang: mặc định 20
+    limit: 5, //số lượng orders trên mỗi trang: mặc định 20
     offset: 0, //vị trí đầu tiên trong danh sách order của mỗi trang, (trạng hiện tại - 1)*limit
     start_date: Util.getCurrentDay(), //lọc order theo ngày bắt đầu, mặc địch là ngày hiện tại
     end_date: Util.getCurrentDay() //lọc order theo ngày kết thúc, mặc định là ngày hiện tại
@@ -8,7 +12,7 @@ var orderFilter = {
 
 function start() { 
     
-    initDatePicker();
+    // initDatePicker();
     setFilter();
     initOnclickViewall();
     getListOrders(renderListOrders, orderFilter);
@@ -46,14 +50,16 @@ function getValueFromUrl(param) {
 }
 
 function getListOrders(callback, filter) {
-    axios.get(API_URL+'/public/source/api_orders', {
+    axios.get(API_URL+'/admin/orders', 
+    {
         params: filter,
         headers: option.headers
-    })
+    }
+    )
     .then((response) => {
         var result = response.data.data;
-        getOderpages(result)
-        return callback(response.data.data.rows)
+        // getOderpages(result)
+        return callback(result)
     })
     .catch(function (error) {
         console.log(error)
@@ -61,24 +67,24 @@ function getListOrders(callback, filter) {
 };
 
 
-function renderListOrders(result){
+function renderListOrders(results){
     var html ='';
     //render data row
-    result.forEach(function(item){
+    results.forEach(function(item){
         html += `<tr>
-        <td>${item.sale_time}</td>`;
-        if (item.customer_name != undefined) {
-            html += `<td>${item.customer_name}</td>`;
+        <td>${item.created_at}</td>`;
+        if (item.customer) {
+            html += `<td>${item.customer}</td>`;
         } else {
             html += `<td></td>`;
         }
-        html += `<td style="text-align: right;">${Util.formatNumber(item.amount_tendered)}đ</td>`;
+        html += `<td style="text-align: right;">${Util.formatNumber(item.total)}đ</td>`;
 
-        if (item.payment_type != undefined) {
-            html += `<td>${item.payment_type}</td>`;
-        } else {
-            html += `<td></td>`;
-        }
+        // if (item. != undefined) {
+        //     html += `<td>${item.payment_type}</td>`;
+        // } else {
+            html += `<td>tien mat</td>`;
+        // }
         html += `<td><span class="status delivered">xong</span></td>
     </tr>`
     });
@@ -89,7 +95,7 @@ function renderListOrders(result){
 function getOderpages(result){
     var htmlBtn ='';
     try {
-        var number_of_pages = _getNumberOfPage(result.total, orderFilter.limit)
+        var number_of_pages = _getNumberOfPage(result.lenght, orderFilter.limit)
     } catch (error) {
         var number_of_pages = 1;
     }
@@ -120,7 +126,7 @@ function _getNumberOfPage(total, limit) {
 }
 
 function initOnclickViewall(){
-    var btnViewAll = document.querySelector(".recentOrders .btn.viewall");
+    var btnViewAll = document.querySelector(".recentOrders .cardHeaders .btn.viewall");
     btnViewAll.onclick = () => {  
         orderFilter.offset = 0;
         orderFilter.limit = 0;
@@ -128,20 +134,20 @@ function initOnclickViewall(){
     }
 }
 
-function initDatePicker(){
-    const startDate = datepicker('.startDate', {
-        formatter: (input, date, instance) => {
-            const startValue = date.toLocaleDateString('vi-VN')
-            input.value = startValue // => '1/1/2099'
-          }
-    });
-    const endDate = datepicker('.endDate', {
-        formatter: (input, date, instance) => {
-            const endValue = date.toLocaleDateString('vi-VN')
-            input.value = endValue 
-        }
-    })
-}
+// function initDatePicker(){
+//     const startDate = datepicker('.startDate', {
+//         formatter: (input, date, instance) => {
+//             const startValue = date.toLocaleDateString('vi-VN')
+//             input.value = startValue // => '1/1/2099'
+//           }
+//     });
+//     const endDate = datepicker('.endDate', {
+//         formatter: (input, date, instance) => {
+//             const endValue = date.toLocaleDateString('vi-VN')
+//             input.value = endValue 
+//         }
+//     })
+// }
 
 function initSearchDates(){
     var searchDates = document.getElementById('searchDates');

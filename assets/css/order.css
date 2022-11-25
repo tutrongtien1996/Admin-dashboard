@@ -2,6 +2,7 @@
     width: 100%;
     display: block;
     overflow: scroll;
+   
 }
 .listBtn{
     display: flex;
@@ -9,17 +10,24 @@
 }
 .recentOrders .cardHeaders .date {
     background-color: #ededed;
-    border: 1px solid black;
+    border: 1px solid var(--white);
     height: 20px;
     width: 70px;
     text-align: center;
     border-radius: 4px;
+    margin-right: 5px;
 }
 .recentOrders .cardHeaders #searchDates {
-    background-color: green;
+    background-color: var(--primary);
     color: white;
     width: 50px;
     height: 25px;
     text-align: center;
     border-radius: 4px;
+    border: none;
+    cursor: pointer;
+}
+
+.recentOrders {
+    border-radius: 20px;
 }

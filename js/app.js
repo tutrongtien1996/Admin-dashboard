@@ -1,10 +1,10 @@
-const API_URL = "http://localhost/opensourcepos";
+const API_URL = "http://127.0.0.1:3001";
 
 function start() {
     initMenu();
-    if (!checkIfUserLogged()) {
-        window.location.href = '/login.html';
-    }
+    // if (!checkIfUserLogged()) {
+    //     window.location.href = '/login.html';
+    // }
     initUI();
     getListProduct();
 }
