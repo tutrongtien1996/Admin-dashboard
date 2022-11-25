@@ -1,36 +1,54 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@100;300;400;500;700&display=swap');
+
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 100;
+}
+p {
+    font-size: 13px;
 }
 
 :root {
-    --blue: #287bff;
+    --primary: #00bcd4;
     --white: #fff;
     --grey: #f5f5f5;
     --black1: #222;
     --black2: #999;
+    --btn: rgb(69, 90, 100);
+    --body2: rgb(236, 239, 241);
+    --body: rgb(229, 231, 235);
 }
 
 body {
     min-height: 100vh;
-    overflow-x: hidden;
+    background-color: var(--body);
+    /* font-family: sans-serif; */
+
 }
 
 .container {
     position: relative;
     width: 100%;
+    background-color: var(--body);
+    padding-left: 10px;
+    box-sizing: border-box;
 }
 
 .navigation {
     position: fixed;
-    width: 300px;
-    height: 100%;
-    background: var(--blue);
-    border-left: 10px solid var(--blue);
+    width: 200px;
+    height: calc(100% - 20px);
+    background: var(--primary);
+    border-left: 10px solid var(--primary);
     transition: 0.5s;
     overflow: hidden;
+    border-radius: 20px;
+    margin-top: 10px;
 }
 
 .navigation.active {
@@ -55,7 +73,7 @@ body {
 
 .navigation ul li:hover,
 .navigation ul li.hovered {
-    background: var(--white);
+    background: var(--body);
 }
 
 .navigation ul li:nth-child(1) {
@@ -74,7 +92,7 @@ body {
 
 .navigation ul li:hover a,
 .navigation ul li.hovered a {
-    color: var(--blue);
+    color: var(--primary);
 }
 
 .navigation ul li a .icon {
@@ -111,7 +129,7 @@ body {
     
     background: transparent;
     border-radius: 50%;
-    box-shadow: 35px 35px 0 10px var(--white);
+    box-shadow: 35px 35px 0 10px var(--body);
     pointer-events: none;
 }
 
@@ -126,25 +144,29 @@ body {
     
     background: transparent;
     border-radius: 50%;
-    box-shadow: 35px -35px 0 10px var(--white);
+    box-shadow: 35px -35px 0 10px var(--body);
     pointer-events: none;
 }
 
 /* main */
 .main {
     position: absolute;
-    width: calc(100% - 300px);
-    left: 300px;
+    width: calc(100% - 210px);
+    height: calc(100% - 20px);
+    left: 210px;
     min-height: 100vh;
-    background: var(--white);
+    background: var(--body);
     transition: 0.5s;
+    position: relative;
 }
 
 .main.active {
-    width: calc(100% - 80px);
+    width: calc(100% - 90px);
     /* position: absolute; */
-    left: 80px;
+    left: 90px;
 }
+
+
 
 .topbar {
     width: 100%;
@@ -153,6 +175,11 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 0 10px;
+    top: 0px;
+    position: sticky;
+    top: 0;
+    z-index: 10000;
+    background-color: var(--body);
 }
 
 .toggle {
@@ -164,6 +191,7 @@ body {
     align-items: center;
     font-size: 2.5em;
     cursor: pointer;
+    color: var(--primary)
     
 }
 
@@ -171,6 +199,7 @@ body {
     position: relative;
     width: 400px;
     margin: 0 10px;
+    margin-right: 240px;
 }
 
 .search label {
@@ -239,7 +268,7 @@ body {
     position: relative;
     font-weight: 500;
     font-size: 1.5em;
-    color: var(--blue);
+    color: var(--primary);
 }
 
 .cardBox .card .cardName {
@@ -254,7 +283,7 @@ body {
 }
 
 .cardBox .card:hover {
-    background: var(--blue);
+    background: var(--primary);
 }
 
 .cardBox .card:hover .numbers,
@@ -266,11 +295,10 @@ body {
 .details {
     position: relative;
     width: 100%;
-    padding: 20px;
+    padding: 10px;
     display: grid;
     grid-template-columns: 2fr 1fr;
-    grid-gap: 30px;
-    margin-top: 10px;
+    grid-gap: 10px;
 }
 
 .details .recentOrders {
@@ -291,13 +319,13 @@ body {
 
 .cardHeaders h2{
     font-weight: 600;
-    color: var(--blue);
+    color: var(--primary);
 }
 
 .btn {
     position: relative;
     padding: 5px 10px;
-    background: var(--blue);
+    background: var(--primary);
     text-decoration: none;
     color: var(--white);
     border-radius: 6px;
@@ -323,7 +351,7 @@ body {
 }
 
 .details .recentOrders table tbody tr:hover {
-    background: var(--blue);
+    background: var(--primary);
     color: var(--white);
 }
 
@@ -367,9 +395,9 @@ body {
 
 .recentCustomers {
     position: relative;
-    display: grid;
+    
     min-height: 500px;
-    padding: 20px;
+    /* padding: 20px; */
     background: var(--white);
     box-shadow: 0 7px 25px rgba(0,0,0,0.08);
     border-radius: 20px;
@@ -395,7 +423,7 @@ body {
 }
 
 .recentCustomers table tr:hover {
-    background: var(--blue);
+    background: var(--primary);
 
 }
 
@@ -415,7 +443,7 @@ body {
 }
 
 .recentCustomers table tr:hover {
-    background: var(--blue);
+    background: var(--primary);
     color: var(--white);
 }
 
@@ -424,27 +452,38 @@ body {
 }
 
 /* make it responsive design */
+
+
 @media (max-width: 991px) {
+    .search {
+        margin-right: 220px;
+    }
     .navigation {
-        left: -300px;
+        left: -200px;
     }
     .navigation.active {
-        width: 300px;
-        left: 0;
+        width: 80px;
+        left: 5px;
     }
     .main {
         width: 100%;
         left: 0;
     }
     .main.active {
-        left: 300px;
+        width: calc(100% - 85px);
+        left: 85px;
     }
     .cardBox {
         grid-template-columns: repeat(2,1fr);
     }
+
 }
 
+
 @media (max-width: 768px) {
+    .search {
+        margin-right: 100px;
+    }
     .details {
         grid-template-columns: repeat(1,1fr);
     }
@@ -468,15 +507,14 @@ body {
     }
 
     .navigation {
-        width: 100%;
-        left: -100%;
-        z-index: 1000;
+        left: -200px;
+    }
+    .navigation.active {
+        width: 80px;
+        left: 5px;
     }
 
-    .navigation.active {
-        width: 100%;
-        left: 0;
-    }
+    
     .toggle {
         z-index: 10001;
     }
@@ -484,5 +522,8 @@ body {
         position: fixed;
         left: inherit;
         color: #fff;
+    }
+    .search {
+        margin-right: 30px;
     }
 }

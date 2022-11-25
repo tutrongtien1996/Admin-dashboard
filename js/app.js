@@ -1,14 +1,19 @@
+const API_URL = "http://127.0.0.1:3001";
 
 function start() {
     initMenu();
-    if (!checkIfUserLogged()) {
-        window.location.href = '/login.html';
-    }
+    // if (!checkIfUserLogged()) {
+    //     window.location.href = '/login.html';
+    // }
     initUI();
+    getListProduct();
 }
 
-
-const API_URL = "http://localhost/opensourcepos";
+var option = {
+    headers: {
+        'Authorization': "Bearer "+localStorage.getItem('access_token')
+    }
+};
 
 
 start();
@@ -60,8 +65,17 @@ function initMenu() {
         document.getElementById("menu").innerHTML = html;
     })
 }
-
-
+function getListProduct(){
+    axios.get(API_URL + '/public/source/api_items', option)
+        .then((reponse) => {
+            var productEntity = new Product();
+            var listProducts = productEntity.parseFromAPI(reponse.data.data);
+            localStorage.setItem('products', JSON.stringify(listProducts));
+        })
+        .catch(function (error) {
+            console.log(error)
+        })
+}
 
 setTimeout(
     function(){

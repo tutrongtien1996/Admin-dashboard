@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UDO Dashboard | Sales</title>
+    <link rel="stylesheet" href="./assets/css/index.css">
+    <link rel="stylesheet" href="./assets/css/product.css">
+    <script src="./node_modules/axios/dist/axios.js"></script>
+
+    
+</head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <ul id="menu">     
+            </ul>
+        </div>
+       <!-- main -->
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle">
+                    
+                    <ion-icon name="menu-outline"></ion-icon>
+                    
+                </div>
+
+                <!-- search -->
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Search here">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>
+
+                <!-- userimg -->
+                <div class="user">
+                    <img src="img/user.jpg" style="width: 65px; height: 65px;">
+                </div>
+            </div>
+
+            <!--order list  -->
+            <div class="details">
+                <div class="renderProducts">
+                    <ul class="listProducts ">
+                        <li class="item">
+                            <div class="content">
+                                <div class="img">
+                                    <img src="/img/products/quan_ao_thong_thuong.jpeg"/>
+                                </div>
+                                <div>
+                                    <h3>Giặt ủi thông thường</h3>
+                                    <h4>12,000đ<span> / kg</span></h4>
+                                </div>
+                               
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- new customers --> 
+                
+                <div class="recentCustomers container_order">
+                   <div class="content_order">
+                        <div class="empaty_cart">
+
+                        </div>
+                        <div class="cart_items">
+                            <div class="top_icon">
+                                <div>
+                                    <ion-icon  name="cart-outline"></ion-icon>
+                                </div>
+                                <div>
+                                    <ion-icon class="trash" name="trash-outline"></ion-icon>
+                                </div>
+                            </div>
+                            <div class="items">
+                                
+                            </div>
+                        </div>
+                        <div class="payment_info">
+                            <div class="total item">
+                                <div>TOTAL</div>
+                                <div class="price_total">35.983.453 USD</div>
+                            </div>
+                            <div class="discount item">
+                                <div class="cash">
+                                    <div class="h2">CASH</div>
+                                    <div>
+                                        <span>VND</span>
+                                        <input type="text">
+                                    </div>
+                                </div>
+                                <div class="list_item">
+                                    <button class="cash_item">5.000</button>
+                                    <button class="cash_item">10.000</button>
+                                    <button class="cash_item">15.000</button>
+                                    <button class="cash_item">20.000</button>
+                                    <button class="cash_item">25.000</button>
+                                    <button class="cash_item">30.000</button>
+                                </div>
+                                
+                            </div>
+                            <div class="customer_name">
+                                <label for="">Customer</label>
+                                <input type="text">
+                            </div>
+                            <div class="submit item">
+                                <button id="submit_data">SUBMIT</button>
+                            </div>
+                        </div>
+                   </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="container_bill">
+            <div class="bill_content">
+                <div class="content_items">
+                    <div class="company_info">
+                        <div> <img src="/img/logo_apple.png" alt=""></div>
+                        <h2>APPLE POS</h2>
+                        <p>09015121</p>
+                    </div>
+                    <div class="customer_bill">
+                        <h5>Customer:</h5>
+                        <h5>Jhon Dang</h5>
+                    </div>
+                    <div class="number_bill">
+                        <p class="id">max hoa don</p>
+                        <p class="date">23/03/2022</p>
+                    </div>
+                    <div class="table_items">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>#</td>
+                                    <td>Items</td>
+                                    <td>Qty</td>
+                                    <td>Subtutol</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td><p>iphone 4</p><span>4000</span></td>
+                                    <td>2</td>
+                                    <td>8000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                    </div>
+                    <div class="total_bill">
+                        <div class="total_payment">
+                             <div class="total">
+                                <h3>Total</h3>
+                                <h3>783.323.321vnd</h3>
+                            </div>
+                             <div class="payment">
+                                <h5>Payment</h5>
+                                <h5>783.323.321vnd</h5>
+                             </div>
+                        </div>
+                        <div class="discount">
+                            <h4>Discount</h4>
+                            <h4>323.321vnd</h4> 
+                        </div>
+                    </div>
+                </div>
+                <div class="bill_btns">
+                    <button class="proceed btns">Proceed</button>
+                    <button class="cancel btns">Cancel</button>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+    
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="./node_modules/tienformater/tienformater,js"></script>
+    <script src="/js/entities/config.js"></script>
+    <script src="./js/entities/product.js"></script>
+    <script src="./js/app.js"></script>
+    
+    <script src="./js/product.js"></script>
+    
+    
+</body>
+</html>
+
