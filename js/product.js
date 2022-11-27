@@ -18,7 +18,7 @@ function initOrder() {
 
 var option = {
     headers: {
-        'Authorization': "Bearer "+"SMgddqJL10tlwrQTTrIMjZkrf8uJXhs70wE9pcBBCSOyIuqYmPTWzx4qtwoK"
+        'Authorization': "Bearer "+localStorage.getItem('access_token')
     }
 };
 
@@ -54,7 +54,7 @@ function renderListProduct(data){
                         <div class="img"><img src="${product.image}"/></div>
                         <div class="name_price">
                             <h3>${product.name}</h3>
-                            <h4>${product.price}</span></h4>
+                            <h4>${Util.formatNumber(product.price)}</span></h4>
                         </div>
                     </div>
                 </li>`
@@ -117,7 +117,7 @@ function showOrder(html){
                         </div>
                         <div class="center">
                             <p class="name">${product.name}</p>
-                            <p class="price">${product.price}</p>
+                            <p class="price">${Util.formatNumber(product.price)}</p>
                         </div>
                         <div class="right">
                             <button class="plus_minus minus">-</button>
@@ -138,7 +138,7 @@ function handleTotal(){
         order.products[index].quantity = product.quantity;
         order.total += product.quantity * product.price;
     })
-    var html = `<div class="price_total" style="color: orange">${order.total}</div>`;
+    var html = `<div class="price_total" style="color: orange">${Util.formatNumber(order.total)}</div>`;
     document.querySelector(".content_order .price_total").innerHTML = html
 }
 
@@ -182,7 +182,7 @@ function createOrders() {
                 document.querySelector(".payment_info .price_total").innerHTML = '';
                 document.querySelector(".customer_name input").value = '';
 
-                alert("Đã tạo đơn hàng!")
+                alert("Order creation successful!")
 
             })
             .catch(function (error) {
@@ -192,21 +192,21 @@ function createOrders() {
 
 function create_bill() {
     order.date = formatDate(new Date())
-    order.code = "company" + Math.floor(Math.random() * 1000000);
+    order.code = "com-" + Math.floor(Math.random() * 1000000);
     var table = "";
     order.products.forEach((element, index) => {
         table += `<tr>
                     <td>${index + 1}</td>
-                    <td><p>${element.name}</p><span>${element.price}</span></td>
+                    <td><p>${element.name}</p><span>${Util.formatNumber(element.price)}</span></td>
                     <td>${element.quantity}</td>
-                    <td>${element.quantity * element.price}</td>
+                    <td>${Util.formatNumber(element.quantity * element.price)}</td>
                 </tr>`
     })
     document.querySelector(".container_bill .customer_bill h5:nth-child(2)").innerText = order.customer.name;
     document.querySelector(".container_bill .number_bill p:nth-child(2)").innerText = order.date;
     document.querySelector(".container_bill .number_bill p:nth-child(1)").innerText = order.code;
     document.querySelector(".container_bill .bill_content tbody").innerHTML = table;
-    document.querySelector(".container_bill .total_bill .total h3:nth-child(2)").innerText = order.total;
+    document.querySelector(".container_bill .total_bill .total h3:nth-child(2)").innerText = Util.formatNumber(order.total);
     var cancel = document.querySelector(".container_bill .cancel");
     cancel.onclick = () => {
         document.querySelector(".container_bill").style.display = "none"

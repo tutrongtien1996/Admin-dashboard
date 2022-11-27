@@ -1,21 +1,29 @@
+var API_URL = "http://127.0.0.1:3001"
 
 const btn_register = document.querySelector(".btn_register");
-const btn_login = document.querySelector(".login_btn");
-btn_login.onclick = async () =>{
-    if (await processLogin()) {
-        window.location.href = '/view/index.html';
-    } else {
-        alert("Login failed");
+const btn_login = document.querySelector(".btn_login");
+if(btn_login){
+    btn_login.onclick = async () =>{
+        processLogin()
+        if (await processLogin()) {
+            window.location.href = '/index.html';
+        } else {
+            alert("Login failed");
+        }
     }
 }
 
-btn_register.onclick = async () =>{
-    if (await processRegister()) {
-        window.location.href = '/view/index.html';
-    } else {
-        alert("register fail");
+if(btn_register){
+    btn_register.onclick = async () =>{
+        processRegister()
+        if (await processRegister()) {
+            window.location.href = '/index.html';
+        } else {
+            alert("register fail");
+        }
     }
 }
+
 
 async function processLogin() {
     var username = document.querySelector('input[name="username"]').value;
@@ -25,6 +33,7 @@ async function processLogin() {
         user_name: username,
         password: password        
     };
+   
     const response = await axios.post(API_URL+"/admin/login", input)
                     .then(function (response) {
                         return response.data;
@@ -48,15 +57,17 @@ async function processRegister() {
         user_name: username,
         password: password        
     };
+    console.log(input)
     const response = await axios.post(API_URL+"/admin/register", input)
-                    .then(function (response) {
-                        return response.data;
-                    })
-                    .catch(function (error) {
-                        return error
-                    });
+        .then(function (response) {
+            return response.data;
+        })
+        .catch(function (error) {
+            return error
+        });
     
     if (response.success) {
+        console.log(response.data.token)
         localStorage.setItem("access_token", response.data.token);
         return true
     }

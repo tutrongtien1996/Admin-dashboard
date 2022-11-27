@@ -1,0 +1,204 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@100;300;400;500;700&display=swap');
+:root {
+    --white: rgb(224, 223, 222)
+}
+
+body{
+	margin:0;
+	color:#6a6f8c;
+	background:#5a888e;
+	font:400 16px/18px 'Poppins',sans-serif;
+}
+*,:after,:before{box-sizing:border-box}
+.clearfix:after,.clearfix:before{content:'';display:table}
+.clearfix:after{clear:both;display:block}
+a{color:inherit;text-decoration:none}
+
+.login-wrap{
+    border-radius: 10px;
+	width:100%;
+	margin:auto;
+	max-width:350px;
+	min-height:500px;
+	position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+	background: rgb(34, 33, 33);
+	box-shadow:0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
+}
+.login-html{
+	width:100%;
+	height:100%;
+	padding:30px;
+    /* background: rgb(34, 33, 33); */
+
+}
+
+
+.login-html .sign-in-htm,
+.login-html .sign-up-htm{
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	position:absolute;
+	transform:rotateY(180deg);
+	backface-visibility:hidden;
+	transition:all .4s linear;
+    margin-top: 50px
+}
+.login-html .sign-in,
+.login-html .sign-up,
+.login-form .group .check{
+	display:none;
+}
+.login-html .tab,
+.login-form .group .label,
+.login-form .group .button{
+	text-transform:uppercase;
+}
+.login-html > label:hover
+ {   color: rgb(0, 188, 212);
+    cursor: pointer !important;
+}
+.login-html .tab{
+	font-size:22px;
+	margin-right:15px;
+	padding-bottom:5px;
+	margin:0 15px 10px 0;
+	display:inline-block;
+	border-bottom:2px solid transparent;
+}
+.login-html .sign-in:checked + .tab,
+.login-html .sign-up:checked + .tab{
+	color:var(--white);
+	border-color:#00bcd4;
+}
+.login-form{
+	min-height:345px;
+	position:relative;
+	perspective:1000px;
+	transform-style:preserve-3d;
+}
+.login-form .group{
+	margin-bottom:20px;
+}
+.login-form .group .label,
+.login-form .group .input,
+.login-form .group .button{
+	width:100%;
+	color:var(--white);
+	display:block;
+    box-sizing: border-box;
+}
+.login-form .group .input:hover {
+    border-bottom: 1px solid #00bcd4;
+    border-right: 1px solid #00bcd4;
+   
+}
+.login-form .group .input:focus {
+    border-bottom: 1px solid #00bcd4;
+    border-right: 1px solid #00bcd4;
+    outline: none;
+}
+.group .button:hover {
+    cursor: pointer;
+}
+
+.login-form .group .input,
+.login-form .group .button{
+	border:none;
+	padding:10px 20px;
+	border-radius:7px;
+	background:rgb(73, 71, 71);
+    font-size: 14px;
+}
+.login-form .group .input{
+    border: 1px solid rgb(34, 33, 33);
+}
+.login-form .group input[data-type="password"]{
+	text-security:circle;
+	-webkit-text-security:circle;
+}
+.login-form .group .label{
+	color:#00bcd4;
+	font-size:12px;
+}
+.login-form .group .button{
+	background: #00bcd4;
+}
+.login-form .group label .icon{
+	width:15px;
+	height:15px;
+	border-radius:2px;
+	position:relative;
+	display:inline-block;
+	background:rgb(73, 71, 71);
+    margin-right: 5px;
+    margin-bottom: -3px;
+}
+.login-form .group label .icon:hover {
+	background:#00bcd4;
+    cursor: pointer;
+}
+.login-form .group label .icon:before,
+.login-form .group label .icon:after{
+	content:'';
+	width:10px;
+	height:2px;
+	background:var(--white);
+	position:absolute;
+	transition:all .2s ease-in-out 0s;
+}
+.login-form .group label .icon:before{
+	left:3px;
+	width:5px;
+	bottom:6px;
+	transform:scale(0) rotate(0);
+}
+.login-form .group label .icon:after{
+	top:6px;
+	right:0;
+	transform:scale(0) rotate(0);
+}
+.login-form .group .check:checked + label{
+	color:var(--white);
+}
+.login-form .group .check:checked + label .icon{
+	background: #00bcd4;
+}
+.login-form .group .check:checked + label .icon:before{
+	transform:scale(1) rotate(45deg);
+}
+.login-form .group .check:checked + label .icon:after{
+	transform:scale(1) rotate(-45deg);
+}
+.login-html .sign-in:checked + .tab + .sign-up + .tab + .login-form .sign-in-htm{
+	transform:rotate(0);
+}
+.login-html .sign-up:checked + .tab + .login-form .sign-up-htm{
+	transform:rotate(0);
+}
+
+.hr{
+	height:1px;
+	margin:40px 0 10px 0;
+	background: #00bcd4;
+    width: 20%;
+    margin-left: 40%;
+}
+.foot-lnk{
+	text-align:center;
+}
+.foot-lnk:hover {
+    color: var(--white);
+}
+span {
+    color: var(--white);
+    font-size: 12px;
+}
+.check-label {
+    font-size: 12px;
+    color: var(--white);
+}

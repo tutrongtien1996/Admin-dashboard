@@ -1,6 +1,6 @@
 var option = {
     headers: {
-        'Authorization': "Bearer "+"SMgddqJL10tlwrQTTrIMjZkrf8uJXhs70wE9pcBBCSOyIuqYmPTWzx4qtwoK"
+        'Authorization': "Bearer "+localStorage.getItem("access_token")
     }
 };
 var orderFilter = {  
@@ -14,7 +14,7 @@ function start() {
     
     // initDatePicker();
     setFilter();
-    initOnclickViewall();
+    // initOnclickViewall();
     getListOrders(renderListOrders, orderFilter);
     initSearchDates();
 }
@@ -37,7 +37,6 @@ function setFilter() {
     }
 
     //set value to input
-
     document.getElementsByClassName('startDate')[0].value =  Util.FormatVNDate(new Date(orderFilter.start_date));
     document.getElementsByClassName('endDate')[0].value =  Util.FormatVNDate(new Date(orderFilter.end_date));
 
@@ -52,13 +51,13 @@ function getValueFromUrl(param) {
 function getListOrders(callback, filter) {
     axios.get(API_URL+'/admin/orders', 
     {
-        params: filter,
+        params: orderFilter ,
         headers: option.headers
     }
     )
     .then((response) => {
-        var result = response.data.data;
-        // getOderpages(result)
+        var result = response.data.data.results;
+        getOderpages(response.data.data.count)
         return callback(result)
     })
     .catch(function (error) {
@@ -71,8 +70,9 @@ function renderListOrders(results){
     var html ='';
     //render data row
     results.forEach(function(item){
+        let created_at = new Date(item.created_at)
         html += `<tr>
-        <td>${item.created_at}</td>`;
+        <td>${formatDate(created_at)}</td>`;
         if (item.customer) {
             html += `<td>${item.customer}</td>`;
         } else {
@@ -92,10 +92,10 @@ function renderListOrders(results){
     
 }
 
-function getOderpages(result){
+function getOderpages(count){
     var htmlBtn ='';
     try {
-        var number_of_pages = _getNumberOfPage(result.lenght, orderFilter.limit)
+        var number_of_pages = _getNumberOfPage(count, orderFilter.limit)
     } catch (error) {
         var number_of_pages = 1;
     }
@@ -113,12 +113,12 @@ function getOderpages(result){
     // })
 }
 
-function _getNumberOfPage(total, limit) {
+function _getNumberOfPage(count, limit) {
     if (limit == 0) {
         throw("Limit can not be zero");
     }
-    var number_of_pages = Math.floor(total / limit);
-    var numberMod = total % limit;
+    var number_of_pages = Math.floor(count / limit);
+    var numberMod = count % limit;
     if(numberMod > 0){
         number_of_pages +=1;
     }
@@ -152,18 +152,19 @@ function initOnclickViewall(){
 function initSearchDates(){
     var searchDates = document.getElementById('searchDates');
     searchDates.onclick =  () => {
+        
         var startDate = document.getElementsByClassName('startDate')[0].value;
         var endDate = document.getElementsByClassName('endDate')[0].value;
-        
         if(startDate){
-            var arrStartDate = startDate.split('/');
-            startDate = arrStartDate[2] + '/' + arrStartDate[1] + '/' +arrStartDate[0];
-            orderFilter.start_date = Util.formatDate(new Date(startDate))
+            // var arrStartDate = startDate.split('/');
+            // startDate = arrStartDate[2] + '/' + arrStartDate[1] + '/' +arrStartDate[0];
+            orderFilter.start_date = startDate
         }
         if(endDate){
-            var arrEndDate = endDate.split('/');
-            endDate = arrEndDate[2] + '/' + arrEndDate[1] + '/' +arrEndDate[0];
-            orderFilter.end_date = Util.formatDate(new Date(endDate))
+        //     var arrEndDate = endDate.split('/');
+        //     endDate = arrEndDate[2] + '/' + arrEndDate[1] + '/' +arrEndDate[0];
+            // orderFilter.end_date = Util.formatDate(new Date(endDate))
+            orderFilter.end_date = endDate;
             
         }
         getListOrders(renderListOrders, orderFilter);
