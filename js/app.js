@@ -1,12 +1,19 @@
 const API_URL = "http://127.0.0.1:3001";
 
+var Filter = {  
+    limit: 20, //số lượng orders trên mỗi trang: mặc định 20
+    offset: 0, //vị trí đầu tiên trong danh sách order của mỗi trang, (trạng hiện tại - 1)*limit
+    start_date: Util.getCurrentDay(), //lọc order theo ngày bắt đầu, mặc địch là ngày hiện tại
+    end_date: Util.getCurrentDay() //lọc order theo ngày kết thúc, mặc định là ngày hiện tại
+}
+
 function start() {
     initMenu();
     if (!checkIfUserLogged()) {
         window.location.href = '/login.html';
     }
     initUI();
-    getListProduct();
+    setFilter();
 }
 
 var option = {
@@ -14,7 +21,6 @@ var option = {
         'Authorization': "Bearer "+localStorage.getItem('access_token')
     }
 };
-
 
 start();
 
@@ -65,16 +71,75 @@ function initMenu() {
         document.getElementById("menu").innerHTML = html;
     })
 }
-function getListProduct(){
-    axios.get(API_URL + '/public/source/api_items', option)
-        .then((reponse) => {
-            var productEntity = new Product();
-            var listProducts = productEntity.parseFromAPI(reponse.data.data);
-            localStorage.setItem('products', JSON.stringify(listProducts));
-        })
-        .catch(function (error) {
-            console.log(error)
-        })
+
+function setFilter() {
+    var page = getValueFromUrl('page');
+    
+    if (page == null) {
+        page = 1;
+    }
+    if(page != 'all'){
+        Filter.offset = (Filter.limit) * (parseInt(page) - 1); 
+        console.log(Filter.offset)
+    }
+    
+    var start_date = getValueFromUrl('start_date');
+    if(start_date != null){
+        Filter.start_date = start_date;
+    }
+    var end_date = getValueFromUrl('end_date');
+    if(end_date != null){
+        Filter.end_date = end_date;
+    }
+    if(page == 'all'){
+
+        Filter.offset = 0;
+        Filter.limit = 10000;
+        console.log(Filter)
+    }
+    //set value to input
+    if(document.getElementsByClassName('startDate')[0] && document.getElementsByClassName('endDate')[0].value){
+
+        document.getElementsByClassName('startDate')[0].value =  Util.FormatVNDate(new Date(Filter.start_date));
+        document.getElementsByClassName('endDate')[0].value =  Util.FormatVNDate(new Date(Filter.end_date));
+    
+    }
+}
+
+function getValueFromUrl(param) {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    return urlParams.get(param)
+}
+
+function _getNumberOfPage(count, limit) {
+    if (limit == 0) {
+        throw("Limit can not be zero");
+    }
+    var number_of_pages = Math.floor(count / limit);
+    var numberMod = count % limit;
+    if(numberMod > 0){
+        number_of_pages +=1;
+    }
+    return number_of_pages;
+}
+
+function getOderpages(count, nameTemplate){
+    var htmlBtn ='';
+    try {
+        var number_of_pages = _getNumberOfPage(count, Filter.limit)
+    } catch (error) {
+        var number_of_pages = 1;
+    }
+    if(number_of_pages > 1){
+        document.getElementsByClassName('startDate')[0].value =  Filter.start_date;
+        document.getElementsByClassName('endDate')[0].value =  Filter.end_date;
+        htmlBtn += `<li><a href="${nameTemplate}.html?page=all&start_date=${Filter.start_date}&end_date=${Filter.end_date}">All</a></li>`
+        for(var i = 0; i < number_of_pages; i++){
+            htmlBtn += `<li><a href="${nameTemplate}.html?page=${i+1}&start_date=${Filter.start_date}&end_date=${Filter.end_date}">${i + 1}</a></li>`
+        }
+        document.querySelector(".details .recentOrders .pages ul").innerHTML = htmlBtn;
+    }
 }
 
 setTimeout(

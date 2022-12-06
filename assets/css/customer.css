@@ -1,0 +1,44 @@
+
+.list_input_customer .create_customer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.list_input_customer button {
+    width: 80%;
+    font-size: x-large;
+    border-radius: 10px;
+    border: none;
+    color: var(--btn);
+}
+
+.list_input_customer button:hover {
+    box-shadow: 0 0 10px rgba(0, 188, 212, 0.5); 
+    color: var(--white);
+    background-color: var(--primary);
+}
+
+
+.status{
+    font-size: 10px;
+    border: none;
+}
+.status:hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 10px rgba(1, 1, 1, 0.5);
+    font-size: 14px;
+}
+
+thead td:nth-child(3),
+ tbody td:nth-child(3) {
+    width: 200px
+  }
+
+  thead td:nth-child(4),
+  tbody td:nth-child(4) {
+     width: 160px;
+     padding-right: 0px !important;
+   }
+
+

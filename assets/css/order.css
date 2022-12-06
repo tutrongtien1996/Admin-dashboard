@@ -1,21 +1,24 @@
-.details {
-    width: 100%;
-    display: block;
-    overflow: scroll;
-   
+
+
+.details { 
+    display: block; 
 }
-.listBtn{
-    display: flex;
-    /* flex-direction: row-reverse */
+
+.recentOrders .cardHeaders {
+    height: 35px;
 }
+
 .recentOrders .cardHeaders .date {
-    background-color: #ededed;
+    background-color: var(--body);
     border: 1px solid var(--white);
     height: 20px;
-    width: 70px;
+    width: 100px;
     text-align: center;
     border-radius: 4px;
-    margin-right: 5px;
+    margin-right: 10px;
+    padding: 10px;
+
+
 }
 .recentOrders .cardHeaders #searchDates {
     background-color: var(--primary);
@@ -28,6 +31,9 @@
     cursor: pointer;
 }
 
-.recentOrders {
-    border-radius: 20px;
-}
+
+
+
+
+
+
