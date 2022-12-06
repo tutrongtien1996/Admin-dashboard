@@ -2,27 +2,27 @@
     {
         "title": "ZEOPOS",
         "icon": "print",
-        "link": "/index.html"
+        "link": "/cart.html"
     },
     {
-        "title": "Dashboard",
-        "icon": "home-outline",
-        "link": "/index.html"
-    },
-    {
-        "title": "Customer",
-        "icon": "people-outline",
-        "link": "/customer.html"
+        "title": "Sale",
+        "icon": "cart-outline",
+        "link": "/cart.html"
     },
     {
         "title": "Orders",
-        "icon": "cart-outline",
+        "icon": "wallet-outline",
         "link": "/order.html"
     },
     {
         "title": "Products",
         "icon": "pricetag-outline",
         "link": "/product.html"
+    },
+    {
+        "title": "Customer",
+        "icon": "people-outline",
+        "link": "/customer.html"
     },
     {
         "title": "Logout",

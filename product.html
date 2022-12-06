@@ -4,12 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SEOPOS | Sales</title>
+    <title>ZEOPOS</title>
     <link rel="stylesheet" href="./assets/css/index.css">
     <link rel="stylesheet" href="./assets/css/product.css">
-    <script src="./node_modules/axios/dist/axios.js"></script>
-
-    
+    <script src="/node_modules/axios/dist/axios.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -17,13 +15,12 @@
             <ul id="menu">     
             </ul>
         </div>
+        
        <!-- main -->
         <div class="main">
             <div class="topbar">
                 <div class="toggle">
-                    
-                    <ion-icon name="menu-outline"></ion-icon>
-                    
+                    <ion-icon name="menu-outline"></ion-icon> 
                 </div>
 
                 <!-- search -->
@@ -40,142 +37,121 @@
                 </div>
             </div>
 
+            <!-- card -->
+           
+
             <!--order list  -->
             <div class="details">
-                <div class="renderProducts">
-                    <ul class="listProducts ">
-                        <li class="item">
-                            <div class="content">
-                            </div>
-                        </li>
-                    </ul>
+                <div class="recentOrders renderCustomers renderproducts">
+                    <div class="cardHeaders">
+                        <h2>List Products</h2>
+                        <span class="status add">Add</span>
+                    </div>
+                    <div class="table">
+                    <table>
+                       <thead>
+                            <tr>
+                                <td>Img</td>
+                                <td>Name</td>
+                                <td>Price</td>
+                                <td>Category</td>
+                                <td>Action</td>
+                            </tr>
+                        </thead>
+                        <tbody id="list_customerOrder">
+                        </tbody>
+                    </table>
+                    </div>
+                    <div class="listBtn pages">  
+                        <ul></ul>
+                    </div>
                 </div>
-                <!-- new customers --> 
-                
-                <div class="recentCustomers container_order">
-                   <div class="content_order">
-                        <div class="empaty_cart">
-
+                <!-- new customers -->
+                <div class="recentCustomers">
+                    <div class="create_custom">
+                        <!-- <div class="cardHeader">
+                            <h2>Create Product</h2>
                         </div>
-                        <div class="cart_items">
-                            <div class="top_icon">
-                                <div>
-                                    <ion-icon  name="cart-outline"></ion-icon>
-                                </div>
-                                <div>
-                                    <ion-icon class="trash" name="trash-outline"></ion-icon>
-                                </div>
+                        <div class="list_input_customer list_input_product">
+                            <div>
+                                <label for="">name</label>
+                                <input type="text" class="pri_name" name="name">
+                                <span></span>
                             </div>
-                            <div class="items">
-                                
+                            <div>
+                                <label for="">Price</label>
+                                <input type="text" class="pri_name price" name="price">
+                                <span></span>
+                            </div>
+                            <div>
+                                <label for="image">Categories</label>
+                                <input type="text" name="" class="option" list="categoryList">
+                                <datalist id="categoryList">
+                                    <option value="volvo"></option>
+                                    <option value="saab"></option>
+                                    <option value="mercedes"></option>
+                                    <option value="audi"></option>
+                                </datalist>
+                            </div>
+                            <div class="contai_file">
+                                <label for="">Image</label>
+                                <input type="file" id="upload" hidden/>
+                                <div class="label_choose"><label  for="upload">Choose file</label></div>
+                                <span></span>
+                            </div>
+                            <div class="create_product">
+                                <button id="create_product">Create</button>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="create_category">
+                        <div class="list_category">
+                            <h3>List Categories</h3>
+                            <div>
+                                <ul>
+                                    <li>Apple</li><span>-</span>
+                                    <li>Apple</li><span>-</span>
+                                    <li>Apple</li><span>-</span>
+                                    <li>Apple</li><span>-</span>
+                                    <li>Apple</li><span>-</span>
+                                    <li>Apple</li><span>-</span>
+                                    <li>Apple</li><span>-</span>
+                                    <li>Apple</li><span>-</span>
+                                    <li>Apple</li><span>-</span>
+                                    <li>Apple</li><span>-</span>
+                                    <li>Apple</li><span>-</span>
+                                    <li>Apple</li><span>-</span>
+                                </ul> 
                             </div>
                         </div>
-                        <div class="payment_info">
-                            <div class="total item">
-                                <div>TOTAL</div>
-                                <div class="price_total"></div>
-                            </div>
-                            <div class="discount item">
-                                <div class="cash">
-                                    <div class="h2">CASH</div>
-                                    <div>
-                                        <span>VND</span>
-                                        <input type="text">
-                                    </div>
-                                </div>
-                                <div class="list_item">
-                                    <button class="cash_item">5.000</button>
-                                    <button class="cash_item">10.000</button>
-                                    <button class="cash_item">15.000</button>
-                                    <button class="cash_item">20.000</button>
-                                    <button class="cash_item">25.000</button>
-                                    <button class="cash_item">30.000</button>
-                                </div>
-                                
-                            </div>
-                            <div class="customer_name">
-                                <label for="">Customer</label>
-                                <input type="text">
-                            </div>
-                            <div class="submit item">
-                                <button id="submit_data">SUBMIT</button>
+                        <div class="create_cate">
+                            <h3>Create</h3>
+                            <div>
+                               <input type="text">
+                               <span>Add</span>
                             </div>
                         </div>
-                   </div>
+                    </div>
                 </div>
-                
             </div>
         </div>
-        <div class="container_bill">
-            <div class="bill_content">
-                <div class="content_items">
-                    <div class="company_info">
-                        <!-- <div> <img src="/img/logo_apple.png" alt=""></div> -->
-                        <h2>ZEOPOS</h2>
-                        <p>09015121</p>
-                    </div>
-                    <div class="customer_bill">
-                        <h5>Customer:</h5>
-                        <h5>Jhon Dang</h5>
-                    </div>
-                    <div class="number_bill">
-                        <p class="id">max hoa don</p>
-                        <p class="date">23/03/2022</p>
-                    </div>
-                    <div class="table_items">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <td>#</td>
-                                    <td>Items</td>
-                                    <td>Qty</td>
-                                    <td>Subtutol</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                
-                            </tbody>
-                        </table>
-                        
-                    </div>
-                    <div class="total_bill">
-                        <div class="total_payment">
-                             <div class="total">
-                                <h3>Total</h3>
-                                <h3></h3>
-                            </div>
-                             <div class="payment">
-                                <h5>Payment</h5>
-                                <h5></h5>
-                             </div>
-                        </div>
-                        <div class="discount">
-                            <h4>Discount</h4>
-                            <h4></h4> 
-                        </div>
-                    </div>
-                </div>
-                <div class="bill_btns">
-                    <button class="proceed btns">Proceed</button>
-                    <button class="cancel btns">Cancel</button>
-                </div>
+
+        <div class="container_popup">
+            <div class="popup_content">
                 
             </div>
         </div>
 
     </div>
-    
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="./node_modules/tienformater/tienformater,js"></script>
-    <script src="/js/entities/config.js"></script>
-    <script src="/js/app.js"></script>
-    <script src="./js/entities/product.js"></script>
+    <script src="./js/entities/config.js"></script>
+    <script src="./js/popup.js"></script>
+
     <script src="./js/app.js"></script>
-    
+    <script src="./js/index.js"></script>
     <script src="./js/product.js"></script>
-    
-    
 </body>
 </html>
 

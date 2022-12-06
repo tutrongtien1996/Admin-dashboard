@@ -1,228 +1,306 @@
 
 
 
-var order = {}
 
 
-function initOrder() {
-    order = {
-        total: 0,
-        customer: {
-            name: "",
-            phone_number: "",
-            id: ""
-        },
-        products: []
-    }
-}
 
 var option = {
     headers: {
-        'Authorization': "Bearer "+localStorage.getItem('access_token')
+        'Authorization': "Bearer "+localStorage.getItem("access_token")
     }
 };
 
-
-function start(){
-    // popup()
-    initOrder();
-    getListProducts(renderListProduct)
-   
-}
-start();
+var product = {}
 
 
-function getListProducts (callback) {
-    axios.get(API_URL + "/admin/products", option)
-    .then((response) => {
-        callback(response.data.data)
-    })
-    .catch((err) => {
-        if (err) throw err
-    })
-}
-
-function renderListProduct(data){
-    var list_products = document.getElementsByClassName("listProducts")[0];
-
-    let html = "";
-    data.forEach(product => {
-        product.image = API_URL +"/"+ product.image;
-        const mydata = JSON.stringify(product);
-        html += `<li class="item">
-                    <div class="content" data-product='${mydata}'>
-                        <div class="img"><img src="${product.image}"/></div>
-                        <div class="name_price">
-                            <h3>${product.name}</h3>
-                            <h4>${Util.formatNumber(product.price)}</span></h4>
-                        </div>
-                    </div>
-                </li>`
-    })
-    list_products.innerHTML = html;
-    getListItemProduct();
-}
-
-function getListItemProduct(){
-    var listElements = document.querySelectorAll(".listProducts .item .content");
-    if (listElements){
-        initOnclickProducts(listElements);
+function initOrder() {
+    product = {
+        name: "",
+        price: "",
+        category_id: "",
+        avatar: ""
     }
 }
 
-function initOnclickProducts(listElements){
+
+function start() {
+    initOrder();
+    setFilter();
+    getListproducts(renderListproducts);
+    createproduct();
+}
+start()
+
+
+function renderListproducts(list){
+    let renderproducts = document.querySelector(".renderproducts tbody");
     var html = "";
-    listElements.forEach(element => {
-        element.onclick = () =>{
-            var product = JSON.parse(element.dataset.product); 
-            if(order.products.length == 0){
-                product.quantity = 1;
-                order.products.push(product);
-            }
-            else if(!checkIfProductIxist(product)){
-                product.quantity = 1;
-                order.products.push(product);
-            }
-            else{
-                order.products.forEach((item, index) => {
-                    if(item.id == product.id){
-                        order.products[index].quantity += 1;
-                    }
-                })
-            }
-            showOrder(html);
-            handleTotal();
-        }  
-    });    
+
+    list.forEach(item => {
+        item.image = API_URL +"/"+ item.image;
+        let data_product = JSON.stringify(item)
+        html += `<tr>
+            <td>
+                <div><img src="${item.image}" alt="product name"></div>
+            </td>
+            <td>${item.name}</td>
+            <td>${item.price}</td>
+            <td>${item.category_id}</td>
+            <td>
+                <span class="status delivered show_profile" data-product='${data_product}'>Prof</span>
+                <span class="status PENDING edit" data-product='${data_product}'>Edit</span>
+                <span class="status return" data-product='${data_product}'>Del</span>
+            </td>
+        </tr>`
+    });
+    renderproducts.innerHTML = html;
+    deleteproduct();
+    editproduct();
+    showProfile();
 }
 
-function checkIfProductIxist(product){
-    var daTonTai = false;
-    order.products.forEach(item => {
-        if(item.id == product.id){
-            daTonTai = true;
+
+
+function getListproducts(callback) {
+    axios.get(API_URL+'/admin/products', 
+    {
+        params: Filter ,
+        headers: option.headers
+    }
+    )
+    .then((response) => {
+        getOderpages(response.data.data.count, "product")
+        return callback(response.data.data.results)
+    })
+    .catch(function (error) {
+        console.log(error)
+    })
+};
+
+function getDataproduct(){
+    
+    // product.category_id = document.querySelector('#address').value;
+    var inputFileElement = document.querySelector(".contai_file input");
+
+    inputFileElement.onchange = () => {
+        product.avatar = inputFileElement.files[0];
+    }
+}
+
+function createproduct() {
+
+    let create = document.querySelector(".cardHeaders .add")
+    
+    create.onclick = () => {
+    let container_popup_elememt = document.querySelector(".container_popup");
+    let content_popup_element = document.querySelector(".popup_content");
+    content_popup_element.classList.add("edit")
+
+    content_popup_element.innerHTML = getPopup(product_popup.edit);
+    container_popup_elememt.style.display = "block"
+
+    
+    let create_popup_element = document.querySelector(".popup_content .proccess");
+    let cancel_popup_element = document.querySelector(".popup_content .cancel");
+
+
+    getDataproduct()
+    create_popup_element.onclick = () => {
+        product.name = content_popup_element.querySelector('input[name="name"]').value;
+        product.price = content_popup_element.querySelector('input[name="price"]').value;
+        // product.category_id = document.querySelector('#address_edit').value;
+        var formData = new FormData();
+        formData.append("avatar", product.avatar);
+        formData.append("name", product.name);
+        formData.append("price", product.price);
+        axios.post(API_URL+'/admin/products', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              'Authorization': "Bearer "+localStorage.getItem("access_token")
+            }
+            })
+            .then((response) => {
+                alert("create products is Success!")
+                content_popup_element.classList.remove("edit")
+            content_popup_element.innerHTML = ""
+                container_popup_elememt.style.display = "none"
+                getListproducts(renderListproducts);
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+        }    
+        cancel_popup_element.onclick = () => {
+            content_popup_element.classList.remove("edit")
+            content_popup_element.innerHTML = ""
+            container_popup_elememt.style.display = "none"
+            getListproducts(renderListproducts);
+        }  
+    }
+
+    
+}
+
+    
+
+    
+function listElement() {
+    let deleteBtn = document.querySelectorAll(".status.return");
+    let container_popup_elememt = document.querySelector(".container_popup");
+    let content_popup_element =document.querySelector(".popup_content");
+    let delete_popup_element = document.querySelector(".popup_content .delete");
+    let cancel_popup_element = document.querySelector(".popup_content .cancel");
+    
+}
+
+function deleteproduct() {
+    let deleteBtn = document.querySelectorAll(".status.return");
+    deleteBtn.forEach(item => {
+        item.onclick = () => {
+            deleteHandle(item)
         }
     })
-    return daTonTai
-};
-
-function showOrder(html){
-    if(order.products){
-        var productElements = document.querySelector(".content_order .cart_items .items");
-        order.products.forEach(product => {
-            html = `<div class="item_product" data_product_id="${product.id}">
-                        <div class="left">
-                            <img src="${product.image}" alt="product name">
-
-                        </div>
-                        <div class="center">
-                            <p class="name">${product.name}</p>
-                            <p class="price">${Util.formatNumber(product.price)}</p>
-                        </div>
-                        <div class="right">
-                            <button class="plus_minus minus">-</button>
-                            <button class="number">${product.quantity}</button>
-                            <button class="plus_minus plus">+</button>
-                        </div>
-                    </div>` + html
-            productElements.innerHTML = html;
-        })
-        initOnchangeProducts(productElements);  
-        handleCreateDataOrder()
-    }
 }
 
-function handleTotal(){
-    order.total = 0;
-    order.products.forEach((product, index) => {
-        order.products[index].quantity = product.quantity;
-        order.total += product.quantity * product.price;
+function editproduct(){
+    let editBtn = document.querySelectorAll(".status.edit");
+    editBtn.forEach(item => {
+        item.onclick = () => {
+            editHandle(item)   
+        }
     })
-    var html = `<div class="price_total" style="color: orange">${Util.formatNumber(order.total)}</div>`;
-    document.querySelector(".content_order .price_total").innerHTML = html
 }
 
-function initOnchangeProducts(productElements){
-    var elements = productElements.querySelectorAll(".item_product");
+function showProfile() {
+    let show_profileBtn = document.querySelectorAll(".status.show_profile");
+    show_profileBtn.forEach(item => {
+        item.onclick = () => {
+            let container_popup_elememt = document.querySelector(".container_popup");
+            let content_popup_element = document.querySelector(".popup_content");
+            content_popup_element.classList.add("profile")
 
-    elements.forEach(item => {
-        var plus_minusElements = item.querySelectorAll(".plus_minus")
-        plus_minusElements.forEach((btn, btnIndex) => {
-            btn.onclick = () => {
-                order.products.forEach((product, index) => {
-                    if(product.id == item.getAttribute("data_product_id")){
-                        if(btnIndex == 1){
-                            order.products[index].quantity += 1
-                        }
-                        else {order.products[index].quantity -= 1}
-                        var numberElement = btn.parentElement.querySelector(".number");
-                        numberElement.innerText = order.products[index].quantity
-                    }
-                    handleTotal()
-                })
+            content_popup_element.innerHTML = getPopup(product_popup.profile);
+
+            content_popup_element.querySelector('.image').src = JSON.parse(item.dataset.product).image;
+            console.log(content_popup_element.querySelector('.image'))
+            content_popup_element.querySelector('.name').innerText = `${JSON.parse(item.dataset.product).name}`;
+            content_popup_element.querySelector('.price').innerText = `${JSON.parse(item.dataset.product).price}`;
+            content_popup_element.querySelector('.category').innerText = ``;
+            content_popup_element.querySelector('.created_at').innerText = `${JSON.parse(item.dataset.product).created_at}`;
+            content_popup_element.querySelector('.status.edit').setAttribute("data-product", item.dataset.product);
+            content_popup_element.querySelector('.status.delete').setAttribute("data-product", item.dataset.product);
+            content_popup_element.querySelector('.status.cancel').setAttribute("data-product", item.dataset.product);
+            container_popup_elememt.style.display = "block"
+
+            
+            let edit_popup_element = container_popup_elememt.querySelector(".status.edit");
+            let cancel_popup_element = container_popup_elememt.querySelector(".status.cancel");
+            let delete_popup_element = container_popup_elememt.querySelector(".status.delete");
+
+            edit_popup_element.onclick = () => {
+                editHandle(edit_popup_element)
             }
-        })
-       
-    }) 
-}
 
-function handleCreateDataOrder(){
-    var createOder = document.querySelector(".container_order #submit_data");
-    createOder.onclick = () => {
-        order.customer.name = document.querySelector(".recentCustomers .payment_info .customer_name input").value;
-        document.querySelector(".container_bill").style.display = "block"
-        create_bill();
-    }
-}
-function createOrders() {
-        axios.post(API_URL + '/admin/orders/', order, option)
-            .then((response) => {
-                initOrder();
-                document.querySelector(".content_order .cart_items .items").innerHTML = '';
-                document.querySelector(".payment_info .price_total").innerHTML = '';
-                document.querySelector(".customer_name input").value = '';
+            cancel_popup_element.onclick = () => {
+                content_popup_element.innerHTML = ""
+                content_popup_element.classList.remove("edit")
 
-                alert("Order creation successful!")
+                container_popup_elememt.style.display = "none"
+                getListproducts(renderListproducts);
+            }
 
-            })
-            .catch(function (error) {
-                console.log(error)
-            })
-    }
-
-function create_bill() {
-    order.date = formatDate(new Date())
-    order.code = "com-" + Math.floor(Math.random() * 1000000);
-    var table = "";
-    order.products.forEach((element, index) => {
-        table += `<tr>
-                    <td>${index + 1}</td>
-                    <td><p>${element.name}</p><span>${Util.formatNumber(element.price)}</span></td>
-                    <td>${element.quantity}</td>
-                    <td>${Util.formatNumber(element.quantity * element.price)}</td>
-                </tr>`
+            delete_popup_element.onclick = () => {
+                content_popup_element.classList.remove("edit")
+                deleteHandle(edit_popup_element)
+            }
+        }
     })
-    document.querySelector(".container_bill .customer_bill h5:nth-child(2)").innerText = order.customer.name;
-    document.querySelector(".container_bill .number_bill p:nth-child(2)").innerText = order.date;
-    document.querySelector(".container_bill .number_bill p:nth-child(1)").innerText = order.code;
-    document.querySelector(".container_bill .bill_content tbody").innerHTML = table;
-    document.querySelector(".container_bill .total_bill .total h3:nth-child(2)").innerText = Util.formatNumber(order.total);
-    var cancel = document.querySelector(".container_bill .cancel");
-    cancel.onclick = () => {
-        document.querySelector(".container_bill").style.display = "none"
+}
+
+function deleteHandle(item) {
+    let container_popup_elememt = document.querySelector(".container_popup");
+    let content_popup_element = document.querySelector(".popup_content");
+
+    content_popup_element.classList.remove("edit")
+
+    content_popup_element.classList.add("delete")
+    
+    content_popup_element.innerHTML = getPopup(customer_popup.delete);
+    content_popup_element.querySelector(".name").innerText = `${JSON.parse(item.dataset.product).name}`;
+    container_popup_elememt.style.display = "block"
+    let delete_popup_element = document.querySelector(".popup_content .delete");
+    let cancel_popup_element = document.querySelector(".popup_content .cancel");
+    
+    delete_popup_element.onclick = () => {
+        axios.delete(API_URL + '/admin/products/'+JSON.parse(item.dataset.product).id, option)
+        .then((response) => {
+            content_popup_element.classList.remove("delete")
+            container_popup_elememt.style.display = "none"
+            content_popup_element.innerHTML = ""
+
+            getListproducts(renderListproducts);
+        })
+        .catch((err) => {
+            console.log(err)
+        })
     }
-    let proceed = document.querySelector(".proceed");
-    proceed.onclick = () => {
-        console.log(order)
-        createOrders()
-        document.querySelector(".container_bill").style.display = "none"
+
+    cancel_popup_element.onclick = () => {
+        content_popup_element.classList.remove("delete")
+        content_popup_element.innerHTML = ""
+        container_popup_elememt.style.display = "none"
+        getListproducts(renderListproducts);
     }
 }
-let trash = document.querySelector(".trash")
 
-trash.onclick = () => {
-    initOrder();
-    document.querySelector(".content_order .cart_items .items").innerHTML = '';
-    document.querySelector(".payment_info .price_total").innerHTML = '';
-    document.querySelector(".customer_name input").value = '';
+
+function editHandle(item){
+    let container_popup_elememt = document.querySelector(".container_popup");
+    let content_popup_element = document.querySelector(".popup_content");
+    content_popup_element.classList.remove("edit")
+    content_popup_element.classList.add("edit")
+
+    content_popup_element.innerHTML = getPopup(product_popup.edit);
+    content_popup_element.querySelector('input[name="name"]').value = `${JSON.parse(item.dataset.product).name}`;
+    content_popup_element.querySelector('input[name="price"]').value = `${JSON.parse(item.dataset.product).price}`;
+    container_popup_elememt.style.display = "block"
+
+    
+    let edit_popup_element = document.querySelector(".popup_content .proccess");
+    let cancel_popup_element = document.querySelector(".popup_content .cancel");
+
+    getDataproduct()
+    edit_popup_element.onclick = () => {
+        product.name = content_popup_element.querySelector('input[name="name"]').value;
+        product.price = content_popup_element.querySelector('input[name="price"]').value;
+        // product.category_id = document.querySelector('#address_edit').value;
+        var formData = new FormData();
+        formData.append("avatar", product.avatar);
+        formData.append("name", product.name);
+        formData.append("price", product.price);
+        axios.patch(API_URL + "/admin/products/"+JSON.parse(item.dataset.product).id, formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              'Authorization': "Bearer "+localStorage.getItem("access_token")
+            }
+            })
+        .then((response) => {
+            alert("Update Success!")
+            content_popup_element.classList.remove("edit")
+            container_popup_elememt.style.display = "none"
+            content_popup_element.innerHTML = ""
+
+            getListproducts(renderListproducts);
+        })
+        .catch((err) => {
+            if (err) throw err
+        })
+    }
+
+    cancel_popup_element.onclick = () => {
+        content_popup_element.classList.remove("edit")
+        content_popup_element.innerHTML = ""
+        container_popup_elememt.style.display = "none"
+        getListproducts(renderListproducts);
+    }
 }
