@@ -11,7 +11,8 @@ function initOrder() {
             phone_number: "",
             id: ""
         },
-        products: []
+        products: [],
+        payment_id: "", 
     }
 }
 
@@ -36,10 +37,34 @@ function start(){
     initCustomer();
     getCustomer();
     initOrder();
+    getListPayment(rederListPayment);
     getListProducts(renderListProduct)
+
    
 }
 start();
+
+
+function getListPayment (callback){
+    axios.get(API_URL + "/admin/payments", option)
+    .then((response) => {
+        callback(response.data.data)
+    })
+    .catch((err) => {
+        if (err) throw err
+    })
+}
+
+function rederListPayment(data) {
+    let html = "";
+    let paymentContainer = document.querySelector('.content_order .payment_info .customer_name.pay_status .pay')
+    if(data){
+        data.forEach(item => {
+            html += `<option value="${item.id}">${item.name}</option>`
+        })
+    }
+    paymentContainer.innerHTML = html;
+}
 
 
 function getListProducts (callback) {
@@ -81,9 +106,11 @@ function getListItemProduct(){
 }
 
 function initOnclickProducts(listElements){
+    
     var html = "";
     listElements.forEach(element => {
         element.onclick = () =>{
+            document.querySelector(".empty_cart").style.display = "none"
             var product = JSON.parse(element.dataset.product); 
             if(order.products.length == 0){
                 product.quantity = 1;
@@ -117,29 +144,34 @@ function checkIfProductIxist(product){
 };
 
 function showOrder(html){
+    
     if(order.products){
         var productElements = document.querySelector(".content_order .cart_items .items");
         order.products.forEach(product => {
-            html = `<div class="item_product" data_product_id="${product.id}">
-                        <div class="left">
-                            <img src="${product.image}" alt="product name">
+            if(product.quantity > 0){
+                html = `<div class="item_product" data_product_id="${product.id}">
+                <div class="left">
+                    <img src="${product.image}" alt="product name">
 
-                        </div>
-                        <div class="center">
-                            <p class="name">${product.name}</p>
-                            <p class="price">${Util.formatNumber(product.price)}</p>
-                        </div>
-                        <div class="right">
-                            <button class="plus_minus minus">-</button>
-                            <button class="number">${product.quantity}</button>
-                            <button class="plus_minus plus">+</button>
-                        </div>
-                    </div>` + html
+                </div>
+                <div class="center">
+                    <p class="name">${product.name}</p>
+                    <p class="price">${Util.formatNumber(product.price)}</p>
+                </div>
+                <div class="right">
+                    <button class="plus_minus minus">-</button>
+                    <button class="number">${product.quantity}</button>
+                    <button class="plus_minus plus">+</button>
+                </div>
+            </div>` + html
             productElements.innerHTML = html;
+            }
+            
         })
         initOnchangeProducts(productElements);  
         handleCreateDataOrder()
     }
+    
 }
 
 function handleTotal(){
@@ -164,7 +196,12 @@ function initOnchangeProducts(productElements){
                         if(btnIndex == 1){
                             order.products[index].quantity += 1
                         }
-                        else {order.products[index].quantity -= 1}
+                        if(btnIndex == 0){
+                            order.products[index].quantity -= 1  
+                        }
+                        if(order.products[index].quantity == 0){
+                            item.remove()
+                        }
                         var numberElement = btn.parentElement.querySelector(".number");
                         numberElement.innerText = order.products[index].quantity
                     }
@@ -178,11 +215,19 @@ function initOnchangeProducts(productElements){
 
 function handleCreateDataOrder(){
     var createOder = document.querySelector(".container_order #submit_data");
-    createOder.onclick = () => {
-        order.customer.name = document.querySelector(".recentCustomers .payment_info .customer_name input").value;
-        document.querySelector(".container_popup").style.display = "block"
-        create_bill();
+
+    if(order.products.length > 0){
+        
+        document.querySelector(".top_icon").style.display = "grid"
+        document.querySelector(".container_order #submit_data").disabled = false;
+        createOder.onclick = () => {
+            order.payment_id =  document.querySelector('.content_order .payment_info .customer_name.pay_status .pay').value
+            order.customer.name = document.querySelector(".recentCustomers .payment_info .customer_name input").value;
+            document.querySelector(".container_popup").style.display = "block"
+            create_bill();
+        }
     }
+    
 }
 
 function getCustomer() {
@@ -277,6 +322,10 @@ function create_bill() {
 let trash = document.querySelector(".trash")
 
 trash.onclick = () => {
+    
+    document.querySelector(".top_icon").style.display = "none"
+    document.querySelector(".container_order #submit_data").disabled = true;
+    document.querySelector(".empty_cart").style.display = "block"
     initOrder();
     document.querySelector(".content_order .cart_items .items").innerHTML = '';
     document.querySelector(".payment_info .price_total").innerHTML = '';

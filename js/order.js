@@ -49,11 +49,11 @@ function renderListOrders(results){
         }
         html += `<td style="text-align: right;">${Util.formatNumber(item.total)}đ</td>`;
 
-        // if (item. != undefined) {
-        //     html += `<td>${item.payment_type}</td>`;
-        // } else {
-            html += `<td>tien mat</td>`;
-        // }
+        if (item.payment_name) {
+            html += `<td>${item.payment_name}</td>`;
+        } else {
+            html += `<td>cash</td>`;
+        }
         html += `<td><span class="status ${item.status}">${item.status}</span></td>
     </tr>`
     });

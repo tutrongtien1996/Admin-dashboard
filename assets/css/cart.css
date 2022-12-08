@@ -88,6 +88,17 @@ ul {
     height: 100%;
     width: 100%;
     min-height: 583px;
+    position: relative;
+}
+
+.empty_cart {
+   position: absolute;
+   top: 30%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   font-size: 25px;
+   font-weight: 700;
+   opacity: 10%;
 }
 
 .container_order .content_order:focus {
@@ -121,9 +132,9 @@ ul {
     background-color: var(--body);
     width: 100%;
     display: grid;
-    grid-template-rows: 1fr 2fr;
+    grid-template-rows: 1fr 0.8fr;
     grid-gap: 10px;
-    padding: 10px;
+    padding: 10px 10px 2px 10px;
     border-radius: 5px;
 }
 .content_order .payment_info .discount .cash{
@@ -151,12 +162,13 @@ ul {
     display: grid;
     grid-template-columns: auto auto auto;
     grid-gap: 5px;
-    
+    width: 100%;
 }
 .payment_info .discount .list_item .cash_item {
     border-radius: 5px;
     border: none;
-    background-color: var(--white);;
+    background-color: var(--white);
+    
 }
 
 
@@ -200,6 +212,7 @@ ul {
     justify-content: space-between;
     align-content: center;
     padding: 0px 20px;
+    display: none;
 }
 
 .content_order .cart_items .top_icon ion-icon {
@@ -275,6 +288,25 @@ ul {
     border-radius: 5px;
 }
 
+.content_order .payment_info .customer_name.pay_status {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+
+
+.content_order .payment_info .customer_name.pay_status select {
+    border: none;
+    font-weight: 400;
+    color: var(--btn);
+    padding: 3px;
+}
+
+
+.content_order .payment_info .customer_name.pay_status select:focus {
+    outline: none;
+}
+
 .content_order .payment_info .customer_name input {
     border: none;
     border-radius: 3px;
@@ -302,8 +334,6 @@ ul {
     cursor: pointer;
     box-shadow: 0 0 10px rgba(0, 188, 212, 0.5); 
 }
-
-
 
 
 .container_popup .popup_content .content_items{
@@ -342,6 +372,10 @@ ul {
 }
 
 .popup_content .content_items .customer_bill {
+    display: flex;
+    justify-content: space-between;
+}
+.popup_content .content_items .customer_bill > div:first-child{
     display: flex;
 }
 .popup_content .content_items .customer_bill h5:nth-child(2) {

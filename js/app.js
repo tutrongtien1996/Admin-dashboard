@@ -1,4 +1,4 @@
-const API_URL = "http://127.0.0.1:3001";
+var API_URL = "http://157.230.253.55";
 
 var Filter = {  
     limit: 20, //số lượng orders trên mỗi trang: mặc định 20
