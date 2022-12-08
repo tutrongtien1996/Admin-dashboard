@@ -71,7 +71,6 @@ function initMenu() {
         document.getElementById("menu").innerHTML = html;
     })
 }
-
 function setFilter() {
     var page = getValueFromUrl('page');
     
@@ -141,11 +140,3 @@ function getOderpages(count, nameTemplate){
         document.querySelector(".details .recentOrders .pages ul").innerHTML = htmlBtn;
     }
 }
-
-setTimeout(
-    function(){
-        var logOut = document.getElementById("logout");
-        logOut.onclick = function(){
-        localStorage.removeItem('access_token');
-        window.location.href = '/login.html';}
-    }, 1000)

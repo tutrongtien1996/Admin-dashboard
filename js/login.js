@@ -1,4 +1,4 @@
-const API_URL = "http://127.0.0.1/opensourcepos";
+const API_URL = "http://54.254.213.100:2300";
 async function login(event) {
     event.preventDefault();
     if (await processLogin()) {
@@ -18,7 +18,7 @@ async function processLogin() {
         username: username,
         password: password        
     };
-    const response = await fetch(API_URL+"/public/source/login", {
+    const response = await fetch(API_URL+"/source/login", {
         method: "POST",
         headers: {
             // 'Authorization': "Bearer ____TOKEN____",
