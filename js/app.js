@@ -1,4 +1,4 @@
-var API_URL = "http://157.230.253.55";
+var API_URL = "http://157.230.253.55:8080";
 
 var Filter = {  
     limit: 20, //số lượng orders trên mỗi trang: mặc định 20

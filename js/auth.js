@@ -1,4 +1,4 @@
-var API_URL = "http://157.230.253.55"
+var API_URL = "http://157.230.253.55:8080"
 
 const btn_register = document.querySelector(".btn_register");
 const btn_login = document.querySelector(".btn_login");
