@@ -1,10 +1,11 @@
 import { API_URL  } from "../config/constant.js";
+import { Helper } from "../utils/helper.js";
 export const productRepository = {
-    list: () => {
+    list: (params) => {
         return axios.get(API_URL+'/admin/products', 
         {
-            params: Filter ,
-            headers: option.headers
+            params: params,
+            headers: Helper.requestOption.headers
         }
         )
         .then((response) => {

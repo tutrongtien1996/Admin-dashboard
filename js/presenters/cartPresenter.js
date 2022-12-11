@@ -1,14 +1,9 @@
+import { API_URL } from "../config/constant.js";
 import { cartUsecase } from "../usecases/cartUsecase.js";
+import { Helper } from "../utils/helper.js";
 
 
 var customElement = document.querySelector('.payment_info .customer_name input[name="customer"]');
-
-
-var option = {
-    headers: {
-        'Authorization': "Bearer "+localStorage.getItem('access_token')
-    }
-};
 
 var customer = {}
 
@@ -23,7 +18,7 @@ function initCustomer() {
 
 function start(){
     initCustomer();
-    setFilter();
+    Helper.setFilter();
     getCustomer();
     cartUsecase.initOrder();
     getListPayment(rederListPayment);
@@ -91,7 +86,7 @@ async function  searchCustomer (){
 function getListCustomers(){
     return  axios.get(API_URL+'/admin/customers', 
         {
-            headers: option.headers
+            headers: Helper.requestOption.headers
         }
         )
         .then((response) => {
@@ -104,7 +99,7 @@ function getListCustomers(){
 
 
 function getListPayment (callback){
-    axios.get(API_URL + "/admin/payments", option)
+    axios.get(API_URL + "/admin/payments", Helper.requestOption)
     .then((response) => {
         callback(response.data.data)
     })
@@ -127,8 +122,8 @@ function rederListPayment(data) {
 
 function getListProducts (callback) {
     axios.get(API_URL + "/admin/products", {
-        params: Filter,
-        headers: option.headers
+        params: Helper.getFilter(),
+        headers: Helper.requestOption.headers
     })
     .then((response) => {
         searchProduct(response.data.data.results);
@@ -360,7 +355,7 @@ function getCustomer() {
         customer.phone_number = document.querySelector('input[name="phone_number_edit"]').value;
         customer.address = document.querySelector('#address_edit').value;
 
-        axios.post(API_URL + '/admin/customers', customer, option)
+        axios.post(API_URL + '/admin/customers', customer, Helper.requestOption)
         .then((response) => {
             content_popup_element.classList.remove("edit")
             container_popup_elememt.style.display = "none"
@@ -385,7 +380,7 @@ function getCustomer() {
 
 function createOrders() {
 
-        axios.post(API_URL + '/admin/orders/', cartUsecase.order, option)
+        axios.post(API_URL + '/admin/orders/', cartUsecase.order, Helper.requestOption)
             .then((response) => {
                 cartUsecase.initOrder();
                 document.querySelector(".content_order .cart_items .items").innerHTML = '';

@@ -1,13 +1,11 @@
-var option = {
-    headers: {
-        'Authorization': "Bearer "+localStorage.getItem("access_token")
-    }
-};
+import { API_URL } from "../config/constant.js";
+import { Helper } from "../utils/helper.js";
+import { commonPresenter } from "./commonPresenter.js";
 
 function start() { 
     
     // initDatePicker();
-    setFilter();
+    Helper.setFilter();
     // initOnclickViewall();
     getListOrders(renderListOrders);
     initSearchDates();
@@ -20,13 +18,13 @@ start();
 function getListOrders(callback) {
     axios.get(API_URL+'/admin/orders', 
     {
-        params: Filter ,
-        headers: option.headers
+        params: Helper.getFilter(),
+        headers: Helper.requestOption.headers
     }
     )
     .then((response) => {
         var result = response.data.data.results;
-        getOderpages(response.data.data.count, 'order')
+        commonPresenter.showPagination(response.data.data.count, 'order')
         return callback(result)
     })
     .catch(function (error) {
@@ -70,9 +68,9 @@ function renderListOrders(results){
 function initOnclickViewall(){
     var btnViewAll = document.querySelector(".recentOrders .cardHeaders .btn.viewall");
     btnViewAll.onclick = () => {  
-        Filter.offset = 0;
-        Filter.limit = 0;
-        getListOrders(renderListOrders, Filter);
+        Helper.filter.offset = 0;
+        Helper.filter.limit = 0;
+        getListOrders(renderListOrders, Helper.getFilter());
     }
 }
 
@@ -98,10 +96,10 @@ function initSearchDates(){
         var startDate = document.getElementsByClassName('startDate')[0].value;
         var endDate = document.getElementsByClassName('endDate')[0].value;
         if(startDate){
-            Filter.start_date = startDate
+            Helper.filter.start_date = startDate
         }
         if(endDate){
-            Filter.end_date = endDate;
+            Helper.filter.end_date = endDate;
         }
         getListOrders(renderListOrders);
     }
