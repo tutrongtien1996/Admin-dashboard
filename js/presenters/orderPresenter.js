@@ -1,36 +1,16 @@
-import { API_URL } from "../config/constant.js";
+import { orderUsecase } from "../usecases/orderUsecase.js";
 import { Helper } from "../utils/helper.js";
-import { commonPresenter } from "./commonPresenter.js";
 
 function start() { 
     
     // initDatePicker();
     Helper.setFilter();
     // initOnclickViewall();
-    getListOrders(renderListOrders);
+    orderUsecase.list(renderListOrders)
     initSearchDates();
 }
 
 start();
-
-
-
-function getListOrders(callback) {
-    axios.get(API_URL+'/admin/orders', 
-    {
-        params: Helper.getFilter(),
-        headers: Helper.requestOption.headers
-    }
-    )
-    .then((response) => {
-        var result = response.data.data.results;
-        commonPresenter.showPagination(response.data.data.count, 'order')
-        return callback(result)
-    })
-    .catch(function (error) {
-        console.log(error)
-    })
-};
 
 
 function renderListOrders(results){
@@ -70,7 +50,7 @@ function initOnclickViewall(){
     btnViewAll.onclick = () => {  
         Helper.filter.offset = 0;
         Helper.filter.limit = 0;
-        getListOrders(renderListOrders, Helper.getFilter());
+        orderUsecase.list(renderListOrders)
     }
 }
 
@@ -101,7 +81,7 @@ function initSearchDates(){
         if(endDate){
             Helper.filter.end_date = endDate;
         }
-        getListOrders(renderListOrders);
+        orderUsecase.list(renderListOrders)
     }
 }
 
