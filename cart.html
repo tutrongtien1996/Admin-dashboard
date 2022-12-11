@@ -29,7 +29,7 @@
                 <!-- search -->
                 <div class="search">
                     <label>
-                        <input type="text" placeholder="Search here">
+                        <input type="text" name="search_name" placeholder="Search here">
                         <ion-icon name="search-outline"></ion-icon>
                     </label>
                 </div>
@@ -54,13 +54,14 @@
                 
                 <div class="recentCustomers container_order">
                    <div class="content_order">
-                        <div class="empaty_cart">
-
+                        <div class="empty_cart">
+                            Empty Cart!
                         </div>
                         <div class="cart_items">
                             <div class="top_icon">
-                                <div>
+                                <div  class="cart_quantity">
                                     <ion-icon  name="cart-outline"></ion-icon>
+                                    <span></span>
                                 </div>
                                 <div>
                                     <ion-icon class="trash" name="trash-outline"></ion-icon>
@@ -77,7 +78,7 @@
                             </div>
                             <div class="discount item">
                                 <div class="cash">
-                                    <div class="h2">CASH</div>
+                                    <div class="h2">Discount</div>
                                     <div>
                                         <span>VND</span>
                                         <input type="text">
@@ -87,19 +88,30 @@
                                     <button class="cash_item">5.000</button>
                                     <button class="cash_item">10.000</button>
                                     <button class="cash_item">15.000</button>
-                                    <button class="cash_item">20.000</button>
-                                    <button class="cash_item">25.000</button>
-                                    <button class="cash_item">30.000</button>
                                 </div>
                                 
                             </div>
+                            <div class="customer_name pay_status">
+                                <select name="cars" class="pay" id="pay">
+                                  </select>
+                                  <select name="cars" id="status_payment">
+                                    <option value="PENDING" selected class="selected pending">Pending</option>
+                                    <option value="PAID" class="paid">Paid</option>
+                                    <option value="CANCELLED" class="cancelled">Cancel</option>
+                                  </select>
+                            </div>
                             <div class="customer_name">
-                    
+                                <div class="list_customer">
+                                    <ul>
+                                        <li>nam anh</li>
+                        
+                                    </ul>
+                                </div>
                                 <input type="text" name="customer" placeholder="Customer">
                                 <span class="add">Add</span>
                             </div>
                             <div class="submit item">
-                                <button id="submit_data" class="submit_data">SUBMIT</button>
+                                <button id="submit_data" disabled class="submit_data">SUBMIT</button>
                             </div>
                         </div>
                    </div>
@@ -116,13 +128,13 @@
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="./node_modules/tienformater/tienformater,js"></script>
+    <script src="/js/util.js"></script>
     <script src="/js/entities/config.js"></script>
     <script src="/js/popup.js"></script>
     <script src="/js/app.js"></script>
     <script src="./js/entities/product.js"></script>
     <script src="./js/app.js"></script>
-
-    <script src="./js/cart.js"></script>
+    <script src="js/presenters/cartPresenter.js" type="module"></script>
     
     
 </body>

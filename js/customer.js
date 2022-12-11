@@ -57,7 +57,7 @@ start()
 function getListCustomers(callback) {
     axios.get(API_URL+'/admin/customers', 
     {
-        params: Filter ,
+        params: Filter,
         headers: option.headers
     }
     )

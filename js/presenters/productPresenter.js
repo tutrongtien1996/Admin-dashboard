@@ -1,8 +1,4 @@
-
-
-
-
-
+import { productUsecase } from "../usecases/productUsecase.js";
 
 var option = {
     headers: {
@@ -44,10 +40,9 @@ function renderListproducts(list){
                 <div><img src="${item.image}" alt="product name"></div>
             </td>
             <td>${item.name}</td>
-            <td>${item.price}</td>
-            <td>${item.category_id}</td>
+            <td>${Util.formatNumber(item.price)}VND</td>
             <td>
-                <span class="status delivered show_profile" data-product='${data_product}'>Prof</span>
+                <span class="status delivered show_profile" data-product='${data_product}'>View</span>
                 <span class="status PENDING edit" data-product='${data_product}'>Edit</span>
                 <span class="status return" data-product='${data_product}'>Del</span>
             </td>
@@ -62,19 +57,7 @@ function renderListproducts(list){
 
 
 function getListproducts(callback) {
-    axios.get(API_URL+'/admin/products', 
-    {
-        params: Filter ,
-        headers: option.headers
-    }
-    )
-    .then((response) => {
-        getOderpages(response.data.data.count, "product")
-        return callback(response.data.data.results)
-    })
-    .catch(function (error) {
-        console.log(error)
-    })
+    productUsecase.list(callback)
 };
 
 function getDataproduct(){
@@ -141,23 +124,11 @@ function createproduct() {
     
 }
 
-    
-
-    
-function listElement() {
-    let deleteBtn = document.querySelectorAll(".status.return");
-    let container_popup_elememt = document.querySelector(".container_popup");
-    let content_popup_element =document.querySelector(".popup_content");
-    let delete_popup_element = document.querySelector(".popup_content .delete");
-    let cancel_popup_element = document.querySelector(".popup_content .cancel");
-    
-}
-
 function deleteproduct() {
     let deleteBtn = document.querySelectorAll(".status.return");
     deleteBtn.forEach(item => {
         item.onclick = () => {
-            deleteHandle(item)
+            productUsecase.delete(item)
         }
     })
 }
@@ -211,47 +182,12 @@ function showProfile() {
 
             delete_popup_element.onclick = () => {
                 content_popup_element.classList.remove("edit")
-                deleteHandle(edit_popup_element)
+                productUsecase.delete(edit_popup_element)
             }
         }
     })
 }
 
-function deleteHandle(item) {
-    let container_popup_elememt = document.querySelector(".container_popup");
-    let content_popup_element = document.querySelector(".popup_content");
-
-    content_popup_element.classList.remove("edit")
-
-    content_popup_element.classList.add("delete")
-    
-    content_popup_element.innerHTML = getPopup(customer_popup.delete);
-    content_popup_element.querySelector(".name").innerText = `${JSON.parse(item.dataset.product).name}`;
-    container_popup_elememt.style.display = "block"
-    let delete_popup_element = document.querySelector(".popup_content .delete");
-    let cancel_popup_element = document.querySelector(".popup_content .cancel");
-    
-    delete_popup_element.onclick = () => {
-        axios.delete(API_URL + '/admin/products/'+JSON.parse(item.dataset.product).id, option)
-        .then((response) => {
-            content_popup_element.classList.remove("delete")
-            container_popup_elememt.style.display = "none"
-            content_popup_element.innerHTML = ""
-
-            getListproducts(renderListproducts);
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-    }
-
-    cancel_popup_element.onclick = () => {
-        content_popup_element.classList.remove("delete")
-        content_popup_element.innerHTML = ""
-        container_popup_elememt.style.display = "none"
-        getListproducts(renderListproducts);
-    }
-}
 
 
 function editHandle(item){

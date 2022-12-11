@@ -1,4 +1,6 @@
-const API_URL = "http://127.0.0.1:3001";
+
+
+var API_URL = "http://127.0.0.1:3000";
 
 var Filter = {  
     limit: 20, //số lượng orders trên mỗi trang: mặc định 20
@@ -14,6 +16,7 @@ function start() {
     }
     initUI();
     setFilter();
+    logOut();
 }
 
 var option = {
@@ -71,7 +74,6 @@ function initMenu() {
         document.getElementById("menu").innerHTML = html;
     })
 }
-
 function setFilter() {
     var page = getValueFromUrl('page');
     
@@ -80,7 +82,6 @@ function setFilter() {
     }
     if(page != 'all'){
         Filter.offset = (Filter.limit) * (parseInt(page) - 1); 
-        console.log(Filter.offset)
     }
     
     var start_date = getValueFromUrl('start_date');
@@ -142,10 +143,20 @@ function getOderpages(count, nameTemplate){
     }
 }
 
-setTimeout(
-    function(){
-        var logOut = document.getElementById("logout");
-        logOut.onclick = function(){
-        localStorage.removeItem('access_token');
-        window.location.href = '/login.html';}
-    }, 1000)
+function logOut() {
+    let logoutElement = document.querySelector("#logout");
+    if(logoutElement){
+        logoutElement.onclick = () => {
+            alert("da vao")
+            axios.post(API_URL+"/admin/logout", {
+                headers : option.headers
+            })
+            .then(function (response) {
+                console.log(response)
+            })
+            .catch(function (error) {
+                return error
+            });
+        }
+    }
+}

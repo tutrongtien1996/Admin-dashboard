@@ -11,8 +11,13 @@ var cart_popup = `<div class="content_items">
     <p>09015121</p>
 </div>
 <div class="customer_bill">
+
+    <div>
     <h5>Customer:</h5>
     <h5>Jhon Dang</h5>
+    </div>
+    <div class="pay_bill">
+    </div>
 </div>
 <div class="number_bill">
     <p class="id">max hoa don</p>
@@ -47,8 +52,9 @@ var cart_popup = `<div class="content_items">
     </div>
     <div class="discount">
         <h4>Discount</h4>
-        <h4></h4> 
+        <h5>78687070-7</h5> 
     </div>
+    
 </div>
 </div>
 <div class="bill_btns">
