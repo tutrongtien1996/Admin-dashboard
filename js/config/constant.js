@@ -1,1 +1,1 @@
-export var API_URL = "http://157.230.253.55:3000";
+export var API_URL = "http://157.230.253.55:8080";
