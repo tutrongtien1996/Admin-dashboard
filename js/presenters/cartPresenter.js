@@ -304,9 +304,6 @@ function initOnchangeProducts(productElements){
                     }
                     checkQuantityOrder();
                     handleTotal()
-                    if (!cartUsecase.order.product || cartUsecase.order.product.length == 0) {
-                        initEmpty();
-                    }
                 })
             }
         })
