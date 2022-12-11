@@ -151,7 +151,8 @@ ul {
     border-radius: 3px;
     width: 100px;
     height: 20px;
- 
+    text-align: right;
+    padding-right: 10px;
 }
 .payment_info .discount .cash input:focus {
     outline: none;
@@ -163,6 +164,7 @@ ul {
     grid-template-columns: auto auto auto;
     grid-gap: 5px;
     width: 100%;
+    margin-bottom: 5px;
 }
 .payment_info .discount .list_item .cash_item {
     border-radius: 5px;
@@ -215,6 +217,21 @@ ul {
     display: none;
 }
 
+.content_order .cart_items .top_icon .cart_quantity {
+    position: relative;
+}
+
+.content_order .cart_items .top_icon .cart_quantity  span{
+    position: absolute;
+    transform: translate(-30%, -60%);
+    font-size: 12px;
+    font-weight: 700;
+    background-color: green;
+    padding: 0 5px;
+    border-radius: 50%;
+    color: white;
+}
+
 .content_order .cart_items .top_icon ion-icon {
     font-size: 25px;
 }
@@ -245,6 +262,7 @@ ul {
     margin-top: 7px;
 }
 
+.items .item_product .right input,
 .items .item_product .right button {
     background-color: var(--btn);
     border: none;
@@ -252,6 +270,15 @@ ul {
     border-radius: 5px;
     font-size: 14px;
     color: var(--white);
+}
+
+.items .item_product .right input{
+    max-width: 26px !important;
+    text-align: center;
+}
+
+.items .item_product .right input:focus {
+    outline: none;
 }
 
 
@@ -291,6 +318,7 @@ ul {
 .content_order .payment_info .customer_name.pay_status {
     display: grid;
     grid-template-columns: auto auto;
+    grid-column-gap: 10px;
 }
 
 
@@ -300,6 +328,7 @@ ul {
     font-weight: 400;
     color: var(--btn);
     padding: 3px;
+    border-radius: 4px;
 }
 
 
@@ -311,9 +340,8 @@ ul {
     border: none;
     border-radius: 3px;
     padding: 3px 10px;
-    width: calc(100% - 110px);
-    margin-left: 10px;
-    margin-right: 10px;
+    width: calc(100% - 70px);
+    margin-right: 20px;
 }
 
 .content_order .payment_info .customer_name input:focus {
@@ -324,10 +352,9 @@ ul {
     font-size: 10px;
     background-color: var(--btn);
     font-weight: 700;
-    padding: 3px 10px;
+    padding: 5px 12px;
     color: white;
     border-radius: 5px;
-    margin-right: 5px;
 }
 .payment_info .customer_name .add:hover {
     background-color: var(--primary);
@@ -335,6 +362,31 @@ ul {
     box-shadow: 0 0 10px rgba(0, 188, 212, 0.5); 
 }
 
+.payment_info .customer_name {
+    position: relative;
+}
+
+.payment_info .customer_name .list_customer{
+    position: absolute;
+    transform: translateY(-100%);
+    background-color: var(--body);
+    width: calc(100% - 70px);
+    padding: 10px;
+    border-radius: 5px;
+    display: none;
+}
+
+.payment_info .customer_name .list_customer ul {
+    max-height: 150px;
+    overflow-y: scroll;
+}
+
+.payment_info .customer_name .list_customer ul li {
+    background-color: white;
+    margin-bottom: 5px;
+    padding-left: 10px;
+    cursor: pointer;
+}
 
 .container_popup .popup_content .content_items{
     height: calc(100% - 84px);

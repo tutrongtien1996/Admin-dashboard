@@ -27,7 +27,7 @@
     {
         "title": "Logout",
         "icon": "log-out-outline",
-        "link": "#",
+        "link": "/login.html",
         "id": "logout"
     }
 ]

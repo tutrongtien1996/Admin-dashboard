@@ -38,25 +38,27 @@ function getListOrders(callback) {
 function renderListOrders(results){
     var html ='';
     //render data row
-    results.forEach(function(item){
-        let created_at = new Date(item.created_at)
-        html += `<tr>
-        <td>${formatDate(created_at)}</td>`;
-        if (item.customer) {
-            html += `<td>${item.customer}</td>`;
-        } else {
-            html += `<td></td>`;
-        }
-        html += `<td style="text-align: right;">${Util.formatNumber(item.total)}đ</td>`;
+    if(results){
+        results.forEach(function(item){
+            let created_at = new Date(item.created_at)
+            html += `<tr>
+            <td>${formatDate(created_at)}</td>`;
+            if (item.customer) {
+                html += `<td>${item.customer}</td>`;
+            } else {
+                html += `<td></td>`;
+            }
+            html += `<td style="text-align: right;">${Util.formatNumber(item.total)}đ</td>`;
 
-        if (item.payment_name) {
-            html += `<td>${item.payment_name}</td>`;
-        } else {
-            html += `<td>cash</td>`;
-        }
-        html += `<td><span class="status ${item.status}">${item.status}</span></td>
-    </tr>`
-    });
+            if (item.payment_name) {
+                html += `<td>${item.payment_name}</td>`;
+            } else {
+                html += `<td>cash</td>`;
+            }
+            html += `<td><span class="status ${item.status}">${item.status.slice(0, 4)}</span></td>
+        </tr>`
+        });
+    }
     document.getElementById('list_order').innerHTML = html;
     
 }

@@ -52,7 +52,7 @@ var cart_popup = `<div class="content_items">
     </div>
     <div class="discount">
         <h4>Discount</h4>
-        <h4></h4> 
+        <h5>78687070-7</h5> 
     </div>
     
 </div>
