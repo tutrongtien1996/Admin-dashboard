@@ -1,14 +1,7 @@
+import { API_URL } from "../config/constant.js";
+import { customerUsecase } from "../usecases/customerUsecase.js";
+import { Helper } from "../utils/helper.js";
 
-
-
-
-
-
-var option = {
-    headers: {
-        'Authorization': "Bearer "+localStorage.getItem("access_token")
-    }
-};
 
 var customer = {}
 
@@ -25,21 +18,22 @@ function initCustomer() {
 function renderListCustomers(list){
     let renderCustomers = document.querySelector(".renderCustomers tbody");
     var html = "";
-
-    list.forEach(item => {
-        let data_customer = JSON.stringify(item)
-        let created_at = new Date(item.created_at)
-        html += `<tr>
-            <td>${item.name}</td>
-            <td>${item.phone_number}</td>
-            <td>${formatDate(created_at)}</td>
-            <td>
-                <span class="status delivered show_profile" data-customer='${data_customer}'>Profile</span>
-                <span class="status PENDING edit" data-customer='${data_customer}'>Edit</span>
-                <span class="status return" data-customer='${data_customer}'>Delete</span>
-            </td>
-        </tr>`
-    });
+    if (list != undefined) {
+        list.forEach(item => {
+            let data_customer = JSON.stringify(item)
+            let created_at = new Date(item.created_at)
+            html += `<tr>
+                <td>${item.name}</td>
+                <td>${item.phone_number}</td>
+                <td>${formatDate(created_at)}</td>
+                <td>
+                    <span class="status delivered show_profile" data-customer='${data_customer}'>Profile</span>
+                    <span class="status PENDING edit" data-customer='${data_customer}'>Edit</span>
+                    <span class="status return" data-customer='${data_customer}'>Delete</span>
+                </td>
+            </tr>`
+        });
+    }
     renderCustomers.innerHTML = html;
     deleteCustomer();
     editCustomer();
@@ -48,28 +42,12 @@ function renderListCustomers(list){
 
 function start() {
     initCustomer();
-    setFilter();
-    getListCustomers(renderListCustomers);
+    Helper.setFilter();
+    customerUsecase.list(renderListCustomers);
     createCustomer();
 }
 start()
 
-function getListCustomers(callback) {
-    axios.get(API_URL+'/admin/customers', 
-    {
-        params: Filter,
-        headers: option.headers
-    }
-    )
-    .then((response) => {
-        var result = response.data.data.results;
-        getOderpages(response.data.data.count, "customer")
-        return callback(result)
-    })
-    .catch(function (error) {
-        console.log(error)
-    })
-};
 
 function getDataCustomer(){
     customer.name = document.querySelector('input[name="name"]').value;
@@ -83,26 +61,14 @@ function createCustomer() {
     create.onclick = () => {
         getDataCustomer();
 
-        axios.post(API_URL + '/admin/customers', customer, option)
+        axios.post(API_URL + '/admin/customers', customer, Helper.requestOption)
         .then((response) => {
-            getListCustomers(renderListCustomers);
+            customerUsecase.list(renderListCustomers);
         })
         .catch((err) => {
             console.log(err)
         })
     }
-}
-
-    
-
-    
-function listElement() {
-    let deleteBtn = document.querySelectorAll(".status.return");
-    let container_popup_elememt = document.querySelector(".container_popup");
-    let content_popup_element =document.querySelector(".popup_content");
-    let delete_popup_element = document.querySelector(".popup_content .delete");
-    let cancel_popup_element = document.querySelector(".popup_content .cancel");
-    
 }
 
 function deleteCustomer() {
@@ -157,7 +123,7 @@ function showProfile() {
                 content_popup_element.classList.remove("edit")
 
                 container_popup_elememt.style.display = "none"
-                getListCustomers(renderListCustomers);
+                customerUsecase.list(renderListCustomers);
             }
 
             delete_popup_element.onclick = () => {
@@ -183,13 +149,13 @@ function deleteHandle(item) {
     let cancel_popup_element = document.querySelector(".popup_content .cancel");
     
     delete_popup_element.onclick = () => {
-        axios.delete(API_URL + '/admin/customers/'+JSON.parse(item.dataset.customer).id, option)
+        axios.delete(API_URL + '/admin/customers/'+JSON.parse(item.dataset.customer).id, Helper.requestOption)
         .then((response) => {
             content_popup_element.classList.remove("delete")
             container_popup_elememt.style.display = "none"
             content_popup_element.innerHTML = ""
 
-            getListCustomers(renderListCustomers);
+            customerUsecase.list(renderListCustomers);
         })
         .catch((err) => {
             console.log(err)
@@ -200,7 +166,7 @@ function deleteHandle(item) {
         content_popup_element.classList.remove("delete")
         content_popup_element.innerHTML = ""
         container_popup_elememt.style.display = "none"
-        getListCustomers(renderListCustomers);
+        customerUsecase.list(renderListCustomers);
     }
 }
 
@@ -226,13 +192,13 @@ function editHandle(item){
         customer.name = document.querySelector('input[name="name_edit"]').value;
         customer.phone_number = document.querySelector('input[name="phone_number_edit"]').value;
         customer.address = document.querySelector('#address_edit').value;
-        axios.patch(API_URL + "/admin/customers/"+JSON.parse(item.dataset.customer).id, customer, option)
+        axios.patch(API_URL + "/admin/customers/"+JSON.parse(item.dataset.customer).id, customer, Helper.requestOption)
         .then((response) => {
             content_popup_element.classList.remove("edit")
             container_popup_elememt.style.display = "none"
             content_popup_element.innerHTML = ""
 
-            getListCustomers(renderListCustomers);
+            customerUsecase.list(renderListCustomers);
         })
         .catch((err) => {
             if (err) throw err
@@ -243,6 +209,6 @@ function editHandle(item){
         content_popup_element.classList.remove("edit")
         content_popup_element.innerHTML = ""
         container_popup_elememt.style.display = "none"
-        getListCustomers(renderListCustomers);
+        customerUsecase.list(renderListCustomers);
     }
 }

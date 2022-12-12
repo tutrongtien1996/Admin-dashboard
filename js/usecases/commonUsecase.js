@@ -1,8 +1,5 @@
 export const commonPresenter = {
-    alertFail: (title) => {
-        alert(title)
-    },
-    showPagination: (count, nameTemplate) => {
+   displayPagination: (count, nameTemplate) => {
         var htmlBtn ='';
         try {
             var number_of_pages = _getNumberOfPage(count, Filter.limit)
@@ -18,5 +15,5 @@ export const commonPresenter = {
             }
             document.querySelector(".details .recentOrders .pages ul").innerHTML = htmlBtn;
         }
-    }
+   }
 }
