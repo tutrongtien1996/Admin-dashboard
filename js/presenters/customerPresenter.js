@@ -1,6 +1,6 @@
 import { API_URL } from "../config/constant.js";
+import { customerUsecase } from "../usecases/customerUsecase.js";
 import { Helper } from "../utils/helper.js";
-import { commonPresenter } from "./commonPresenter.js";
 
 
 var customer = {}
@@ -43,27 +43,11 @@ function renderListCustomers(list){
 function start() {
     initCustomer();
     Helper.setFilter();
-    getListCustomers(renderListCustomers);
+    customerUsecase.list(renderListCustomers);
     createCustomer();
 }
 start()
 
-function getListCustomers(callback) {
-    axios.get(API_URL+'/admin/customers', 
-    {
-        params: Helper.getFilter(),
-        headers: Helper.requestOption.headers
-    }
-    )
-    .then((response) => {
-        var result = response.data.data.results;
-        commonPresenter.showPagination(response.data.data.count, "customer")
-        return callback(result)
-    })
-    .catch(function (error) {
-        console.log(error)
-    })
-};
 
 function getDataCustomer(){
     customer.name = document.querySelector('input[name="name"]').value;
@@ -79,7 +63,7 @@ function createCustomer() {
 
         axios.post(API_URL + '/admin/customers', customer, Helper.requestOption)
         .then((response) => {
-            getListCustomers(renderListCustomers);
+            customerUsecase.list(renderListCustomers);
         })
         .catch((err) => {
             console.log(err)
@@ -139,7 +123,7 @@ function showProfile() {
                 content_popup_element.classList.remove("edit")
 
                 container_popup_elememt.style.display = "none"
-                getListCustomers(renderListCustomers);
+                customerUsecase.list(renderListCustomers);
             }
 
             delete_popup_element.onclick = () => {
@@ -171,7 +155,7 @@ function deleteHandle(item) {
             container_popup_elememt.style.display = "none"
             content_popup_element.innerHTML = ""
 
-            getListCustomers(renderListCustomers);
+            customerUsecase.list(renderListCustomers);
         })
         .catch((err) => {
             console.log(err)
@@ -182,7 +166,7 @@ function deleteHandle(item) {
         content_popup_element.classList.remove("delete")
         content_popup_element.innerHTML = ""
         container_popup_elememt.style.display = "none"
-        getListCustomers(renderListCustomers);
+        customerUsecase.list(renderListCustomers);
     }
 }
 
@@ -214,7 +198,7 @@ function editHandle(item){
             container_popup_elememt.style.display = "none"
             content_popup_element.innerHTML = ""
 
-            getListCustomers(renderListCustomers);
+            customerUsecase.list(renderListCustomers);
         })
         .catch((err) => {
             if (err) throw err
@@ -225,6 +209,6 @@ function editHandle(item){
         content_popup_element.classList.remove("edit")
         content_popup_element.innerHTML = ""
         container_popup_elememt.style.display = "none"
-        getListCustomers(renderListCustomers);
+        customerUsecase.list(renderListCustomers);
     }
 }
