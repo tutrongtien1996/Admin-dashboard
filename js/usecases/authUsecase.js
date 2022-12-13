@@ -1,6 +1,7 @@
 import { authRepository } from "../repositories/authRepository.js";
-
 export const userUsecase = {
+
+    
 
     processLogin: async () => {
         var username = document.querySelector('input[name="username"]').value;

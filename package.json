@@ -19,6 +19,7 @@
   "dependencies": {
     "axios": "^0.27.2",
     "js-datepicker": "^5.18.0",
-    "tienformater": "^1.0.0"
+    "tienformater": "^1.0.0",
+    "validator": "^13.7.0"
   }
 }
