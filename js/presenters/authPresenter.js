@@ -1,6 +1,6 @@
 import { commonPresenter } from "./commonPresenter.js";
 import { userUsecase } from "../usecases/authUsecase.js";
-import {validate} from "../validator.js"
+import {validate} from "../utils/validator.js"
 
 const btn_register = document.querySelector(".btn_register");
 const btn_login = document.querySelector(".btn_login");
