@@ -387,7 +387,6 @@ function createOrders() {
                 document.querySelector(".payment_info .price_total").innerHTML = '';
                 document.querySelector(".customer_name input").value = '';
                 document.querySelector("#status_payment .selected").setAttribute('selected','selected')
-                alert("Order creation successful!")
                 document.querySelector(".top_icon").style.display = "none"
                 document.querySelector(".empty_cart").style.display = "block"
 

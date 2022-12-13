@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <script src="node_modules/axios/dist/axios.min.js"></script>
+    <script src="node_modules/validator/validator.min.js"></script>
     <link rel="stylesheet" href="assets/css/login2.css">
     <title>POS 88</title>
 </head>
@@ -15,14 +16,16 @@
             <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
             <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
             <div class="login-form">
-                <div class="sign-in-htm">
+                <div class="sign-in-htm login_form1">
                     <div class="group">
                         <label for="user"  class="label">Username</label>
-                        <input id="user" name="username" type="text" class="input">
+                        <input id="user" name="username" type="text" class="input user_pass_login">
+                        <div></div>
                     </div>
                     <div class="group">
                         <label for="pass" class="label">Password</label>
-                        <input id="pass" name="password" type="password" class="input" data-type="password">
+                        <input id="pass" name="password" type="password" class="input user_pass_login" data-type="password">
+                        <div></div>
                     </div>
                     <div class="group check-label">
                         <input id="check" type="checkbox" class="check" checked>
@@ -36,22 +39,18 @@
                         <a href="#forgot">Forgot Password?</a>
                     </div>
                 </div>
-                <div class="sign-up-htm">
+                <div class="sign-up-htm register_form">
                     <div class="group">
                         <label for="user" class="label">Username</label>
-                        <input id="user" name="register_username" type="text" class="input">
-                        
+                        <input id="user" name="register_username" type="text" class="input user_pass_register">
+                        <div></div>
                     </div>
                     <div class="group">
                         <label for="pass" class="label">Password</label>
-                        <input id="pass" name="register_password" type="password" class="input" data-type="password">
-                        
-                    </div>
-                    <div class="group">
-                        <label for="pass" class="label">Confirm Password</label>
-                        <input id="pass" name="register_password" type="password" class="input" data-type="password">
-                        
-                    </div>
+                        <input id="pass" name="register_password" type="password" class="input user_pass_register" data-type="password">
+                        <div></div>
+                    </div> 
+    
                     
                     <div class="group">
                         <input type="submit" class="button btn_register" value="Sign Up">
@@ -64,18 +63,8 @@
             </div>
         </div>
     </div>
-    <script src="js/utils/validator.js"></script>
+    <script src="js/utils/validator.js" type="module"></script>
     <script src="js/presenters/authPresenter.js" type="module"></script>
 
-    <script>;
-
-        Validator({
-            form: '#form_login',
-            rules: [
-                Validator.isRequired("#user_name"),
-                Validator.isEmail("#email"),
-            ]
-        })
-    </script>
 </body>
 </html>
