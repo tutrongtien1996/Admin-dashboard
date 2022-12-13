@@ -1,10 +1,6 @@
+import { API_URL } from "../config/constant.js";
 import { productUsecase } from "../usecases/productUsecase.js";
-
-var option = {
-    headers: {
-        'Authorization': "Bearer "+localStorage.getItem("access_token")
-    }
-};
+import { Helper } from "../utils/helper.js";
 
 var product = {}
 
@@ -21,8 +17,8 @@ function initOrder() {
 
 function start() {
     initOrder();
-    setFilter();
-    getListproducts(renderListproducts);
+    Helper.setFilter();
+    productUsecase.list(renderListproducts);
     createproduct();
 }
 start()
@@ -56,10 +52,6 @@ function renderListproducts(list){
 
 
 
-function getListproducts(callback) {
-    productUsecase.list(callback)
-};
-
 function getDataproduct(){
     
     // product.category_id = document.querySelector('#address').value;
@@ -75,60 +67,29 @@ function createproduct() {
     let create = document.querySelector(".cardHeaders .add")
     
     create.onclick = () => {
-    let container_popup_elememt = document.querySelector(".container_popup");
-    let content_popup_element = document.querySelector(".popup_content");
-    content_popup_element.classList.add("edit")
-
-    content_popup_element.innerHTML = getPopup(product_popup.edit);
-    container_popup_elememt.style.display = "block"
-
-    
-    let create_popup_element = document.querySelector(".popup_content .proccess");
-    let cancel_popup_element = document.querySelector(".popup_content .cancel");
-
-
-    getDataproduct()
-    create_popup_element.onclick = () => {
-        product.name = content_popup_element.querySelector('input[name="name"]').value;
-        product.price = content_popup_element.querySelector('input[name="price"]').value;
-        // product.category_id = document.querySelector('#address_edit').value;
-        var formData = new FormData();
-        formData.append("avatar", product.avatar);
-        formData.append("name", product.name);
-        formData.append("price", product.price);
-        axios.post(API_URL+'/admin/products', formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-              'Authorization': "Bearer "+localStorage.getItem("access_token")
-            }
-            })
-            .then((response) => {
-                alert("create products is Success!")
-                content_popup_element.classList.remove("edit")
-            content_popup_element.innerHTML = ""
-                container_popup_elememt.style.display = "none"
-                getListproducts(renderListproducts);
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-        }    
+        let container_popup_elememt = document.querySelector(".container_popup");
+        let content_popup_element = document.querySelector(".popup_content");
+        content_popup_element.classList.add("edit")
+        content_popup_element.innerHTML = getPopup(product_popup.edit);
+        container_popup_elememt.style.display = "block"
+        let create_popup_element = document.querySelector(".popup_content .proccess");
+        let cancel_popup_element = document.querySelector(".popup_content .cancel");
+        getDataproduct()
+        create_popup_element.onclick = () => productUsecase.create(renderListproducts)
         cancel_popup_element.onclick = () => {
             content_popup_element.classList.remove("edit")
             content_popup_element.innerHTML = ""
             container_popup_elememt.style.display = "none"
-            getListproducts(renderListproducts);
-        }  
+            productUsecase.list(renderListproducts);
+        }
     }
-
-    
 }
 
 function deleteproduct() {
     let deleteBtn = document.querySelectorAll(".status.return");
     deleteBtn.forEach(item => {
         item.onclick = () => {
-            productUsecase.delete(item)
+            productUsecase.delete(item, renderListproducts)
         }
     })
 }
@@ -153,7 +114,6 @@ function showProfile() {
             content_popup_element.innerHTML = getPopup(product_popup.profile);
 
             content_popup_element.querySelector('.image').src = JSON.parse(item.dataset.product).image;
-            console.log(content_popup_element.querySelector('.image'))
             content_popup_element.querySelector('.name').innerText = `${JSON.parse(item.dataset.product).name}`;
             content_popup_element.querySelector('.price').innerText = `${JSON.parse(item.dataset.product).price}`;
             content_popup_element.querySelector('.category').innerText = ``;
@@ -177,12 +137,12 @@ function showProfile() {
                 content_popup_element.classList.remove("edit")
 
                 container_popup_elememt.style.display = "none"
-                getListproducts(renderListproducts);
+                productUsecase.list(renderListproducts);
             }
 
             delete_popup_element.onclick = () => {
                 content_popup_element.classList.remove("edit")
-                productUsecase.delete(edit_popup_element)
+                productUsecase.delete(edit_popup_element, renderListproducts)
             }
         }
     })
@@ -207,36 +167,13 @@ function editHandle(item){
 
     getDataproduct()
     edit_popup_element.onclick = () => {
-        product.name = content_popup_element.querySelector('input[name="name"]').value;
-        product.price = content_popup_element.querySelector('input[name="price"]').value;
-        // product.category_id = document.querySelector('#address_edit').value;
-        var formData = new FormData();
-        formData.append("avatar", product.avatar);
-        formData.append("name", product.name);
-        formData.append("price", product.price);
-        axios.patch(API_URL + "/admin/products/"+JSON.parse(item.dataset.product).id, formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-              'Authorization': "Bearer "+localStorage.getItem("access_token")
-            }
-            })
-        .then((response) => {
-            alert("Update Success!")
-            content_popup_element.classList.remove("edit")
-            container_popup_elememt.style.display = "none"
-            content_popup_element.innerHTML = ""
-
-            getListproducts(renderListproducts);
-        })
-        .catch((err) => {
-            if (err) throw err
-        })
+        productUsecase.update(JSON.parse(item.dataset.product).id, product, renderListproducts)
     }
 
     cancel_popup_element.onclick = () => {
         content_popup_element.classList.remove("edit")
         content_popup_element.innerHTML = ""
         container_popup_elememt.style.display = "none"
-        getListproducts(renderListproducts);
+        productUsecase.list(renderListproducts);
     }
 }

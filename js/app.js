@@ -1,13 +1,5 @@
-
-
-var API_URL = "http://127.0.0.1:3000";
-
-var Filter = {  
-    limit: 20, //số lượng orders trên mỗi trang: mặc định 20
-    offset: 0, //vị trí đầu tiên trong danh sách order của mỗi trang, (trạng hiện tại - 1)*limit
-    start_date: Util.getCurrentDay(), //lọc order theo ngày bắt đầu, mặc địch là ngày hiện tại
-    end_date: Util.getCurrentDay() //lọc order theo ngày kết thúc, mặc định là ngày hiện tại
-}
+import { API_URL } from "./config/constant.js";
+import { Helper } from "./utils/helper.js";
 
 function start() {
     initMenu();
@@ -15,7 +7,7 @@ function start() {
         window.location.href = '/login.html';
     }
     initUI();
-    setFilter();
+    Helper.setFilter();
     logOut();
 }
 
@@ -74,44 +66,6 @@ function initMenu() {
         document.getElementById("menu").innerHTML = html;
     })
 }
-function setFilter() {
-    var page = getValueFromUrl('page');
-    
-    if (page == null) {
-        page = 1;
-    }
-    if(page != 'all'){
-        Filter.offset = (Filter.limit) * (parseInt(page) - 1); 
-    }
-    
-    var start_date = getValueFromUrl('start_date');
-    if(start_date != null){
-        Filter.start_date = start_date;
-    }
-    var end_date = getValueFromUrl('end_date');
-    if(end_date != null){
-        Filter.end_date = end_date;
-    }
-    if(page == 'all'){
-
-        Filter.offset = 0;
-        Filter.limit = 10000;
-        console.log(Filter)
-    }
-    //set value to input
-    if(document.getElementsByClassName('startDate')[0] && document.getElementsByClassName('endDate')[0].value){
-
-        document.getElementsByClassName('startDate')[0].value =  Util.FormatVNDate(new Date(Filter.start_date));
-        document.getElementsByClassName('endDate')[0].value =  Util.FormatVNDate(new Date(Filter.end_date));
-    
-    }
-}
-
-function getValueFromUrl(param) {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    return urlParams.get(param)
-}
 
 function _getNumberOfPage(count, limit) {
     if (limit == 0) {
@@ -123,24 +77,6 @@ function _getNumberOfPage(count, limit) {
         number_of_pages +=1;
     }
     return number_of_pages;
-}
-
-function getOderpages(count, nameTemplate){
-    var htmlBtn ='';
-    try {
-        var number_of_pages = _getNumberOfPage(count, Filter.limit)
-    } catch (error) {
-        var number_of_pages = 1;
-    }
-    if(number_of_pages > 1){
-        document.getElementsByClassName('startDate')[0].value =  Filter.start_date;
-        document.getElementsByClassName('endDate')[0].value =  Filter.end_date;
-        htmlBtn += `<li><a href="${nameTemplate}.html?page=all&start_date=${Filter.start_date}&end_date=${Filter.end_date}">All</a></li>`
-        for(var i = 0; i < number_of_pages; i++){
-            htmlBtn += `<li><a href="${nameTemplate}.html?page=${i+1}&start_date=${Filter.start_date}&end_date=${Filter.end_date}">${i + 1}</a></li>`
-        }
-        document.querySelector(".details .recentOrders .pages ul").innerHTML = htmlBtn;
-    }
 }
 
 function logOut() {

@@ -53,6 +53,12 @@ a{color:inherit;text-decoration:none}
 .login-form .group .check{
 	display:none;
 }
+
+.login-form  .group span{
+	color: rgb(240, 135, 135) !important;
+	font-size: 10px;
+}
+
 .login-html .tab,
 .login-form .group .label,
 .login-form .group .button{
@@ -126,7 +132,7 @@ a{color:inherit;text-decoration:none}
 	font-size:12px;
 }
 .login-form .group .button{
-	background: #00bcd4;
+	background: rgb(149, 149, 149);
 }
 .login-form .group label .icon{
 	width:15px;
