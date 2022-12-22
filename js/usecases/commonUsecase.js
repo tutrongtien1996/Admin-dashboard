@@ -13,7 +13,7 @@ function _getNumberOfPage(count, limit) {
 }
 
 
-export const commonPresenter = {
+export const commonUsecase = {
    displayPagination: (count, nameTemplate) => {
         var htmlBtn ='';
         try {
@@ -23,8 +23,8 @@ export const commonPresenter = {
         }
         if(number_of_pages > 1){
             console.log(number_of_pages)
-            document.getElementsByClassName('startDate')[0].value =  Helper.getFilter().start_date;
-            document.getElementsByClassName('endDate')[0].value =  Helper.getFilter().end_date;
+            // document.getElementsByClassName('startDate')[0].value =  Helper.getFilter().start_date;
+            // document.getElementsByClassName('endDate')[0].value =  Helper.getFilter().end_date;
             htmlBtn += `<li><a href="${nameTemplate}.html?limit=-1&start_date=${Helper.getFilter().start_date}&end_date=${Helper.getFilter().end_date}">All</a></li>`
             for(var i = 0; i < number_of_pages; i++){
                 htmlBtn += `<li><a href="${nameTemplate}.html?page=${i+1}&start_date=${Helper.getFilter().start_date}&end_date=${Helper.getFilter().end_date}">${i + 1}</a></li>`

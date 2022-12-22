@@ -1,35 +1,41 @@
-import { API_URL } from "../config/constant.js";
 import { productUsecase } from "../usecases/productUsecase.js";
 import { Helper } from "../utils/helper.js";
+import { commonPresenter } from "./commonPresenter.js";
 
 var product = {}
 
 
-function initOrder() {
-    product = {
-        name: "",
-        price: "",
-        category_id: "",
-        avatar: ""
-    }
+function resetProduct() {
+    $("#file-div-preview").removeClass("d-block");
+    $("#file-div-preview").addClass("d-none");
+    $('#productForm').trigger("reset");
 }
 
 
 function start() {
-    initOrder();
+    resetProduct();
     Helper.setFilter();
     productUsecase.list(renderListproducts);
-    createproduct();
+    $("#addBtn").on("click", showProductFormModal)
+    $("input[name='avatar']").on("change", commonPresenter.showPreview)
+    $("#saveBtn").on("click", () => productUsecase.create(refreshPage))
 }
 start()
 
+function refreshPage() {
+    location.reload();
+}
+
+function showProductFormModal() {
+    resetProduct();
+    $("#productFormPopup").modal("show");
+}
 
 function renderListproducts(list){
     let renderproducts = document.querySelector(".renderproducts tbody");
     var html = "";
 
     list.forEach(item => {
-        item.image = API_URL +"/"+ item.image;
         let data_product = JSON.stringify(item)
         html += `<tr>
             <td>
@@ -48,43 +54,6 @@ function renderListproducts(list){
     deleteproduct();
     editproduct();
     showProfile();
-}
-
-
-
-function getDataproduct(){
-    
-    // product.category_id = document.querySelector('#address').value;
-    var inputFileElement = document.querySelector(".contai_file input");
-
-    inputFileElement.onchange = () => {
-        product.avatar = inputFileElement.files[0];
-    }
-}
-
-function createproduct() {
-
-    let create = document.querySelector(".cardHeaders .add")
-    
-    create.onclick = () => {
-        let container_popup_elememt = document.querySelector(".container_popup");
-        let content_popup_element = document.querySelector(".popup_content");
-        content_popup_element.classList.add("edit")
-        content_popup_element.innerHTML = getPopup(product_popup.edit);
-        container_popup_elememt.style.display = "block";
-        document.querySelector(".popup_content .proccess").classList.add("processCreate")
-        let create_popup_element = document.querySelector(".popup_content .proccess.processCreate");
-        let cancel_popup_element = document.querySelector(".popup_content .cancel");
-        getDataproduct()
-
-        create_popup_element.onclick = () => productUsecase.create(product, renderListproducts)
-        cancel_popup_element.onclick = () => {
-            content_popup_element.classList.remove("edit")
-            content_popup_element.innerHTML = ""
-            container_popup_elememt.style.display = "none"
-            productUsecase.list(renderListproducts);
-        }
-    }
 }
 
 function deleteproduct() {
@@ -114,12 +83,12 @@ function showProfile() {
             content_popup_element.classList.add("profile")
 
             content_popup_element.innerHTML = getPopup(product_popup.profile);
-
-            content_popup_element.querySelector('.image').src = JSON.parse(item.dataset.product).image;
-            content_popup_element.querySelector('.name').innerText = `${JSON.parse(item.dataset.product).name}`;
-            content_popup_element.querySelector('.price').innerText = `${JSON.parse(item.dataset.product).price}`;
+            var parsedData = JSON.parse(item.dataset.product)
+            content_popup_element.querySelector('.image').src = parsedData.image;
+            content_popup_element.querySelector('.name').innerText = `${parsedData.name}`;
+            content_popup_element.querySelector('.price').innerText = `${parsedData.price}`;
             content_popup_element.querySelector('.category').innerText = ``;
-            content_popup_element.querySelector('.created_at').innerText = `${JSON.parse(item.dataset.product).created_at}`;
+            content_popup_element.querySelector('.created_at').innerText = `${parsedData.created_at}`;
             content_popup_element.querySelector('.status.edit').setAttribute("data-product", item.dataset.product);
             content_popup_element.querySelector('.status.delete').setAttribute("data-product", item.dataset.product);
             content_popup_element.querySelector('.status.cancel').setAttribute("data-product", item.dataset.product);
