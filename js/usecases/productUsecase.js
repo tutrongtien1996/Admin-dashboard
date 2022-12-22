@@ -10,7 +10,9 @@ export const productUsecase = {
        return callback(response.results)
     },
 
-    create: (callback) => {
+    create: (product, callback) => {
+        let container_popup_elememt = document.querySelector(".container_popup");
+        let content_popup_element = document.querySelector(".popup_content");
         product.name = content_popup_element.querySelector('input[name="name"]').value;
         product.price = content_popup_element.querySelector('input[name="price"]').value;
         // product.category_id = document.querySelector('#address_edit').value;
@@ -27,7 +29,7 @@ export const productUsecase = {
             .then((response) => {
                 alert("create products is Success!")
                 content_popup_element.classList.remove("edit")
-            content_popup_element.innerHTML = ""
+                content_popup_element.innerHTML = ""
                 container_popup_elememt.style.display = "none"
                 productUsecase.list(callback);
             })

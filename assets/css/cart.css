@@ -27,7 +27,7 @@ ul {
 }
 .main.active .details {
     display: grid;
-    grid-template-columns: 3fr 1fr;
+    grid-template-columns: 5fr 2.1fr;
 }
 .main.active .details .listProducts .item {
     width: 25%;
@@ -181,6 +181,7 @@ ul {
    
 }
 .content_order .payment_info .submit button {
+    background-color: rgb(194, 195, 196);
     width: 100%;
     height: 100%;
     font-size: x-large;

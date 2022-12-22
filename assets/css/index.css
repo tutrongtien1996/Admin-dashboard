@@ -59,6 +59,16 @@ body {
     width: 80px;
 }
 
+.navigation .profile .avatar {
+    height: 40px;
+    width:40px ;
+    border-radius: 50%;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-25px, -160%);
+}
+
 .navigation ul {
     position: absolute;
     top: 0;

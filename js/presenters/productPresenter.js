@@ -71,11 +71,13 @@ function createproduct() {
         let content_popup_element = document.querySelector(".popup_content");
         content_popup_element.classList.add("edit")
         content_popup_element.innerHTML = getPopup(product_popup.edit);
-        container_popup_elememt.style.display = "block"
-        let create_popup_element = document.querySelector(".popup_content .proccess");
+        container_popup_elememt.style.display = "block";
+        document.querySelector(".popup_content .proccess").classList.add("processCreate")
+        let create_popup_element = document.querySelector(".popup_content .proccess.processCreate");
         let cancel_popup_element = document.querySelector(".popup_content .cancel");
         getDataproduct()
-        create_popup_element.onclick = () => productUsecase.create(renderListproducts)
+
+        create_popup_element.onclick = () => productUsecase.create(product, renderListproducts)
         cancel_popup_element.onclick = () => {
             content_popup_element.classList.remove("edit")
             content_popup_element.innerHTML = ""

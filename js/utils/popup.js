@@ -115,12 +115,12 @@ var customer_popup = {
 
 var product_popup = {
     edit : `<div class="cardHeader">
-    <h2>Create Product</h2>
+    <h2>Product</h2>
 </div>
 <div class="list_input_customer list_input_product">
     <div>
         <label for="">name</label>
-        <input type="text" class="pri_name" name="name">
+        <input type="text" class="pri_name nam" name="name">
         <span></span>
     </div>
     <div>
@@ -129,7 +129,7 @@ var product_popup = {
         <span></span>
     </div>
     <div>
-        <label for="image">Categories</label>
+        <label for="image">Cat</label>
         <input type="text" name="" class="option" list="categoryList">
         <datalist id="categoryList">
             <option value="volvo"></option>
@@ -149,7 +149,7 @@ var product_popup = {
     
 </div>
 <div class="border_span"></div>
-<div class="list_action"><span class="status return proccess">Proccess</span><span class="status PENDING cancel">Cancel</span></div>`,
+<div class="list_action"><span class="status PAID proccess">Proccess</span><span class="status PENDING cancel">Cancel</span></div>`,
 
 profile: `<div class="cardHeader">
 <h2>Customer</h2>

@@ -36,6 +36,14 @@ function checkQuantityOrder () {
     cartUsecase.order.products.forEach(item => {
         numberQuantity += Number(item.quantity);
     })
+    if(numberQuantity <= 0)
+    {
+        document.querySelector(".container_order #submit_data").style.background = "rgb(194, 195, 196)"
+        document.querySelector(".empty_cart").style.display = "block";
+    }
+    if(numberQuantity > 0){
+        document.querySelector(".container_order #submit_data").style.background = "#00bcd4"
+    }
     numberQuanElement.innerText = Math.floor(numberQuantity);
 }
 
@@ -169,6 +177,7 @@ function initOnclickProducts(listElements){
     listElements.forEach(element => {
         element.onclick = () =>{
             Helper.playSound();
+            document.querySelector(".container_order #submit_data").style.background = "#00bcd4"
             document.querySelector(".empty_cart").style.display = "none"
             var product = JSON.parse(element.dataset.product); 
             if(cartUsecase.order.products.length == 0){
@@ -388,6 +397,7 @@ function createOrders() {
                 document.querySelector(".customer_name input").value = '';
                 document.querySelector("#status_payment .selected").setAttribute('selected','selected')
                 document.querySelector(".top_icon").style.display = "none"
+                document.querySelector(".container_order #submit_data").style.background = "#00bcd4"
                 document.querySelector(".empty_cart").style.display = "block"
 
             })
@@ -436,6 +446,7 @@ trash.onclick = () => {
 
 function initEmpty() {
     Helper.errorSound();
+    document.querySelector(".container_order #submit_data").style.background = "rgb(194, 195, 196)"
     document.querySelector(".top_icon").style.display = "none"
     document.querySelector(".container_order #submit_data").disabled = true;
     cartUsecase.initOrder();

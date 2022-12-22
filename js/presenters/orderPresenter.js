@@ -42,33 +42,6 @@ function renderListOrders(results){
 }
 
 
-
-
-
-function initOnclickViewall(){
-    var btnViewAll = document.querySelector(".recentOrders .cardHeaders .btn.viewall");
-    btnViewAll.onclick = () => {  
-        Helper.filter.offset = 0;
-        Helper.filter.limit = 0;
-        orderUsecase.list(renderListOrders)
-    }
-}
-
-function initDatePicker(){
-    const startDate = datepicker('.startDate', {
-        formatter: (input, date, instance) => {
-            const startValue = date.toLocaleDateString('vi-VN')
-            input.value = startValue // => '1/1/2099'
-          }
-    });
-    const endDate = datepicker('.endDate', {
-        formatter: (input, date, instance) => {
-            const endValue = date.toLocaleDateString('vi-VN')
-            input.value = endValue 
-        }
-    })
-}
-
 function initSearchDates(){
     var searchDates = document.getElementById('searchDates');
     searchDates.onclick =  () => {
