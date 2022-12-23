@@ -86,7 +86,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="productFormPopupLabel">Add/Edit Product</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form action="" id="productForm">
@@ -112,8 +112,41 @@
                   </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
               <button type="button" class="btn btn-primary btn-sm" id="saveBtn">Save</button>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="modal fade pt-5" id="productDetailPopup" tabindex="-1" aria-labelledby="productDetailPopupLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="productDetailPopupLabel">Product information</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row mb-3">
+                    <label class="col-sm-2 col-form-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control product_input" id="detail_name" readonly>
+                    </div>
+                </div>
+                <div class="form-group row mb-3">
+                    <label class="col-sm-2 col-form-label">Price</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control product_input" id="detail_price" readonly >
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Image</label>
+                    <div class="col-sm-10">
+                        <div class="text-center"><img class="rounded img-thumbnail" id="detail_image" width="150px" height="150px" /></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
             </div>
           </div>
         </div>

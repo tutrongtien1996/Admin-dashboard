@@ -373,10 +373,17 @@ input[type=number]:focus,
 .btn {
     position: relative;
     padding: 5px 10px;
-    background: var(--primary);
     text-decoration: none;
     color: var(--white);
     border-radius: 6px;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary);
 }
 
 .details table {
@@ -809,4 +816,12 @@ thead, tbody tr {
     .search {
         margin-right: 30px;
     }
+}
+.modal-header {
+    background-color: var(--primary);
+    color: white;
+}
+.modal-header .btn-close {
+    color: #fff; 
+    opacity: 1;
 }
