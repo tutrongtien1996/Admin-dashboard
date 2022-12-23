@@ -1,5 +1,6 @@
 import { API_URL } from "../config/constant.js";
 import { cartUsecase } from "../usecases/cartUsecase.js";
+import { productUsecase } from "../usecases/productUsecase.js";
 import { Helper } from "../utils/helper.js";
 
 
@@ -22,7 +23,7 @@ function start(){
     getCustomer();
     cartUsecase.initOrder();
     getListPayment(rederListPayment);
-    getListProducts(renderListProduct);
+    productUsecase.list(renderListProduct);
     getListCustomers();
     searchCustomer ();
 }
@@ -36,6 +37,14 @@ function checkQuantityOrder () {
     cartUsecase.order.products.forEach(item => {
         numberQuantity += Number(item.quantity);
     })
+    if(numberQuantity <= 0)
+    {
+        document.querySelector(".container_order #submit_data").style.background = "rgb(194, 195, 196)"
+        document.querySelector(".empty_cart").style.display = "block";
+    }
+    if(numberQuantity > 0){
+        document.querySelector(".container_order #submit_data").style.background = "#00bcd4"
+    }
     numberQuanElement.innerText = Math.floor(numberQuantity);
 }
 
@@ -120,26 +129,13 @@ function rederListPayment(data) {
 }
 
 
-function getListProducts (callback) {
-    axios.get(API_URL + "/admin/products", {
-        params: Helper.getFilter(),
-        headers: Helper.requestOption.headers
-    })
-    .then((response) => {
-        searchProduct(response.data.data.results);
-        callback(response.data.data.results)
-    })
-    .catch((err) => {
-        if (err) throw err
-    })
-}
-
 function renderListProduct(data){
+
+    searchProduct(data);
     var list_products = document.getElementsByClassName("listProducts")[0];
 
     let html = "";
     data.forEach(product => {
-        product.image = API_URL +"/"+ product.image;
         const mydata = JSON.stringify(product);
         html += `<li class="item">
                     <div class="content" data-product='${mydata}'>
@@ -169,6 +165,7 @@ function initOnclickProducts(listElements){
     listElements.forEach(element => {
         element.onclick = () =>{
             Helper.playSound();
+            document.querySelector(".container_order #submit_data").style.background = "#00bcd4"
             document.querySelector(".empty_cart").style.display = "none"
             var product = JSON.parse(element.dataset.product); 
             if(cartUsecase.order.products.length == 0){
@@ -214,7 +211,7 @@ function showOrder(html){
                     <img src="${product.image}" alt="product name">
 
                 </div>
-                <div class="center">
+                <div class="center_custom">
                     <p class="name">${product.name}</p>
                     <p class="price">${Util.formatNumber(product.price)}</p>
                 </div>
@@ -388,6 +385,7 @@ function createOrders() {
                 document.querySelector(".customer_name input").value = '';
                 document.querySelector("#status_payment .selected").setAttribute('selected','selected')
                 document.querySelector(".top_icon").style.display = "none"
+                document.querySelector(".container_order #submit_data").style.background = "#00bcd4"
                 document.querySelector(".empty_cart").style.display = "block"
 
             })
@@ -408,12 +406,12 @@ function create_bill() {
                     <td>${Util.formatNumber(element.quantity * element.price)}</td>
                 </tr>`
     })
-    document.querySelector(".popup_content .customer_bill h5:nth-child(2)").innerText = cartUsecase.order.customer.name;
+    document.querySelector(".popup_content .customer_bill h6:nth-child(2)").innerText = cartUsecase.order.customer.name;
     document.querySelector(".popup_content .number_bill p:nth-child(2)").innerText = cartUsecase.order.date;
     document.querySelector(".popup_content .number_bill p:nth-child(1)").innerText = "code";
     document.querySelector(".popup_content  tbody").innerHTML = table;
-    document.querySelector(".popup_content .total_bill .discount h5").innerText = Util.formatNumber(cartUsecase.order.discount);
-    document.querySelector(".popup_content .total_bill .total h3:nth-child(2)").innerText = Util.formatNumber(cartUsecase.order.total);
+    document.querySelector(".popup_content .total_bill .discount h6:nth-child(2)").innerText = Util.formatNumber(cartUsecase.order.discount);
+    document.querySelector(".popup_content .total_bill .total h6:nth-child(2)").innerText = Util.formatNumber(cartUsecase.order.total);
     var cancel = document.querySelector(".popup_content .cancel");
     cancel.onclick = () => {
         Helper.errorSound();
@@ -436,6 +434,7 @@ trash.onclick = () => {
 
 function initEmpty() {
     Helper.errorSound();
+    document.querySelector(".container_order #submit_data").style.background = "rgb(194, 195, 196)"
     document.querySelector(".top_icon").style.display = "none"
     document.querySelector(".container_order #submit_data").disabled = true;
     cartUsecase.initOrder();

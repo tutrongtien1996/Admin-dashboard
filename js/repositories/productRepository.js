@@ -1,4 +1,5 @@
 import { API_URL  } from "../config/constant.js";
+import { ProductEntityFromList } from "../entities/productEntity.js";
 import { Helper } from "../utils/helper.js";
 export const productRepository = {
     list: (params) => {
@@ -9,9 +10,36 @@ export const productRepository = {
         }
         )
         .then((response) => {
-            return response.data.data;
+            var data = response.data.data
+            return {
+                results: ProductEntityFromList(data.results),
+                count: data.count
+            }
         })
         .catch(function (error) {
+            console.log(error)
+            return false;
+        })
+    },
+    create: (formData) => {
+        var header = Helper.requestOption.headers
+        header["Content-Type"] = 'multipart/form-data'
+        return axios.post(API_URL+'/admin/products', formData, {
+            headers: header
+        })
+        .then((response) => {
+            return response.data;
+        })
+        .catch((err) => {
+            return false
+        })
+    },
+    delete: (id) => {
+        return axios.delete(API_URL + '/admin/products/'+id, Helper.requestOption)
+        .then((response) => {
+            return response.data;
+        })
+        .catch((err) => {
             return false;
         })
     }

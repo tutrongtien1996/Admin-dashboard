@@ -67,17 +67,6 @@ function initMenu() {
     })
 }
 
-function _getNumberOfPage(count, limit) {
-    if (limit == 0) {
-        throw("Limit can not be zero");
-    }
-    var number_of_pages = Math.floor(count / limit);
-    var numberMod = count % limit;
-    if(numberMod > 0){
-        number_of_pages +=1;
-    }
-    return number_of_pages;
-}
 
 function logOut() {
     let logoutElement = document.querySelector("#logout");
