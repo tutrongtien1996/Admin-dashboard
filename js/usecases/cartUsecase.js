@@ -1,5 +1,5 @@
-import { productRepository } from "../repositories/productRepository.js";
-import { orderRepository } from "../repositories/orderRepository.js";
+import { paymentRepository } from "../repositories/paymentRepository.js";
+import { customerRepository } from "../repositories/customerRepository.js";
 
 export const cartUsecase = {
     order: {},
@@ -19,5 +19,11 @@ export const cartUsecase = {
     },
     getOrder: () => {
         return cartUsecase.order
+    },
+    getListPayment: async () => {
+        return await paymentRepository.list(null)
+    },
+    getListCustomer: async () => {
+        return await customerRepository.list(null)
     }
 }
