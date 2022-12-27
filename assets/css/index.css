@@ -11,6 +11,11 @@
 }
 p {
     font-size: 13px;
+    margin-bottom: 0px;
+}
+
+ul {
+    padding-left: 0rem;
 }
 
 :root {
@@ -35,7 +40,23 @@ body {
 
 }
 
-.container {
+textarea:focus, 
+textarea.form-control:focus, 
+input.form-control:focus, 
+input[type=text]:focus, 
+input[type=password]:focus, 
+input[type=email]:focus, 
+input[type=number]:focus, 
+[type=text].form-control:focus, 
+[type=password].form-control:focus, 
+[type=email].form-control:focus, 
+[type=tel].form-control:focus, 
+[contenteditable].form-control:focus {
+  /* box-shadow: inset 0 -1px 0 var(--primary);
+  border-color: var(--primary); */
+}
+
+.container-custom {
     position: relative;
     width: 100%;
     background-color: var(--body);
@@ -180,40 +201,14 @@ body {
     left: 90px;
 }
 
-
-
 .topbar {
     width: 100%;
-    height: 60px;
+    height: 50px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 0 10px;
-    top: 0px;
-    position: sticky;
-    top: 0;
+    padding: 0 5px;
     z-index: 10000;
     background-color: var(--body);
-}
-
-.toggle {
-    position: relative;
-    width: 60px;
-    height: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2.5em;
-    cursor: pointer;
-    color: var(--primary)
-    
-}
-
-.search {
-    position: relative;
-    width: 400px;
-    margin: 0 10px;
-    margin-right: 240px;
 }
 
 .search label {
@@ -224,7 +219,7 @@ body {
 .search label input {
     width: 100%;
     height: 40px;
-    border-radius: 40px;
+    border-radius: 20px;
     padding: 5px 20px;
     padding-left: 35px;
     font-size: 18px;
@@ -235,28 +230,12 @@ body {
 .search label ion-icon 
 {
     position: absolute;
-    top: 0;
+    top: 50%;
+    transform: translateY(-50%);
     left: 10px;
     font-size: 1.2em;
 }
 
-.user {
-    position: relative;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    overflow: hidden;
-    cursor: pointer;
-}
-
-.user img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
 
 .cardBox {
     position: relative;
@@ -313,7 +292,7 @@ body {
     display: grid;
     grid-template-columns: 2fr 1fr;
     grid-gap: 10px;
-    height: calc(100vh - 60px);
+    height: calc(100vh);
 }
 
 .details .recentOrders {
@@ -353,10 +332,17 @@ body {
 .btn {
     position: relative;
     padding: 5px 10px;
-    background: var(--primary);
     text-decoration: none;
     color: var(--white);
     border-radius: 6px;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary);
 }
 
 .details table {
@@ -789,4 +775,12 @@ thead, tbody tr {
     .search {
         margin-right: 30px;
     }
+}
+.modal-header {
+    background-color: var(--primary);
+    color: white;
+}
+.modal-header .btn-close {
+    color: #fff; 
+    opacity: 1;
 }

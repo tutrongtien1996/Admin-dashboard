@@ -1,8 +1,8 @@
 import { API_URL  } from "../config/constant.js";
 import { Helper } from "../utils/helper.js";
-export const customerRepository = {
-    list: (params=null) => {
-        return axios.get(API_URL+'/admin/customers', 
+export const paymentRepository = {
+    list: (params) => {
+        return axios.get(API_URL+'/admin/payments', 
         {
             params: params,
             headers: Helper.requestOption.headers

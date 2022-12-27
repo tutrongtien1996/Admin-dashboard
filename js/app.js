@@ -2,6 +2,7 @@ import { API_URL } from "./config/constant.js";
 import { Helper } from "./utils/helper.js";
 
 function start() {
+    viewProfile();
     initMenu();
     if (!checkIfUserLogged()) {
         window.location.href = '/login.html';
@@ -29,11 +30,11 @@ function checkIfUserLogged() {
 
 function initUI() {
     //menutoggle
-    let toggle = document.querySelector('.toggle');
+    // let toggle = document.querySelector('.toggle');
     let navigation = document.querySelector('.navigation');
     let main = document.querySelector('.main');
 
-    toggle.onclick = function(){
+    navigation.onclick = function(){
         navigation.classList.toggle('active');
         main.classList.toggle('active');
     }
@@ -68,16 +69,41 @@ function initMenu() {
 }
 
 
+function viewProfile() {
+    let viewElement = document.querySelector(".profile .avatar")
+    let profileElement = document.querySelector(".viewProfile")
+    window.addEventListener('click', function(e){   
+        if (e.target != profileElement && e.target != viewElement){
+            if(profileElement){
+                profileElement.style.display = "none"
+            }
+          
+
+        } else{
+          // Clicked outside the box
+        }
+    });
+    if(viewElement){
+        viewElement.onclick = (e) => {
+            console.log(e)
+            profileElement.style.display = "block"
+        }
+    }
+    
+}
+
+
+
 function logOut() {
-    let logoutElement = document.querySelector("#logout");
+    let logoutElement = document.querySelector(".viewProfile .logout");
     if(logoutElement){
         logoutElement.onclick = () => {
-            alert("da vao")
             axios.post(API_URL+"/admin/logout", {
                 headers : option.headers
             })
             .then(function (response) {
-                console.log(response)
+                localStorage.setItem("access_token", "");
+                window.location.href = "./login.html"
             })
             .catch(function (error) {
                 return error

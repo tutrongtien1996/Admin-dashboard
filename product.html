@@ -5,12 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZEOPOS</title>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap-grid.min.css">
     <link rel="stylesheet" href="./assets/css/index.css">
     <link rel="stylesheet" href="./assets/css/product.css">
     <script src="/node_modules/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <div class="container">
+    <div class="container-custom">
         <div class="navigation">
             <ul id="menu">     
             </ul>
@@ -18,12 +22,12 @@
         
        <!-- main -->
         <div class="main">
-            <div class="topbar">
+            <!-- <div class="topbar">
                 <div class="toggle">
                     <ion-icon name="menu-outline"></ion-icon> 
                 </div>
 
-                <!-- search -->
+               
                 <div class="search">
                     <label>
                         <input type="text" placeholder="Search here">
@@ -31,11 +35,11 @@
                     </label>
                 </div>
 
-                <!-- userimg -->
+                
                 <div class="user">
                     <img src="img/user.jpg" style="width: 65px; height: 65px;">
                 </div>
-            </div>
+            </div> -->
 
             <!-- card -->
            
@@ -45,7 +49,7 @@
                 <div class="recentOrders renderCustomers renderproducts">
                     <div class="cardHeaders">
                         <h2>List Products</h2>
-                        <span class="status add">Add</span>
+                        <span class="status add" id="addBtn">Add</span>
                     </div>
                     <div class="table">
                     <table>
@@ -66,62 +70,6 @@
                         <ul></ul>
                     </div>
                 </div>
-                <!-- new customers -->
-                <!-- <div class="recentCustomers">
-                    <div class="create_custom">
-                        <div class="cardHeader">
-                            <h2>Create Product</h2>
-                        </div>
-                        <div class="list_input_customer list_input_product">
-                            <div>
-                                <label for="">name</label>
-                                <input type="text" class="pri_name" name="name">
-                                <span></span>
-                            </div>
-                            <div>
-                                <label for="">Price</label>
-                                <input type="text" class="pri_name price" name="price">
-                                <span></span>
-                            </div>
-                            <div>
-                                <label for="image">Categories</label>
-                                <input type="text" name="" class="option" list="categoryList">
-                                <datalist id="categoryList">
-                                    <option value="volvo"></option>
-                                    <option value="saab"></option>
-                                    <option value="mercedes"></option>
-                                    <option value="audi"></option>
-                                </datalist>
-                            </div>
-                            <div class="contai_file">
-                                <label for="">Image</label>
-                                <input type="file" id="upload" hidden/>
-                                <div class="label_choose"><label  for="upload">Choose file</label></div>
-                                <span></span>
-                            </div>
-                            <div class="create_product">
-                                <button id="create_product">Create</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="create_category">
-                        <div class="list_category">
-                            <h3>List Categories</h3>
-                            <div>
-                                <ul>
-                                    <li>Category 1</li><span>-</span>
-                                </ul> 
-                            </div>
-                        </div>
-                        <div class="create_cate">
-                            <h3>Create</h3>
-                            <div>
-                               <input type="text">
-                               <span>Add</span>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
             </div>
         </div>
 
@@ -131,6 +79,77 @@
             </div>
         </div>
 
+    </div>
+
+    <div class="modal fade pt-5" id="productFormPopup" tabindex="-1" aria-labelledby="productFormPopupLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="productFormPopupLabel">Add/Edit Product</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" id="productForm">
+                    <div class="form-group row mb-3">
+                      <label class="col-sm-2 col-form-label">Name</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control product_input" name="name">
+                      </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                        <label class="col-sm-2 col-form-label">Price</label>
+                        <div class="col-sm-10">
+                          <input type="number" class="form-control product_input" name="price">
+                        </div>
+                    </div>
+                    <div class="text-center d-none" id="file-div-preview"><img class="rounded img-thumbnail" width="150px" height="150px" /></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Image</label>
+                        <div class="col-sm-10">
+                          <input type="file" class="form-control" name="avatar" id="inputAvatar" accept="image/png, image/gif, image/jpeg" >
+                        </div>
+                      </div>
+                  </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary btn-sm" id="saveBtn">Save</button>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="modal fade pt-5" id="productDetailPopup" tabindex="-1" aria-labelledby="productDetailPopupLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="productDetailPopupLabel">Product information</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row mb-3">
+                    <label class="col-sm-2 col-form-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control product_input" id="detail_name" readonly>
+                    </div>
+                </div>
+                <div class="form-group row mb-3">
+                    <label class="col-sm-2 col-form-label">Price</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control product_input" id="detail_price" readonly >
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Image</label>
+                    <div class="col-sm-10">
+                        <div class="text-center"><img class="rounded img-thumbnail" id="detail_image" width="150px" height="150px" /></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
     </div>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>

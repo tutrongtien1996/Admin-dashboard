@@ -13,8 +13,8 @@ var cart_popup = `<div class="content_items">
 <div class="customer_bill">
 
     <div>
-    <h5>Customer:</h5>
-    <h5>Jhon Dang</h5>
+    <h6>Customer: </h6>
+    <h6>Jhon Dang</h6>
     </div>
     <div class="pay_bill">
     </div>
@@ -42,17 +42,17 @@ var cart_popup = `<div class="content_items">
 <div class="total_bill">
     <div class="total_payment">
          <div class="total">
-            <h3>Total</h3>
-            <h3></h3>
+            <h6>Total</h6>
+            <h6></h6>
         </div>
          <div class="payment">
-            <h5>Payment</h5>
-            <h5></h5>
+            <h6>Payment</h6>
+            <h6></h6>
          </div>
     </div>
     <div class="discount">
-        <h4>Discount</h4>
-        <h5>78687070-7</h5> 
+        <h6>Discount</h6>
+        <h6>78687070-7</h6> 
     </div>
     
 </div>

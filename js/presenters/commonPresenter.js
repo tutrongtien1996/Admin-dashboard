@@ -20,5 +20,14 @@ export const commonPresenter = {
             document.querySelector(".details .recentOrders .pages ul").innerHTML = htmlBtn;
         }
         
+    },
+    showPreview(event){
+        if(event.target.files.length > 0){
+            var src = URL.createObjectURL(event.target.files[0]);
+            var preview = $("#file-div-preview").find("img");
+            $(preview).attr("src", src);
+            $("#file-div-preview").removeClass("d-none");
+            $("#file-div-preview").addClass("d-block");
+        }
     }
 }
