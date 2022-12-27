@@ -7,7 +7,28 @@ import { Helper } from "../utils/helper.js";
 var customElement = document.querySelector('.payment_info .customer_name input[name="customer"]');
 
 var customer = {}
-
+var productList = {
+    items: [],
+    set: function(data) {
+        productList.items = data;
+    },
+    get: function(keyword) {
+        return productList.items.filter( (item) => {
+            return item.name.toLowerCase().includes(keyword.toLowerCase())
+        })
+    }
+}
+var customerList = {
+    items: [],
+    set: function(data) {
+        customerList.items = data;
+    },
+    get: function(keyword) {
+        return customerList.items.filter( (item) => {
+            return item.name.toLowerCase().includes(keyword.toLowerCase())
+        })
+    }
+}
 
 function initCustomer() {
     customer = {
@@ -17,18 +38,29 @@ function initCustomer() {
     }
 }
 
-function start(){
+async function start(){
     initCustomer();
     Helper.setFilter();
     getCustomer();
     cartUsecase.initOrder();
-    getListPayment(rederListPayment);
-    productUsecase.list(renderListProduct);
-    getListCustomers();
-    searchCustomer ();
+    productUsecase.list((data) => {
+        productList.set(data);
+        renderListProduct(productList.get(""))
+    });
+    cartUsecase.getListPayment().then((res) => {
+        if (res) {
+            rederListPayment(res)
+        }
+    })
+    cartUsecase.getListCustomer().then((res) => {
+        if (res) {
+            customerList.set(res.results)
+        }
+    })
+    searchCustomer();
+    searchProduct();
 }
 start();
-
 
 
 function checkQuantityOrder () {
@@ -48,26 +80,16 @@ function checkQuantityOrder () {
     numberQuanElement.innerText = Math.floor(numberQuantity);
 }
 
-function searchProduct(data) {
+function searchProduct() {
     let search_element = document.querySelector("input[name='search_name']");
-
     search_element.onkeyup = () => {
-        let data_name = data;
-        data_name = data.filter( (item) => {
-            item.image = item.image.replace(API_URL + "/", '')
-            return item.name.includes(search_element.value)
-        })
-        renderListProduct(data_name)
+        renderListProduct(productList.get(search_element.value))
     }
 }
 
-async function  searchCustomer (){
-    let list_custom = await getListCustomers();
+function  searchCustomer (){
     customElement.onkeyup = () => {
-        let data_name = list_custom;
-        data_name = list_custom.filter( (item) => {
-            return item.name.includes(customElement.value)
-        })
+        let data_name = customerList.get(customElement.value)
         if(data_name){
             let html = ""
             data_name.forEach(custom => {
@@ -92,30 +114,6 @@ async function  searchCustomer (){
     }
 }
 
-function getListCustomers(){
-    return  axios.get(API_URL+'/admin/customers', 
-        {
-            headers: Helper.requestOption.headers
-        }
-        )
-        .then((response) => {
-            return  response.data.data.results;
-        })
-        .catch(function (error) {
-            console.log(error)
-        })
-};
-
-
-function getListPayment (callback){
-    axios.get(API_URL + "/admin/payments", Helper.requestOption)
-    .then((response) => {
-        callback(response.data.data)
-    })
-    .catch((err) => {
-        if (err) throw err
-    })
-}
 
 function rederListPayment(data) {
     let html = "";
@@ -130,10 +128,7 @@ function rederListPayment(data) {
 
 
 function renderListProduct(data){
-
-    searchProduct(data);
     var list_products = document.getElementsByClassName("listProducts")[0];
-
     let html = "";
     data.forEach(product => {
         const mydata = JSON.stringify(product);
@@ -148,7 +143,6 @@ function renderListProduct(data){
                 </li>`
     })
     list_products.innerHTML = html;
-    
     getListItemProduct();
 }
 

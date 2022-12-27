@@ -10,20 +10,34 @@
     <link rel="stylesheet" href="node_modules/js-datepicker/dist/datepicker.min.css">
     <script src="./node_modules/js-datepicker/dist/datepicker.min.js"></script>
     <script src="./node_modules/axios/dist/axios.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+</head>
 </head>
 <body>
     <div class="container">
-        <div class="navigation">
+        <div class="viewProfile">
+            <p>Nam Anh</p>
+            <p>View</p>
+            <p>Setting</p><br>
+            <p class="logout">Logout</p>
+        </div>
+        <div class="navigation active">
             <ul id="menu">     
             </ul>
+            <div class="profile">
+                <img class="avatar" src="/img/img1.jpg" alt="">
+            </div>
+            
         </div>
+        
        <!-- main -->
-        <div class="main">
-            <div class="topbar">
+        <div class="main active">
+            <!-- <div class="topbar">
                 <div class="toggle">
                     <ion-icon name="menu-outline"></ion-icon>
                 </div>
-            </div>
+            </div> -->
             <!--order list  -->
             <div class="details">
                 <div class="recentOrders">
