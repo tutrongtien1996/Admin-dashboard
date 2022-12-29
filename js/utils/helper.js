@@ -31,9 +31,11 @@ export const Helper =  {
         if (page == null) {
             page = 1;
         }
-        if(page != 'all'){
-            Helper.filter.offset = (Helper.filter.limit) * (parseInt(page) - 1); 
-        }
+
+        
+        
+        Helper.filter.offset = (Helper.filter.limit) * (parseInt(page) - 1); 
+        
         
         var start_date = Helper.getValueFromUrl('start_date');
         if(start_date != null){
@@ -43,12 +45,12 @@ export const Helper =  {
         if(end_date != null){
             Helper.filter.end_date = end_date;
         }
-        if(page == 'all'){
-
+        var limit = Helper.getValueFromUrl('limit');
+        if(limit == -1){
             Helper.filter.offset = 0;
-            Helper.filter.limit = 10000;
-            console.log(Helper.filter)
+            Helper.filter.limit = 10000000;
         }
+        
         //set value to input
         if(document.getElementsByClassName('startDate')[0] && document.getElementsByClassName('endDate')[0].value){
 

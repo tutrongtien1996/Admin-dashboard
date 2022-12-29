@@ -13,8 +13,8 @@ var cart_popup = `<div class="content_items">
 <div class="customer_bill">
 
     <div>
-    <h5>Customer:</h5>
-    <h5>Jhon Dang</h5>
+    <h6>Customer: </h6>
+    <h6>Jhon Dang</h6>
     </div>
     <div class="pay_bill">
     </div>
@@ -42,17 +42,17 @@ var cart_popup = `<div class="content_items">
 <div class="total_bill">
     <div class="total_payment">
          <div class="total">
-            <h3>Total</h3>
-            <h3></h3>
+            <h6>Total</h6>
+            <h6></h6>
         </div>
          <div class="payment">
-            <h5>Payment</h5>
-            <h5></h5>
+            <h6>Payment</h6>
+            <h6></h6>
          </div>
     </div>
     <div class="discount">
-        <h4>Discount</h4>
-        <h5>78687070-7</h5> 
+        <h6>Discount</h6>
+        <h6>78687070-7</h6> 
     </div>
     
 </div>
@@ -115,12 +115,12 @@ var customer_popup = {
 
 var product_popup = {
     edit : `<div class="cardHeader">
-    <h2>Create Product</h2>
+    <h2>Product</h2>
 </div>
 <div class="list_input_customer list_input_product">
     <div>
         <label for="">name</label>
-        <input type="text" class="pri_name" name="name">
+        <input type="text" class="pri_name nam" name="name">
         <span></span>
     </div>
     <div>
@@ -129,7 +129,7 @@ var product_popup = {
         <span></span>
     </div>
     <div>
-        <label for="image">Categories</label>
+        <label for="image">Cat</label>
         <input type="text" name="" class="option" list="categoryList">
         <datalist id="categoryList">
             <option value="volvo"></option>
@@ -149,7 +149,7 @@ var product_popup = {
     
 </div>
 <div class="border_span"></div>
-<div class="list_action"><span class="status return proccess">Proccess</span><span class="status PENDING cancel">Cancel</span></div>`,
+<div class="list_action"><span class="status PAID proccess">Proccess</span><span class="status PENDING cancel">Cancel</span></div>`,
 
 profile: `<div class="cardHeader">
 <h2>Customer</h2>

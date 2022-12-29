@@ -1,39 +1,28 @@
 import { API_URL } from "../config/constant.js";
+import { commonPresenter } from "../presenters/commonPresenter.js";
 import { productRepository } from "../repositories/productRepository.js";
 import { Helper } from "../utils/helper.js";
-import { commonPresenter } from "./commonUsecase.js";
+import { commonUsecase } from "./commonUsecase.js";
 
 export const productUsecase = {
     list: async (callback) => {
        var response = await productRepository.list(Helper.getFilter())
-       commonPresenter.displayPagination(response.count, "product")
+       commonUsecase.displayPagination(response.count, "product")
        return callback(response.results)
     },
 
-    create: (callback) => {
-        product.name = content_popup_element.querySelector('input[name="name"]').value;
-        product.price = content_popup_element.querySelector('input[name="price"]').value;
-        // product.category_id = document.querySelector('#address_edit').value;
+    create: async (callback) => {
+        var product = {};
         var formData = new FormData();
+        $(document).find(".product_input").each(function() {
+            formData.append($(this).attr("name"), $(this).val());
+        });
+        product.avatar =  $("#inputAvatar")[0].files[0];
         formData.append("avatar", product.avatar);
-        formData.append("name", product.name);
-        formData.append("price", product.price);
-        axios.post(API_URL+'/admin/products', formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-              'Authorization': "Bearer "+localStorage.getItem("access_token")
-            }
-            })
-            .then((response) => {
-                alert("create products is Success!")
-                content_popup_element.classList.remove("edit")
-            content_popup_element.innerHTML = ""
-                container_popup_elememt.style.display = "none"
-                productUsecase.list(callback);
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+        var response = await productRepository.create(formData)
+        if (response && response.success) {
+            callback()
+        }
     },
 
     update: async (id, product, callback) => {
@@ -82,18 +71,16 @@ export const productUsecase = {
         let delete_popup_element = document.querySelector(".popup_content .delete");
         let cancel_popup_element = document.querySelector(".popup_content .cancel");
         
-        delete_popup_element.onclick = () => {
-            axios.delete(API_URL + '/admin/products/'+JSON.parse(item.dataset.product).id, Helper.requestOption)
-            .then((response) => {
+        delete_popup_element.onclick = async () => {
+            var response = await productRepository.delete(JSON.parse(item.dataset.product).id)
+            if (response && response.success) {
                 content_popup_element.classList.remove("delete")
                 container_popup_elememt.style.display = "none"
                 content_popup_element.innerHTML = ""
-
                 productUsecase.list(callback);
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+            } else {
+                commonPresenter.alertFail("System error")
+            }
         }
 
         cancel_popup_element.onclick = () => {

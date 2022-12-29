@@ -1,3 +1,7 @@
+.details {
+    grid-template-columns: 1fr 0fr;
+}
+
 
 .list_input_customer .create_customer {
     width: 100%;

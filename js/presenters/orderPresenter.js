@@ -34,40 +34,18 @@ function renderListOrders(results){
                 html += `<td>cash</td>`;
             }
             html += `<td><span class="status ${item.status}">${item.status.slice(0, 4)}</span></td>
+            <td>
+                <span class="status delivered show_profile">Pro</span>
+                <span class="status PENDING edit" >Edit</span>
+                <span class="status return" >Del</span>
+            </td>
         </tr>`
         });
     }
     document.getElementById('list_order').innerHTML = html;
-    
+    showProfile()
 }
 
-
-
-
-
-function initOnclickViewall(){
-    var btnViewAll = document.querySelector(".recentOrders .cardHeaders .btn.viewall");
-    btnViewAll.onclick = () => {  
-        Helper.filter.offset = 0;
-        Helper.filter.limit = 0;
-        orderUsecase.list(renderListOrders)
-    }
-}
-
-function initDatePicker(){
-    const startDate = datepicker('.startDate', {
-        formatter: (input, date, instance) => {
-            const startValue = date.toLocaleDateString('vi-VN')
-            input.value = startValue // => '1/1/2099'
-          }
-    });
-    const endDate = datepicker('.endDate', {
-        formatter: (input, date, instance) => {
-            const endValue = date.toLocaleDateString('vi-VN')
-            input.value = endValue 
-        }
-    })
-}
 
 function initSearchDates(){
     var searchDates = document.getElementById('searchDates');
@@ -83,6 +61,48 @@ function initSearchDates(){
         }
         orderUsecase.list(renderListOrders)
     }
+}
+
+function showProfile() {
+    let show_profileBtns = document.querySelectorAll(".status.show_profile");
+    show_profileBtns.forEach(item => {
+        item.onclick = () => {
+            let container_popup_elememt = document.querySelector(".container_popup");
+            let content_popup_element = document.querySelector(".popup_content");
+
+            content_popup_element.innerHTML = cart_popup;
+            // content_popup_element.querySelector('.name').innerText = `${JSON.parse(item.dataset.customer).name}`;
+            // content_popup_element.querySelector('.phone_number').innerText = `${JSON.parse(item.dataset.customer).phone_number}`;
+            // content_popup_element.querySelector('.address').innerText = `${JSON.parse(item.dataset.customer).phone_number}`;
+            // content_popup_element.querySelector('.created_at').innerText = `${JSON.parse(item.dataset.customer).address}`;
+            // content_popup_element.querySelector('.status.edit').setAttribute("data-customer", item.dataset.customer);
+            // content_popup_element.querySelector('.status.delete').setAttribute("data-customer", item.dataset.customer);
+            // content_popup_element.querySelector('.status.cancel').setAttribute("data-customer", item.dataset.customer);
+            container_popup_elememt.style.display = "block"
+
+            
+            // let edit_popup_element = container_popup_elememt.querySelector(".status.edit");
+            // let cancel_popup_element = container_popup_elememt.querySelector(".status.cancel");
+            // let delete_popup_element = container_popup_elememt.querySelector(".status.delete");
+
+            // edit_popup_element.onclick = () => {
+            //     editHandle(edit_popup_element)
+            // }
+
+            // cancel_popup_element.onclick = () => {
+            //     content_popup_element.innerHTML = ""
+            //     content_popup_element.classList.remove("edit")
+
+            //     container_popup_elememt.style.display = "none"
+            //     customerUsecase.list(renderListCustomers);
+            // }
+
+            // delete_popup_element.onclick = () => {
+            //     content_popup_element.classList.remove("edit")
+            //     deleteHandle(edit_popup_element)
+            // }
+        }
+    })
 }
 
 
