@@ -230,7 +230,7 @@ input[type=number]:focus,
 .search label ion-icon 
 {
     position: absolute;
-    top: 50%;
+    top: 40%;
     transform: translateY(-50%);
     left: 10px;
     font-size: 1.2em;
@@ -652,6 +652,10 @@ thead, tbody tr {
     transform: translate(-50%, -45px);
     display: flex;
 }
+
+/* cart */
+
+
 
 /* customer */
 

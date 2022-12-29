@@ -125,7 +125,6 @@ ul {
 .container_order .content_order .payment_info {
     width: 100%;
     height: 35%;
-    
     padding: 10px;
     display: grid;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr;

@@ -62,7 +62,6 @@ async function start(){
 }
 start();
 
-
 function checkQuantityOrder () {
     let numberQuanElement = document.querySelector(".content_order .cart_items .top_icon .cart_quantity  span");
     var numberQuantity = 0;
