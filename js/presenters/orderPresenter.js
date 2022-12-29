@@ -19,7 +19,8 @@ function renderListOrders(results){
     if(results){
         results.forEach(function(item){
             let created_at = new Date(item.created_at)
-            html += `<tr>
+            const mydata = JSON.stringify(item);
+            html += `<tr data-order='${mydata}'>
             <td>${formatDate(created_at)}</td>`;
             if (item.customer) {
                 html += `<td>${item.customer}</td>`;
@@ -36,14 +37,14 @@ function renderListOrders(results){
             html += `<td><span class="status ${item.status}">${item.status.slice(0, 4)}</span></td>
             <td>
                 <span class="status delivered show_profile">Pro</span>
-                <span class="status PENDING edit" >Edit</span>
-                <span class="status return" >Del</span>
+                <span class="status return delete" >Del</span>
             </td>
         </tr>`
         });
     }
     document.getElementById('list_order').innerHTML = html;
     showProfile()
+    deleteHandle()
 }
 
 
@@ -66,43 +67,73 @@ function initSearchDates(){
 function showProfile() {
     let show_profileBtns = document.querySelectorAll(".status.show_profile");
     show_profileBtns.forEach(item => {
-        item.onclick = () => {
+        item.onclick = async () => {
+            let parentItem = item.parentElement.parentElement;
+            let result = await orderUsecase.getOne(JSON.parse(parentItem.dataset.order).id)
+
+            
             let container_popup_elememt = document.querySelector(".container_popup");
             let content_popup_element = document.querySelector(".popup_content");
 
-            content_popup_element.innerHTML = cart_popup;
-            // content_popup_element.querySelector('.name').innerText = `${JSON.parse(item.dataset.customer).name}`;
-            // content_popup_element.querySelector('.phone_number').innerText = `${JSON.parse(item.dataset.customer).phone_number}`;
-            // content_popup_element.querySelector('.address').innerText = `${JSON.parse(item.dataset.customer).phone_number}`;
-            // content_popup_element.querySelector('.created_at').innerText = `${JSON.parse(item.dataset.customer).address}`;
-            // content_popup_element.querySelector('.status.edit').setAttribute("data-customer", item.dataset.customer);
-            // content_popup_element.querySelector('.status.delete').setAttribute("data-customer", item.dataset.customer);
-            // content_popup_element.querySelector('.status.cancel').setAttribute("data-customer", item.dataset.customer);
+            content_popup_element.innerHTML = orders_popup.getOne;
             container_popup_elememt.style.display = "block"
 
-            
-            // let edit_popup_element = container_popup_elememt.querySelector(".status.edit");
-            // let cancel_popup_element = container_popup_elememt.querySelector(".status.cancel");
-            // let delete_popup_element = container_popup_elememt.querySelector(".status.delete");
 
-            // edit_popup_element.onclick = () => {
-            //     editHandle(edit_popup_element)
-            // }
-
-            // cancel_popup_element.onclick = () => {
-            //     content_popup_element.innerHTML = ""
-            //     content_popup_element.classList.remove("edit")
-
-            //     container_popup_elememt.style.display = "none"
-            //     customerUsecase.list(renderListCustomers);
-            // }
-
-            // delete_popup_element.onclick = () => {
-            //     content_popup_element.classList.remove("edit")
-            //     deleteHandle(edit_popup_element)
-            // }
+            content_popup_element.querySelector('.name').innerText = result.customer.name;
+            var table = "";
+            result.items.forEach((element, index) => {
+                table += `<tr>
+                            <td>${index + 1}</td>
+                            <td><p>${element.name}</p><span>${Util.formatNumber(element.price)}</span></td>
+                            <td>${element.quantity}</td>
+                            <td>${Util.formatNumber(element.quantity * element.price)}</td>
+                        </tr>`
+            })
+            content_popup_element.querySelector("tbody").innerHTML = table;
+            let created_at = new Date(result.created_at)
+            content_popup_element.querySelector(".number_bill p:nth-child(2)").innerText = formatDate(created_at);
+            content_popup_element.querySelector(".number_bill .id").innerText = `zeopos${result.id}`;
+            content_popup_element.querySelector(".payment_method").innerText = result.payment_method.name;
+            content_popup_element.querySelector(".total h6:nth-child(2)").innerText = Util.formatNumber(result.total);
         }
     })
+}
+
+function deleteHandle() {
+    let delete_Btns = document.querySelectorAll(".status.delete");
+    delete_Btns.forEach((item) => {
+        item.onclick = () => {
+            let parentItem = item.parentElement.parentElement;
+            let container_popup_elememt = document.querySelector(".container_popup");
+            let content_popup_element = document.querySelector(".popup_content");
+        
+            content_popup_element.classList.remove("edit")
+        
+            content_popup_element.classList.add("delete")
+            content_popup_element.innerHTML = orders_popup.delete;
+            container_popup_elememt.style.display = "block"
+        
+            let delete_popup_element = content_popup_element.querySelector(".delete");
+            let cancel_popup_element = content_popup_element.querySelector(".cancel");
+
+            cancel_popup_element.onclick = () => {
+                content_popup_element.classList.remove("delete")
+                content_popup_element.innerHTML = ""
+                container_popup_elememt.style.display = "none"
+                customerUsecase.list(renderListCustomers);
+            }
+            
+            delete_popup_element.onclick = async () => {
+                await orderUsecase.delete(JSON.parse(parentItem.dataset.order).id)
+                container_popup_elememt.style.display = "none"
+                orderUsecase.list(renderListOrders)
+            }
+        }
+    })
+
+    
+
+    
 }
 
 

@@ -71,6 +71,10 @@
     cursor: pointer;
 }
 
+ .list_action span {
+    height: 26px !important;
+}
+
 
 
 
