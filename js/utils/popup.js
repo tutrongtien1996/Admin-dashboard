@@ -14,14 +14,14 @@ var cart_popup = `<div class="content_items">
 
     <div>
     <h6>Customer: </h6>
-    <h6>Jhon Dang</h6>
+    <h6 class="name"></h6>
     </div>
     <div class="pay_bill">
     </div>
 </div>
 <div class="number_bill">
-    <p class="id">max hoa don</p>
-    <p class="date">23/03/2022</p>
+    <p class="id"></p>
+    <p class="date"></p>
 </div>
 <div class="table_items">
     <table>
@@ -46,8 +46,8 @@ var cart_popup = `<div class="content_items">
             <h6></h6>
         </div>
          <div class="payment">
-            <h6>Payment</h6>
-            <h6></h6>
+            <h6 style="font-size: 12px; font-weight: 100">Payment</h6>
+            <h6 style="font-size: 12px; font-weight: 100" class="payment_method"></h6>
          </div>
     </div>
     <div class="discount">
@@ -61,6 +61,75 @@ var cart_popup = `<div class="content_items">
 <button class="proceed btns">Proceed</button>
 <button class="cancel btns">Cancel</button>
 </div>`
+
+var orders_popup = {
+    getOne: `<div class="content_items">
+    <div class="company_info">
+        <!-- <div> <img src="/img/logo_apple.png" alt=""></div> -->
+        <h2>ZEOPOS</h2>
+        <p>09015121</p>
+    </div>
+    <div class="customer_bill">
+    
+        <div>
+        <h6>Customer: </h6>
+        <h6 class="name"></h6>
+        </div>
+        <div class="pay_bill">
+        </div>
+    </div>
+    <div class="number_bill">
+        <p class="id"></p>
+        <p class="date"></p>
+    </div>
+    <div class="table_items">
+        <table>
+            <thead>
+                <tr>
+                    <td>#</td>
+                    <td>Items</td>
+                    <td>Qty</td>
+                    <td>Subtutol</td>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+        
+    </div>
+    <div class="total_bill">
+        <div class="total_payment">
+             <div class="total">
+                <h6>Total</h6>
+                <h6></h6>
+            </div>
+             <div class="payment">
+                <h6 style="font-size: 12px; font-weight: 100">Payment</h6>
+                <h6 style="font-size: 12px; font-weight: 100" class="payment_method"></h6>
+             </div>
+        </div>
+        <div class="discount">
+            <h6>Discount</h6>
+            <h6>78687070-7</h6> 
+        </div>
+        
+    </div>
+    </div>
+    
+    <div class="list_action">
+    
+    
+    
+    <span class="status return delete">Delete</span>
+    <span class="status PENDING cancel">Cancel</span>
+    
+    
+    </div>`,
+
+    delete: `<div><p>Do you want delete?</p></div>
+             <div class="list_action"><span class="status return delete">Delete</span><span class="status PENDING cancel">Cancel</span></div>`
+}
 
 var customer_popup = {
     delete: `<div><p>Do you want delete customer name: <span class="name">Simon</span></p></div>
