@@ -30,15 +30,21 @@ function checkIfUserLogged() {
 
 function initUI() {
     //menutoggle
-    // let toggle = document.querySelector('.toggle');
+    let toggle = document.querySelector('.toggle');
     let navigation = document.querySelector('.navigation');
     let main = document.querySelector('.main');
 
     navigation.onclick = function(){
+        
+        navigation.classList.toggle('active');
+        main.classList.toggle('active');
+        toggle.classList.toggle('active');
+    }
+    toggle.onclick = function(){
+        toggle.classList.toggle('active')
         navigation.classList.toggle('active');
         main.classList.toggle('active');
     }
-
     let list = document.querySelectorAll('.navigation li');
     function activelink(){
         list.forEach((item) =>

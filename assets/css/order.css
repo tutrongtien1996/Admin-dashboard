@@ -2,36 +2,13 @@
     position: absolute;
     left: 10px;
 }
+.main {
+    padding:0px 10px;
+}
+
 
 .profile .avatar {
     cursor: pointer;
-}
-
-.viewProfile {
-    display: none;
-    width: 100px;
-    background-color: var(--body);
-    position: absolute;
-    top: 100%;
-    transform: translate(-0%, -160px);
-    margin-left: 70px;
-    margin-bottom: 50px;
-    z-index: 100;
-    text-align: center;
-    padding: 10px;
-    border-start-end-radius: 20px;
-    border-top-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-}
-.viewProfile p {
-    font-weight: 400;
-    cursor: pointer;
-}
-.viewProfile p:hover {
-    font-weight: 600;
-}
-.viewProfile .logout:hover {
-    color: orange;
 }
 
 .topbar {
@@ -74,6 +51,19 @@
  .list_action span {
     height: 26px !important;
 }
+
+.listBtn{
+    transform: translateY(-20px);
+}
+
+.listBtn .total h6:nth-child(2){
+    color: orange;
+}
+.listBtn  > div:nth-child(2) {
+    transform: translateY(-5px);
+
+}
+
 
 
 

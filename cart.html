@@ -14,12 +14,20 @@
     <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <div class="container-custom">
+    <div class="container-custom container_custom">
+        <div class="toggle active">
+            <ion-icon name="menu-outline"></ion-icon> 
+        </div>
+        <div class="viewProfile">
+            <p>Nam Anh</p>
+            <p><a href="/company.html">Setting</a></p>
+            <p class="logout">Logout</p>
+        </div>
         <div class="navigation active">
             <ul id="menu" class="ps-0">     
             </ul>
             <div class="profile">
-                <img class="avatar" src="/img/img1.jpg" alt="">
+                <ion-icon class="avatar" name="person-circle-outline"></ion-icon>
             </div>
         </div>
        <!-- main -->
@@ -47,8 +55,6 @@
                                 </div>
                             </label>
                         </div>
-        
-                        
                     </div>
                     <ul class="listProducts ">
                     </ul>

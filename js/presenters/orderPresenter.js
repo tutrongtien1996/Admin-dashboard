@@ -2,10 +2,7 @@ import { orderUsecase } from "../usecases/orderUsecase.js";
 import { Helper } from "../utils/helper.js";
 
 function start() { 
-    
-    // initDatePicker();
     Helper.setFilter();
-    // initOnclickViewall();
     orderUsecase.list(renderListOrders)
     initSearchDates();
 }
@@ -16,8 +13,10 @@ start();
 function renderListOrders(results){
     var html ='';
     //render data row
+    let total_price = 0;
     if(results){
         results.forEach(function(item){
+            total_price += Number(item.total);
             let created_at = new Date(item.created_at)
             const mydata = JSON.stringify(item);
             html += `<tr data-order='${mydata}'>
@@ -42,9 +41,10 @@ function renderListOrders(results){
         </tr>`
         });
     }
+    document.querySelector('.listBtn .total h6:nth-child(2)').innerText = `${Util.formatNumber(total_price)}đ`;
     document.getElementById('list_order').innerHTML = html;
     showProfile()
-    deleteHandle()
+    deleteOrder()
 }
 
 
@@ -78,6 +78,18 @@ function showProfile() {
             content_popup_element.innerHTML = orders_popup.getOne;
             container_popup_elememt.style.display = "block"
 
+            let cancel_popup_element = content_popup_element.querySelector(".cancel");
+            let delete_popup_element = content_popup_element.querySelector(".delete");
+
+            cancel_popup_element.onclick = () => {
+                content_popup_element.innerHTML = ""
+                container_popup_elememt.style.display = "none"
+                orderUsecase.list(renderListOrders)
+            }
+
+            delete_popup_element.onclick = () => {
+                deleteHandle(item)
+            }
 
             content_popup_element.querySelector('.name').innerText = result.customer.name;
             var table = "";
@@ -99,41 +111,41 @@ function showProfile() {
     })
 }
 
-function deleteHandle() {
+function deleteOrder() {
     let delete_Btns = document.querySelectorAll(".status.delete");
-    delete_Btns.forEach((item) => {
+    delete_Btns.forEach(item => {
         item.onclick = () => {
-            let parentItem = item.parentElement.parentElement;
-            let container_popup_elememt = document.querySelector(".container_popup");
-            let content_popup_element = document.querySelector(".popup_content");
-        
-            content_popup_element.classList.remove("edit")
-        
-            content_popup_element.classList.add("delete")
-            content_popup_element.innerHTML = orders_popup.delete;
-            container_popup_elememt.style.display = "block"
-        
-            let delete_popup_element = content_popup_element.querySelector(".delete");
-            let cancel_popup_element = content_popup_element.querySelector(".cancel");
-
-            cancel_popup_element.onclick = () => {
-                content_popup_element.classList.remove("delete")
-                content_popup_element.innerHTML = ""
-                container_popup_elememt.style.display = "none"
-                customerUsecase.list(renderListCustomers);
-            }
-            
-            delete_popup_element.onclick = async () => {
-                await orderUsecase.delete(JSON.parse(parentItem.dataset.order).id)
-                container_popup_elememt.style.display = "none"
-                orderUsecase.list(renderListOrders)
-            }
+            deleteHandle(item)
         }
     })
+}
 
-    
+function deleteHandle(item) {
+    let parentItem = item.parentElement.parentElement;
+    let container_popup_elememt = document.querySelector(".container_popup");
+    let content_popup_element = document.querySelector(".popup_content");
 
+    content_popup_element.classList.remove("edit")
+
+    content_popup_element.classList.add("delete")
+    content_popup_element.innerHTML = orders_popup.delete;
+    container_popup_elememt.style.display = "block"
+
+    let delete_popup_element = content_popup_element.querySelector(".delete");
+    let cancel_popup_element = content_popup_element.querySelector(".cancel");
+
+    cancel_popup_element.onclick = () => {
+        content_popup_element.classList.remove("delete")
+        content_popup_element.innerHTML = ""
+        container_popup_elememt.style.display = "none"
+        orderUsecase.list(renderListOrders)
+    }
     
+    delete_popup_element.onclick = async () => {
+        await orderUsecase.delete(JSON.parse(parentItem.dataset.order).id)
+        container_popup_elememt.style.display = "none"
+        orderUsecase.list(renderListOrders)
+    }  
 }
 
 
