@@ -23,11 +23,5 @@
         "title": "Customer",
         "icon": "people-outline",
         "link": "/customer.html"
-    },
-    {
-        "title": "Logout",
-        "icon": "log-out-outline",
-        "link": "/login.html",
-        "id": "logout"
     }
 ]

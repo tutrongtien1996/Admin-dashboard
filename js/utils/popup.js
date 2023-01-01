@@ -132,11 +132,33 @@ var orders_popup = {
 }
 
 var customer_popup = {
+    create: ` <div class="cardHeader">
+    <h2>Create Customer</h2>
+</div>
+<div class="list_input_customer content_action">
+    <div>
+        <label for="">name</label>
+        <input type="text" name="name" value="">
+        <span></span>
+    </div>
+    <div>
+        <label for="">Phone</label>
+        <input type="text" name="phone_number" value="">
+        <span></span>
+    </div>
+    <div>
+        <label for="">Address</label>
+        <textarea name="address" id="address" cols="30" rows="3"></textarea>
+        <span></span>
+    </div>  
+</div>
+<div class="border_span"></div>
+<div class="list_action"><span class="status return proccess">Proccess</span><span class="status PENDING cancel">Cancel</span></div>`,
     delete: `<div><p>Do you want delete customer name: <span class="name">Simon</span></p></div>
              <div class="list_action"><span class="status return delete">Delete</span><span class="status PENDING cancel">Cancel</span></div>`,
     
     edit:  ` <div class="cardHeader">
-        <h2>Edit Product</h2>
+        <h2>Edit Customer</h2>
     </div>
     <div class="list_input_customer content_action">
         <div>
@@ -153,10 +175,7 @@ var customer_popup = {
             <label for="">Address</label>
             <textarea name="address" id="address_edit" cols="30" rows="3"></textarea>
             <span></span>
-        </div>
-        
-            
-        
+        </div>  
     </div>
     <div class="border_span"></div>
     <div class="list_action"><span class="status return proccess">Proccess</span><span class="status PENDING cancel">Cancel</span></div>`,
