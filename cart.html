@@ -61,7 +61,7 @@
                 </div>
                 <!-- new customers --> 
                 
-                <div class="recentCustomers container_order">
+                <div class="recentCustomers  container_order">
                    <div class="content_order">
                         <div class="empty_cart">
                             Empty Cart!
@@ -77,7 +77,6 @@
                                 </div>
                             </div>
                             <div class="items">
-                                
                             </div>
                         </div>
                         <div class="payment_info">
@@ -120,10 +119,24 @@
                    </div>
                 </div>
                 
+                
             </div>
         </div>
         <div class="container_popup">
             <div class="popup_content"></div>
+        </div>
+        <div id="cart_iphone" class="cart_iphone fixed-bottom d-none  d-flex justify-content-between w-100">
+            <div class="mt-3 ms-3 quantity">
+                <ion-icon name="cart-outline"></ion-icon>
+                <span id="quantity_iphone"></span>
+            </div>
+            <div class="total_iphone mt-3 me-3">
+                <span class="text-dark">total: </span>
+                <span id="total_iphone">0đ</span>
+            </div>
+        </div>
+        <div id="show_hide" class="cart_iphone fixed-bottom d-none w-100">
+            <span class="text-primary font-weight-bold m-auto">Hide</span>
         </div>
 
     </div>

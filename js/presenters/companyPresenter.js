@@ -10,7 +10,7 @@ function start() {
 }
 start();
 function getIdCompany () {
-    let id = JSON.parse(localStorage.getItem('data-login')).company_id;
+    let id = JSON.parse(localStorage.getItem('data-login')).company.id;
     return id;
 }
 

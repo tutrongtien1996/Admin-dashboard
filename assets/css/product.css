@@ -295,4 +295,34 @@ thead td:nth-child(3),
 }
 
 
+@media (max-width: 576px){
+    .recentOrders {
+        padding: 25px 0px !important;
+       
+    }
+    .details {
+        display: block;
+    }
+    .details .cardHeaders h2 {
+        display: none;
+    }
+    .table {
+        margin-top: 40px;
+    }
+    .table thead td:nth-child(1),
+    .table tbody td:nth-child(1){
+        display: none;
+    }
+   
+}
 
+@media (max-width: 480px){
+    .main .table thead td:nth-child(3),
+    .main .table tbody td:nth-child(3){
+        display: none;
+    }
+    .main.active .table thead td:nth-child(3),
+    .main.active .table tbody td:nth-child(3){
+        display: block;
+    }
+}
