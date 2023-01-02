@@ -5,6 +5,10 @@
 .main {
     padding-right: 10px;
 }
+.details {
+    display: grid;
+    grid-template-columns: 1fr 0fr;
+}
 
 
 .list_input_customer .create_customer {

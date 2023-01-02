@@ -64,6 +64,68 @@
 
 }
 
+@media (max-width: 576px){
+    .main .details .search {
+        margin: 0px;
+    
+    }
+    .main .details .search input{
+        width: calc(100% - 50px) !important;
+    }
+    .main.active .details .search {
+        margin-left: 40px;
+    }
+    .details .cardHeaders h2 {
+        display: none;
+    }
+    .details .cardHeaders input {
+        display: block;
+        float: left;
+    }
+    .details .cardHeaders {
+        padding-left: 50px;
+    }
+    
+    .details .cardHeaders span {
+        display: none;
+    }
+    #searchDates {
+        float: left;
+    }
+    .table thead td:nth-child(1),
+    .table thead td:nth-child(2),
+    .table thead td:nth-child(4),
+    .table tbody td:nth-child(1),
+    .table tbody td:nth-child(2),
+    .table tbody td:nth-child(4) {
+        display: none;
+    }
+    .main .table thead td:nth-child(3),
+    .main .table tbody td:nth-child(3)
+    
+    {
+        text-align: right !important;
+    }
+    .table thead td:nth-child(5),
+    .table tbody td:nth-child(5) {
+        text-align: right;
+    }
+
+    .recentOrders {
+        padding: 25px 0px !important;
+       
+    }
+    .table {
+        overflow: none !important;
+    }
+    .startDate, .endDate {
+        padding: 0px !important;
+        height: 25px !important;
+    }
+    
+
+}
+
 
 
 

@@ -18,7 +18,7 @@ function start() {
     $("#addBtn").on("click", showProductFormModal)
     $(document).on("click", ".viewBtn", function () { showInfoProduct(this) })
     $(document).on("click", ".editBtn", function () { showEditProduct(this) })
-    $(document).on("click", ".deleteBtn", function () { showEditProduct(this) })
+    $(document).on("click", ".deleteBtn", function () { deleteproduct(this) })
     $("input[name='avatar']").on("change", commonPresenter.showPreview)
     $("#saveBtn").on("click", () => productUsecase.create(refreshPage))
 }

@@ -61,7 +61,12 @@ function initMenu() {
         return response.json();
     })
     .then(result => {
-        var html = '';
+        var html = '<li>'+
+        '<a href="'+menu.link+'" id = "'+menu.id+'">'+
+            '<span class="icon"><ion-icon name="print"></ion-icon></span>'+
+            '<span class="title">'+ JSON.parse(localStorage.getItem("data-login")).company.name +'</span>'+
+        '</a>'+
+        '</li>';
         result.forEach(menu => {
             html += '<li>'+
                     '<a href="'+menu.link+'" id = "'+menu.id+'">'+
