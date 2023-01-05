@@ -165,8 +165,8 @@ function showProfile() {
             content_popup_element.innerHTML = getPopup(customer_popup.profile);
             content_popup_element.querySelector('.name').innerText = `${JSON.parse(item.dataset.customer).name}`;
             content_popup_element.querySelector('.phone_number').innerText = `${JSON.parse(item.dataset.customer).phone_number}`;
-            content_popup_element.querySelector('.address').innerText = `${JSON.parse(item.dataset.customer).phone_number}`;
-            content_popup_element.querySelector('.created_at').innerText = `${JSON.parse(item.dataset.customer).address}`;
+            content_popup_element.querySelector('.address').innerText = `${JSON.parse(item.dataset.customer).address}`;
+            content_popup_element.querySelector('.created_at').innerText = `${JSON.parse(item.dataset.customer).created_at}`;
             content_popup_element.querySelector('.status.edit').setAttribute("data-customer", item.dataset.customer);
             content_popup_element.querySelector('.status.delete').setAttribute("data-customer", item.dataset.customer);
             content_popup_element.querySelector('.status.cancel').setAttribute("data-customer", item.dataset.customer);
