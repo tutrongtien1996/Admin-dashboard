@@ -916,6 +916,28 @@ thead, tbody tr {
     
 }
 
+.popup_content_sample{
+    min-width: 350px;
+    background-color: var(--body);
+}
+
+
+.popup_content_sample .input-group span {
+    background-color: var(--primary);
+    color: white;
+}
+
+.popup_content_sample .input-group input:focus,
+.popup_content_sample .input-group textarea:focus{
+    border: none;
+}
+
+
+.popup_contai_sample {
+    background-color: rgba(0,0,0,0.6);
+    display: none;
+}
+
 /* make it responsive design */
 
 
@@ -943,6 +965,10 @@ thead, tbody tr {
     }
 
 }
+
+
+/* popup data mau */
+
 
 
 

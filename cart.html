@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>SEOPOS | Sales</title>
     <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap-grid.min.css">
@@ -135,9 +135,27 @@
                 <span id="total_iphone">0đ</span>
             </div>
         </div>
+        <div class="position-absolute top-0 start-0 w-100 h-100 popup_contai_sample">
+            <div class="position-absolute top-50 start-50 translate-middle  rounded-3 p-3 popup_content_sample">
+                <h6 class="mb-4">Select Data Sample!</h6>
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">Business Type</span>
+                    <select class="form-select shadow-none border-0" aria-label="Default select example">
+                      </select>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-info process">Proccess</button>
+                    <button type="button" class="btn btn-warning cancel">Cancel</button>
+    
+                </div>
+            </div>
+        </div>
         <div id="show_hide" class="cart_iphone fixed-bottom d-none w-100">
             <span class="text-primary font-weight-bold m-auto">Hide</span>
         </div>
+
+        
+        
 
     </div>
     
@@ -147,6 +165,7 @@
     <script src="/js/entities/config.js"></script>
     <script src="js/utils/popup.js"></script>
     <script src="js/app.js" type="module"></script>
+    <script src="js/presenters/registerPresenter.js" type="module"></script>
     <script src="js/presenters/cartPresenter.js" type="module"></script>
     
     

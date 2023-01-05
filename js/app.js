@@ -64,9 +64,18 @@ function initMenu() {
         var html = '<li>'+
         '<a href="'+menu.link+'" id = "'+menu.id+'">'+
             '<span class="icon"><ion-icon name="print"></ion-icon></span>'+
-            '<span class="title">'+ JSON.parse(localStorage.getItem("data-login")).company.name +'</span>'+
+            '<span class="title">'+'ZEOPOS'+'</span>'+
         '</a>'+
         '</li>';
+        if(JSON.parse(localStorage.getItem("data-login")).company.name){
+            html = '<li>'+
+            '<a href="'+menu.link+'" id = "'+menu.id+'">'+
+                '<span class="icon"><ion-icon name="print"></ion-icon></span>'+
+                '<span class="title">'+ JSON.parse(localStorage.getItem("data-login")).company.name +'</span>'+
+            '</a>'+
+            '</li>';
+        }
+        
         result.forEach(menu => {
             html += '<li>'+
                     '<a href="'+menu.link+'" id = "'+menu.id+'">'+
@@ -113,7 +122,8 @@ function logOut() {
                 headers : option.headers
             })
             .then(function (response) {
-                localStorage.setItem("access_token", "");
+                localStorage.removeItem("access_token");
+                localStorage.removeItem("data-login");
                 window.location.href = "./login.html"
             })
             .catch(function (error) {

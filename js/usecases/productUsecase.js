@@ -25,37 +25,22 @@ export const productUsecase = {
         }
     },
 
-    update: async (id, product, callback) => {
-        let container_popup_elememt = document.querySelector(".container_popup");
-        let content_popup_element = document.querySelector(".popup_content");
-        container_popup_elememt.style.display = "block"
-        content_popup_element.classList.remove("edit")
-        content_popup_element.classList.add("edit")
-
-        product.name = content_popup_element.querySelector('input[name="name"]').value;
-        product.price = content_popup_element.querySelector('input[name="price"]').value;
-        // product.category_id = document.querySelector('#address_edit').value;
+    update: async (id, callback) => {
+        var product = {};
         var formData = new FormData();
+
+        product.name = $("#productForm").find(".product_input[name='name']").val();
+        product.price = $("#productForm").find(".product_input[name='price']").val();
+        product.avatar =  $("#inputAvatar")[0].files[0];
+
         formData.append("avatar", product.avatar);
         formData.append("name", product.name);
         formData.append("price", product.price);
-        axios.patch(API_URL + "/admin/products/"+id, formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-              'Authorization': "Bearer "+localStorage.getItem("access_token")
-            }
-            })
-        .then((response) => {
-            alert("Update Success!")
-            content_popup_element.classList.remove("edit")
-            container_popup_elememt.style.display = "none"
-            content_popup_element.innerHTML = ""
 
-            productUsecase.list(callback);
-        })
-        .catch((err) => {
-            if (err) throw err
-        })
+        var response = await productRepository.update(id, formData)
+        if (response && response.success) {
+            callback()
+        }
     },
 
     delete: async (item, callback) => {
@@ -66,13 +51,13 @@ export const productUsecase = {
         content_popup_element.classList.add("delete")
         
         content_popup_element.innerHTML = getPopup(customer_popup.delete);
-        content_popup_element.querySelector(".name").innerText = `${JSON.parse(item.dataset.product).name}`;
+        content_popup_element.querySelector(".name").innerText = `${JSON.parse(item.parentElement.dataset.product).name}`;
         container_popup_elememt.style.display = "block"
         let delete_popup_element = document.querySelector(".popup_content .delete");
         let cancel_popup_element = document.querySelector(".popup_content .cancel");
         
         delete_popup_element.onclick = async () => {
-            var response = await productRepository.delete(JSON.parse(item.dataset.product).id)
+            var response = await productRepository.delete(JSON.parse(item.parentElement.dataset.product).id)
             if (response && response.success) {
                 content_popup_element.classList.remove("delete")
                 container_popup_elememt.style.display = "none"
