@@ -3,7 +3,7 @@ Technical: HTML, CSS, Javascript only
 
 ## Installation
 - Clone the repository
-- Run: npm install
+- Run: ``npm install`` to install packages
 
 ## Screen Shots
 **1 Login screen**
