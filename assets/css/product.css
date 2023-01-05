@@ -2,6 +2,21 @@
     grid-template-columns: 1fr 0fr;
 }
 
+#addDataSample {
+    display: none;
+    position: absolute;
+    left: 100%;
+    width: 80px;
+    transform: translate(-120px, 12px);
+    border-radius: 5px;
+    color: white;
+    padding: 3px;
+    background-color: var(--primary);
+}
+#addDataSample:hover {
+    font-size: 10px;
+}
+
 .cardHeaders {
     position: relative;
 }

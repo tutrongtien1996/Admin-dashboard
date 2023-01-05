@@ -13,9 +13,12 @@ var productList = {
         productList.items = data;
     },
     get: function(keyword) {
-        return productList.items.filter( (item) => {
-            return item.name.toLowerCase().includes(keyword.toLowerCase())
-        })
+        if(productList.items){
+            return productList.items.filter( (item) => {
+                return item.name.toLowerCase().includes(keyword.toLowerCase())
+            })
+        }
+        
     }
 }
 var customerList = {
@@ -153,18 +156,21 @@ function rederListPayment(data) {
 function renderListProduct(data){
     var list_products = document.getElementsByClassName("listProducts")[0];
     let html = "";
-    data.forEach(product => {
-        const mydata = JSON.stringify(product);
-        html += `<li class="item">
-                    <div class="content" data-product='${mydata}'>
-                        <div class="img"><img src="${product.image}"/></div>
-                        <div class="name_price">
-                            <h3>${product.name}</h3>
-                            <h4>${Util.formatNumber(product.price)}</span></h4>
+    if(data){
+        data.forEach(product => {
+            const mydata = JSON.stringify(product);
+            html += `<li class="item">
+                        <div class="content" data-product='${mydata}'>
+                            <div class="img"><img src="${product.image}"/></div>
+                            <div class="name_price">
+                                <h3>${product.name}</h3>
+                                <h4>${Util.formatNumber(product.price)}</span></h4>
+                            </div>
                         </div>
-                    </div>
-                </li>`
-    })
+                    </li>`
+        })
+    }
+    
     list_products.innerHTML = html;
     getListItemProduct();
 }

@@ -17,7 +17,6 @@ export const productRepository = {
             }
         })
         .catch(function (error) {
-            console.log(error)
             return false;
         })
     },
@@ -41,6 +40,20 @@ export const productRepository = {
         })
         .catch((err) => {
             return false;
+        })
+    },
+
+    update : (id, formData) => {
+        var header = Helper.requestOption.headers;
+        header["Content-Type"] = 'multipart/form-data';
+        return axios.patch(API_URL + "/admin/products/"+id, formData, {
+            headers: header
+        })
+        .then((response) => {
+            return response.data;
+        })
+        .catch((err) => {
+            return false
         })
     }
 }

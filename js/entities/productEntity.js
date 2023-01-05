@@ -20,7 +20,7 @@ export var ProductEntity = function(id = '', name = '', price = 0, image = null)
     this.toHTMLTable = function() {
         return `<tr>
             <td>
-                <div><img src="${this.image}" alt="product name"></div>
+                <div><img src="${this.image}" alt="product name" onerror="this.onerror=null;this.src='/img/placeholder.png';"></div>
             </td>
             <td>${this.name}</td>
             <td>${Util.formatNumber(this.price)}VND</td>
