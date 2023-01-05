@@ -5,6 +5,12 @@ Technical: HTML, CSS, Javascript only
 - Clone the repository
 - Run: ``npm install`` to install packages
 
+## Demo
+Please use this account as the demo, don't not destroy the data.
+> URL: [http://dev.zeopos.com](http://dev.zeopos.com/)\
+> Username: **ADMIN888**\
+> Password: **123456**
+
 ## Screen Shots
 **1 Login screen**
 
