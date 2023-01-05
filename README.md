@@ -1,4 +1,4 @@
-# POS system for UDO Laundry
+# ZEOPOS
 Technical: HTML, CSS, Javascript only
 
 ## Installation
@@ -10,6 +10,10 @@ Technical: HTML, CSS, Javascript only
 
 ![Login](./img/github/login_page.png?raw=true "Login screen")
 
-**2 Dashboard screen**
+**2 Sale screen**
 
-![Dashboard](./img/github/home_page.png?raw=true "Dashboard screen")
+![Sale](./img/github/sale_page.png?raw=true "Sale screen")
+
+**3 Completed Order screen**
+
+![Completed Order](./img/github/order_page.png?raw=true "Order screen")
