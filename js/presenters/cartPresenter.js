@@ -13,9 +13,12 @@ var productList = {
         productList.items = data;
     },
     get: function(keyword) {
-        return productList.items.filter( (item) => {
-            return item.name.toLowerCase().includes(keyword.toLowerCase())
-        })
+        if(productList.items){
+            return productList.items.filter( (item) => {
+                return item.name.toLowerCase().includes(keyword.toLowerCase())
+            })
+        }
+        
     }
 }
 var customerList = {
@@ -59,9 +62,23 @@ async function start(){
     })
     searchCustomer();
     searchProduct();
+    let cart_iphone_quantity = document.querySelector(".cart_iphone .quantity");
+    if(cart_iphone_quantity){
+        cart_iphone_quantity.onclick = () => {
+            document.querySelector(".container_order").classList.add("contai_order_iphone");
+            document.querySelector("#show_hide").classList.add("bottom_cart_iphone")
+        }
+    }
+    if(document.querySelector("#show_hide")){
+        document.querySelector("#show_hide").onclick = () => {
+            document.querySelector("#show_hide").classList.remove("bottom_cart_iphone")
+            document.querySelector(".container_order").classList.remove("contai_order_iphone");
+        }
+    }
+    
+    
 }
 start();
-
 
 function checkQuantityOrder () {
     let numberQuanElement = document.querySelector(".content_order .cart_items .top_icon .cart_quantity  span");
@@ -73,11 +90,19 @@ function checkQuantityOrder () {
     {
         document.querySelector(".container_order #submit_data").style.background = "rgb(194, 195, 196)"
         document.querySelector(".empty_cart").style.display = "block";
+        document.querySelector(".container_order").classList.remove("contai_order_iphone");
+        document.querySelector("#cart_iphone").classList.remove("bottom_cart_iphone");
+        document.querySelector("#show_hide").classList.remove("bottom_cart_iphone")
+
     }
     if(numberQuantity > 0){
         document.querySelector(".container_order #submit_data").style.background = "#00bcd4"
     }
     numberQuanElement.innerText = Math.floor(numberQuantity);
+
+    
+    let cart_iphone_quantity = document.querySelector("#quantity_iphone");
+    cart_iphone_quantity.innerHTML = Math.floor(numberQuantity);
 }
 
 function searchProduct() {
@@ -95,7 +120,8 @@ function  searchCustomer (){
             data_name.forEach(custom => {
                 html += `<li cus_id = ${custom.id}>${custom.name}</li>`
             })
-            document.querySelector('.payment_info .customer_name .list_customer').style.display = "block"
+            document.querySelector('.payment_info .customer_name .list_customer').style.display = "block";
+            document.querySelector("#cart_iphone").classList.add("bottom_cart_iphone");
             document.querySelector('.payment_info .customer_name .list_customer ul').innerHTML = html;
         }
         let custom_name_list = document.querySelectorAll(".payment_info .customer_name .list_customer ul li");
@@ -110,7 +136,7 @@ function  searchCustomer (){
         
     }
     customElement.onblur = () => {
-    document.querySelector('.payment_info .customer_name .list_customer').style.display = "none"
+    document.querySelector('.payment_info .customer_name .list_customer').style.display = "none";
     }
 }
 
@@ -130,18 +156,21 @@ function rederListPayment(data) {
 function renderListProduct(data){
     var list_products = document.getElementsByClassName("listProducts")[0];
     let html = "";
-    data.forEach(product => {
-        const mydata = JSON.stringify(product);
-        html += `<li class="item">
-                    <div class="content" data-product='${mydata}'>
-                        <div class="img"><img src="${product.image}"/></div>
-                        <div class="name_price">
-                            <h3>${product.name}</h3>
-                            <h4>${Util.formatNumber(product.price)}</span></h4>
+    if(data){
+        data.forEach(product => {
+            const mydata = JSON.stringify(product);
+            html += `<li class="item">
+                        <div class="content" data-product='${mydata}'>
+                            <div class="img"><img src="${product.image}"/></div>
+                            <div class="name_price">
+                                <h3>${product.name}</h3>
+                                <h4>${Util.formatNumber(product.price)}</span></h4>
+                            </div>
                         </div>
-                    </div>
-                </li>`
-    })
+                    </li>`
+        })
+    }
+    
     list_products.innerHTML = html;
     getListItemProduct();
 }
@@ -235,6 +264,9 @@ function handleTotal(){
     })
     var html = `<div class="price_total" style="color: orange">${Util.formatNumber(cartUsecase.order.total)}</div>`;
     document.querySelector(".content_order .price_total").innerHTML = html
+
+    let iphone_total = document.querySelector(".cart_iphone .total_iphone #total_iphone");
+    iphone_total.innerText = Util.formatNumber(cartUsecase.order.total);
 }
 
 function initOnchangeProducts(productElements){
@@ -305,11 +337,15 @@ function handleCreateDataOrder(){
     var createOder = document.querySelector(".container_order #submit_data");
     if(cartUsecase.order.products.length == 0){
     document.querySelector(".container_order #submit_data").disabled = true;
-    document.querySelector(".top_icon").style.display = "none"
+    document.querySelector(".top_icon").style.display = "none";
+    
     }
     else {
+        document.querySelector("#cart_iphone").classList.add("bottom_cart_iphone");
         document.querySelector(".top_icon").style.display = "grid"
         document.querySelector(".container_order #submit_data").disabled = false;
+        
+        
         createOder.onclick = () => {
             Helper.playSound();
             cartUsecase.order.discount = document.querySelector(".payment_info .discount .cash input").value;
@@ -374,13 +410,19 @@ function createOrders() {
         axios.post(API_URL + '/admin/orders/', cartUsecase.order, Helper.requestOption)
             .then((response) => {
                 cartUsecase.initOrder();
-                document.querySelector(".content_order .cart_items .items").innerHTML = '';
-                document.querySelector(".payment_info .price_total").innerHTML = '';
-                document.querySelector(".customer_name input").value = '';
-                document.querySelector("#status_payment .selected").setAttribute('selected','selected')
-                document.querySelector(".top_icon").style.display = "none"
-                document.querySelector(".container_order #submit_data").style.background = "#00bcd4"
-                document.querySelector(".empty_cart").style.display = "block"
+                initEmpty()
+                // document.querySelector(".content_order .cart_items .items").innerHTML = '';
+                // document.querySelector(".payment_info .price_total").innerHTML = '';
+                // document.querySelector(".customer_name input").value = '';
+                // document.querySelector("#status_payment .selected").setAttribute('selected','selected')
+                // document.querySelector(".top_icon").style.display = "none";
+                
+                // document.querySelector(".container_order #submit_data").style.background = "#00bcd4"
+                // document.querySelector(".empty_cart").style.display = "block";
+                document.querySelector(".container_order").classList.remove("contai_order_iphone");
+                document.querySelector("#cart_iphone").classList.remove("bottom_cart_iphone");
+                document.querySelector("#show_hide").classList.remove("bottom_cart_iphone")
+
 
             })
             .catch(function (error) {
@@ -400,11 +442,14 @@ function create_bill() {
                     <td>${Util.formatNumber(element.quantity * element.price)}</td>
                 </tr>`
     })
+    document.querySelector(".popup_content .company_info h2").innerText = JSON.parse(localStorage.getItem("data-login")).company.name;
+    document.querySelector(".popup_content .company_info p").innerText = JSON.parse(localStorage.getItem("data-login")).company.phone_number;
     document.querySelector(".popup_content .customer_bill h6:nth-child(2)").innerText = cartUsecase.order.customer.name;
     document.querySelector(".popup_content .number_bill p:nth-child(2)").innerText = cartUsecase.order.date;
     document.querySelector(".popup_content .number_bill p:nth-child(1)").innerText = "code";
     document.querySelector(".popup_content  tbody").innerHTML = table;
     document.querySelector(".popup_content .total_bill .discount h6:nth-child(2)").innerText = Util.formatNumber(cartUsecase.order.discount);
+    document.querySelector(".popup_content .total_bill .payment .payment_method").innerText = document.querySelector('.content_order .payment_info .customer_name.pay_status .pay').innerText;
     document.querySelector(".popup_content .total_bill .total h6:nth-child(2)").innerText = Util.formatNumber(cartUsecase.order.total);
     var cancel = document.querySelector(".popup_content .cancel");
     cancel.onclick = () => {
@@ -413,6 +458,7 @@ function create_bill() {
     }
     let proceed = document.querySelector(".proceed");
     proceed.onclick = () => {
+        
         Helper.playSound();
         cartUsecase.order.customer.id = customElement.getAttribute("customer_id")
         createOrders()
@@ -423,6 +469,10 @@ function create_bill() {
 let trash = document.querySelector(".trash")
 
 trash.onclick = () => {
+    document.querySelector(".container_order").classList.remove("contai_order_iphone")
+    document.querySelector("#cart_iphone").classList.remove("bottom_cart_iphone");
+    document.querySelector("#show_hide").classList.remove("bottom_cart_iphone")
+
     initEmpty();
 }
 

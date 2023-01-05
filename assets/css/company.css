@@ -1,0 +1,23 @@
+.popup_content,
+.popup_user_content {
+    background-color: var(--body);
+}
+
+.popup_user_content .input-group span, 
+.popup_content .input-group span {
+    background-color: var(--primary);
+    color: white;
+}
+
+.popup_user_content .input-group input:focus,
+.popup_user_content .input-group textarea:focus,
+.popup_content .input-group input:focus,
+.popup_content .input-group textarea:focus{
+    border: none;
+}
+
+.popup_contai_user,
+.popup_contai {
+    background-color: rgba(0,0,0,0.6);
+    display: none;
+}

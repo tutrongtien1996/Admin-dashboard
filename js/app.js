@@ -30,15 +30,21 @@ function checkIfUserLogged() {
 
 function initUI() {
     //menutoggle
-    // let toggle = document.querySelector('.toggle');
+    let toggle = document.querySelector('.toggle');
     let navigation = document.querySelector('.navigation');
     let main = document.querySelector('.main');
 
     navigation.onclick = function(){
+        
+        navigation.classList.toggle('active');
+        main.classList.toggle('active');
+        toggle.classList.toggle('active');
+    }
+    toggle.onclick = function(){
+        toggle.classList.toggle('active')
         navigation.classList.toggle('active');
         main.classList.toggle('active');
     }
-
     let list = document.querySelectorAll('.navigation li');
     function activelink(){
         list.forEach((item) =>
@@ -55,7 +61,21 @@ function initMenu() {
         return response.json();
     })
     .then(result => {
-        var html = '';
+        var html = '<li>'+
+        '<a href="'+menu.link+'" id = "'+menu.id+'">'+
+            '<span class="icon"><ion-icon name="print"></ion-icon></span>'+
+            '<span class="title">'+'ZEOPOS'+'</span>'+
+        '</a>'+
+        '</li>';
+        if(JSON.parse(localStorage.getItem("data-login")).company.name){
+            html = '<li>'+
+            '<a href="'+menu.link+'" id = "'+menu.id+'">'+
+                '<span class="icon"><ion-icon name="print"></ion-icon></span>'+
+                '<span class="title">'+ JSON.parse(localStorage.getItem("data-login")).company.name +'</span>'+
+            '</a>'+
+            '</li>';
+        }
+        
         result.forEach(menu => {
             html += '<li>'+
                     '<a href="'+menu.link+'" id = "'+menu.id+'">'+
@@ -102,7 +122,8 @@ function logOut() {
                 headers : option.headers
             })
             .then(function (response) {
-                localStorage.setItem("access_token", "");
+                localStorage.removeItem("access_token");
+                localStorage.removeItem("data-login");
                 window.location.href = "./login.html"
             })
             .catch(function (error) {

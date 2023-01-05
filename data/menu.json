@@ -1,10 +1,5 @@
 [
     {
-        "title": "ZEOPOS",
-        "icon": "print",
-        "link": "/cart.html"
-    },
-    {
         "title": "Sale",
         "icon": "cart-outline",
         "link": "/cart.html"
@@ -23,11 +18,5 @@
         "title": "Customer",
         "icon": "people-outline",
         "link": "/customer.html"
-    },
-    {
-        "title": "Logout",
-        "icon": "log-out-outline",
-        "link": "/login.html",
-        "id": "logout"
     }
 ]

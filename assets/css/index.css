@@ -64,6 +64,18 @@ input[type=number]:focus,
     box-sizing: border-box;
 }
 
+.container_custom .toggle {
+    position: absolute;
+    z-index: 1000;
+    top: 30px;
+    left: 15px;
+}
+
+.container_custom .toggle ion-icon {
+    font-size: 40px;
+    color: var(--primary);
+}
+
 .navigation {
     position: fixed;
     width: 200px;
@@ -81,6 +93,7 @@ input[type=number]:focus,
 }
 
 .navigation .profile .avatar {
+    color: white;
     height: 40px;
     width:40px ;
     border-radius: 50%;
@@ -183,6 +196,33 @@ input[type=number]:focus,
     pointer-events: none;
 }
 
+.viewProfile {
+    display: none;
+    width: 100px;
+    background-color: var(--body);
+    position: absolute;
+    top: 100%;
+    transform: translate(-0%, -160px);
+    margin-left: 70px;
+    margin-bottom: 50px;
+    z-index: 100;
+    text-align: center;
+    padding: 10px;
+    border-start-end-radius: 20px;
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+.viewProfile p {
+    font-weight: 400;
+    cursor: pointer;
+}
+.viewProfile p:hover {
+    font-weight: 600;
+}
+.viewProfile .logout:hover {
+    color: orange;
+}
+
 /* main */
 .main {
     position: absolute;
@@ -230,10 +270,39 @@ input[type=number]:focus,
 .search label ion-icon 
 {
     position: absolute;
-    top: 50%;
+    top: 40%;
     transform: translateY(-50%);
     left: 10px;
     font-size: 1.2em;
+}
+
+.cardHeaders .add {
+    position: absolute;
+    left: 100%;
+    top: 13px;
+    transform: translateX(-100%);
+    border-radius: 5px !important;
+}
+
+.cardHeaders .add:hover {
+    font-size: 10px;
+}
+
+.status{
+    font-size: 10px;
+    border: none;
+}
+.status:hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 10px rgba(1, 1, 1, 0.5);
+    font-size: 14px;
+}
+
+.status.add {
+    padding: 2px 5px;
+    background-color: var(--primary);
+    border-radius: 3px;
+    color: var(--white);
 }
 
 
@@ -288,7 +357,7 @@ input[type=number]:focus,
 .details {
     position: relative;
     width: 100%;
-    padding: 10px;
+    padding: 10px 0px;
     display: grid;
     grid-template-columns: 2fr 1fr;
     grid-gap: 10px;
@@ -653,6 +722,155 @@ thead, tbody tr {
     display: flex;
 }
 
+/* cart */
+.container_popup .popup_content .content_items{
+    height: calc(100% - 84px);
+    width: 100%;
+    box-sizing: border-box;
+    padding: 24px 24px 0px 24px;
+    overflow: scroll;
+}
+
+.popup_content .content_items .company_info {
+    height: 92px;
+    width: 100%;
+    justify-content: center;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+.popup_content .content_items .company_info div{
+    width: 100%;
+    text-align: center;
+}
+.popup_content .content_items .company_info img{
+    width: 32px;
+    height: 32px;
+}
+
+.popup_content .content_items .company_info h2{
+    text-align: center;
+    width: 100%;
+    margin-top: -5px;
+}
+.popup_content .content_items .company_info p{
+    text-align: center;
+    width: 100%;
+}
+
+.popup_content .content_items .customer_bill {
+    display: flex;
+    justify-content: space-between;
+}
+.popup_content .content_items .customer_bill > div:first-child{
+    display: flex;
+}
+.popup_content .content_items .customer_bill h6:nth-child(2) {
+    margin-left: 5px;
+    color: orange;
+}
+
+
+.popup_content .content_items .number_bill {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(69, 90, 100, 0.1);
+}
+
+.popup_content .content_items .table_items table{
+    width: 100%;
+    border-bottom: 1px solid rgba(69, 90, 100, 0.1);
+}
+.popup_content .content_items .table_items table td:nth-child(3){
+    text-align: right;
+}
+.popup_content .content_items .table_items table tr {
+    margin-bottom: 15px;
+}
+.popup_content .content_items .table_items table tr span {
+    font-size: 11px;
+}
+.popup_content .content_items .table_items table td {
+    vertical-align: top;
+    padding: 5px
+}
+
+.popup_content .content_items .table_items table tbody tr {
+    font-size: 12px;
+}
+
+.popup_content .content_items .table_items table td:last-child{
+   text-align: right;
+}
+
+
+.total_bill .total_payment {
+    padding: 10px 0px;
+    border-bottom: 1px solid rgba(69, 90, 100, 0.1);
+}
+
+.total_bill .discount {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0px;
+
+}
+
+.total_bill .total_payment .total {
+    display: flex;
+    justify-content: space-between;
+}
+.total_bill .total_payment .total h6:nth-child(2){
+    color: orange;
+}
+
+.total_bill .total_payment .payment {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 10px;
+}
+
+
+.container_popup .popup_content .bill_btns {
+    height: 84px;
+    width: 100%;
+    padding: 16px;
+    box-sizing: border-box;
+    display: flex;
+}
+
+.container_popup .popup_content .bill_btns .btns {
+    border: none;
+    cursor: pointer;
+    color: var(--white);
+    font-size: 18px;
+    border-radius: 20px;
+  
+}
+
+.container_popup .popup_content .bill_btns .btns:hover {
+    box-shadow: 0px 0px 10px rgba(1, 1, 1, 0.5);
+}
+
+.popup_content .bill_btns .proceed{
+    background-color: var(--primary);
+    height: 100%;
+    width: 70%;
+    margin-right: 10px;
+}
+
+.container_popup .popup_content .bill_btns  .cancel {
+    background-color: orange;
+    width: 30%;
+    height: 100%;
+}
+
+.container_popup .popup_content .status:hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 10px rgba(1, 1, 1, 0.5);
+}
+
+
 /* customer */
 
 .list_input_customer {
@@ -698,6 +916,28 @@ thead, tbody tr {
     
 }
 
+.popup_content_sample{
+    min-width: 350px;
+    background-color: var(--body);
+}
+
+
+.popup_content_sample .input-group span {
+    background-color: var(--primary);
+    color: white;
+}
+
+.popup_content_sample .input-group input:focus,
+.popup_content_sample .input-group textarea:focus{
+    border: none;
+}
+
+
+.popup_contai_sample {
+    background-color: rgba(0,0,0,0.6);
+    display: none;
+}
+
 /* make it responsive design */
 
 
@@ -727,6 +967,10 @@ thead, tbody tr {
 }
 
 
+/* popup data mau */
+
+
+
 
 
 @media (max-width: 768px) {
@@ -743,6 +987,43 @@ thead, tbody tr {
         white-space: nowrap;
     }
 }
+@media (min-width: 577px){
+    .toggle{
+        display: none;
+    }
+}
+
+@media (max-width: 576px){
+    .navigation.active {
+        left: -200px;
+    }
+    .navigation {
+        width: 80px;
+        left: 5px;
+    }
+
+    .main {
+        width: calc(100% - 90px);
+        left: 90px;
+    }
+    .main.active {
+        width: 100%;
+        left: 0px;
+    }
+    .main ,
+    .main.active {
+        padding: 5px !important;
+    }
+    .container_custom {
+        padding: 0px !important;
+    }
+    .toggle {
+        display: none;
+    }
+    .toggle.active {
+        display: block;
+    }
+}
 
 @media (max-width: 480px) {
     .cardBox {
@@ -753,24 +1034,6 @@ thead, tbody tr {
     }
     .user {
         min-width: 40px;
-    }
-
-    .navigation {
-        left: -200px;
-    }
-    .navigation.active {
-        width: 80px;
-        left: 5px;
-    }
-
-    
-    .toggle {
-        z-index: 10001;
-    }
-    .main.active.toggle {
-        position: fixed;
-        left: inherit;
-        color: #fff;
     }
     .search {
         margin-right: 30px;

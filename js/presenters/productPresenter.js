@@ -1,6 +1,7 @@
 import { productUsecase } from "../usecases/productUsecase.js";
 import { Helper } from "../utils/helper.js";
 import { commonPresenter } from "./commonPresenter.js";
+import { sharedPresenter } from "./sharedPresenter.js";
 
 var activeProduct = {}
 
@@ -18,9 +19,9 @@ function start() {
     $("#addBtn").on("click", showProductFormModal)
     $(document).on("click", ".viewBtn", function () { showInfoProduct(this) })
     $(document).on("click", ".editBtn", function () { showEditProduct(this) })
-    $(document).on("click", ".deleteBtn", function () { showEditProduct(this) })
+    $(document).on("click", "#saveBtn", function () { processSaveProduct(this) })
     $("input[name='avatar']").on("change", commonPresenter.showPreview)
-    $("#saveBtn").on("click", () => productUsecase.create(refreshPage))
+    
 }
 start()
 
@@ -30,17 +31,30 @@ function refreshPage() {
 
 function showProductFormModal() {
     resetProduct();
-    $("#productForm").attr("action", "POST")
+    $("#productForm").attr("action", "CREATE")
     $("#productFormPopup").modal("show");
 }
 
 function renderListproducts(list){
     let renderProducts = document.querySelector(".renderproducts tbody");
     var html = "";
-    list.forEach(item => {
-        html += item.toHTMLTable()
-    });
+    if(list){
+        list.forEach(item => {
+            html += item.toHTMLTable()
+        });
+    }
     renderProducts.innerHTML = html;
+    if(renderProducts.innerText == ""){
+        console.log("da vao")
+        let addElement = document.querySelector("#addDataSample");
+        addElement.style.display = "block";
+        addElement.onclick = () => {
+            sharedPresenter.handleDataSample();
+            addElement.style.display = "none"
+        }
+    }
+    deleteproduct()
+
 }
 
 function getDataProduct(element) {
@@ -71,6 +85,14 @@ function showEditProduct(element) {
     $("#productFormPopup").modal("show");
 }
 
+function processSaveProduct(element) {
+    var action = $("#productForm").attr("action");
+    if (action == "UPDATE") {
+        productUsecase.update(activeProduct.id, refreshPage)
+    } else {
+        productUsecase.create(refreshPage)
+    }
+}
 
 function deleteproduct() {
     let deleteBtn = document.querySelectorAll(".status.return");

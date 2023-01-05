@@ -13,6 +13,7 @@ export const userUsecase = {
         };
         var response = await authRepository.login(input);
         if (response.success) {
+            localStorage.setItem("data-login", JSON.stringify(response.data))
             localStorage.setItem("access_token", response.data.token);
             return true
         }
@@ -29,6 +30,7 @@ export const userUsecase = {
         };
         const response = await authRepository.register(input)
         if (response.success) {
+            localStorage.setItem("data-login", JSON.stringify(response.data))
             localStorage.setItem("access_token", response.data.token);
             return true
         }

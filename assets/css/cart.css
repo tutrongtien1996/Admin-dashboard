@@ -3,6 +3,15 @@ ul {
     margin: 0;
 }
 
+.container_custom .toggle {
+    z-index: 1000;
+    top: 10px;
+    
+}
+
+
+
+
 .details {
     height: calc(100vh);
 }
@@ -36,6 +45,9 @@ ul {
 .listProducts ul {
     display: block;
     width: 100%;
+}
+.main {
+    padding-right:10px;
 }
 .main.active .details {
     display: grid;
@@ -123,9 +135,11 @@ ul {
 
 
 .container_order .content_order .payment_info {
+    position: absolute;
+    top: 100%;
+    transform: translateY(-100%);
     width: 100%;
-    height: 35%;
-    
+    height: 230px;
     padding: 10px;
     display: grid;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
@@ -198,7 +212,7 @@ ul {
 /* cart items  */
 .container_order .content_order .cart_items {
     width: 100%;
-    height: 65%;
+    height: calc(100% - 230px);
     display: grid;
     grid-template-rows: 1fr 10fr;
     
@@ -385,154 +399,34 @@ ul {
     cursor: pointer;
 }
 
-.container_popup .popup_content .content_items{
-    height: calc(100% - 84px);
-    width: 100%;
-    box-sizing: border-box;
-    padding: 24px 24px 0px 24px;
-    overflow: scroll;
-}
-
-.popup_content .content_items .company_info {
-    height: 92px;
-    width: 100%;
-    justify-content: center;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-}
-.popup_content .content_items .company_info div{
-    width: 100%;
-    text-align: center;
-}
-.popup_content .content_items .company_info img{
-    width: 32px;
-    height: 32px;
-}
-
-.popup_content .content_items .company_info h2{
-    text-align: center;
-    width: 100%;
-    margin-top: -5px;
-}
-.popup_content .content_items .company_info p{
-    text-align: center;
-    width: 100%;
-}
-
-.popup_content .content_items .customer_bill {
-    display: flex;
-    justify-content: space-between;
-}
-.popup_content .content_items .customer_bill > div:first-child{
-    display: flex;
-}
-.popup_content .content_items .customer_bill h6:nth-child(2) {
-    margin-left: 5px;
-    color: orange;
-}
+/* content ỏder iphone */
 
 
-.popup_content .content_items .number_bill {
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid rgba(69, 90, 100, 0.1);
-}
 
-.popup_content .content_items .table_items table{
-    width: 100%;
-    border-bottom: 1px solid rgba(69, 90, 100, 0.1);
+/* cart danh cho iphone */
+.cart_iphone {
+    background-color: var(--body);
+    height:50px;
+    box-sizing: border-box !important;
 }
-.popup_content .content_items .table_items table td:nth-child(3){
-    text-align: right;
+.cart_iphone ion-icon {
+    font-size: 30px;
+    color: var(--primary);
 }
-.popup_content .content_items .table_items table tr {
-    margin-bottom: 15px;
+.cart_iphone .total_iphone span {
+    color: #bf460e;
+    font-weight: 500;
 }
-.popup_content .content_items .table_items table tr span {
-    font-size: 11px;
-}
-.popup_content .content_items .table_items table td {
-    vertical-align: top;
-    padding: 5px
-}
-
-.popup_content .content_items .table_items table tbody tr {
+.cart_iphone .quantity span{
+    position: absolute;
+    transform: translate(-40%, -40%);
     font-size: 12px;
+    font-weight: 700;
+    background-color: green;
+    padding: 0 5px;
+    border-radius: 50%;
+    color: white;
 }
-
-.popup_content .content_items .table_items table td:last-child{
-   text-align: right;
-}
-
-
-.total_bill .total_payment {
-    padding: 10px 0px;
-    border-bottom: 1px solid rgba(69, 90, 100, 0.1);
-}
-
-.total_bill .discount {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 0px;
-
-}
-
-.total_bill .total_payment .total {
-    display: flex;
-    justify-content: space-between;
-}
-.total_bill .total_payment .total h6:nth-child(2){
-    color: orange;
-}
-
-.total_bill .total_payment .payment {
-    display: flex;
-    justify-content: space-between;
-    padding-left: 10px;
-}
-
-
-.container_popup .popup_content .bill_btns {
-    height: 84px;
-    width: 100%;
-    padding: 16px;
-    box-sizing: border-box;
-    display: flex;
-}
-
-.container_popup .popup_content .bill_btns .btns {
-    border: none;
-    cursor: pointer;
-    color: var(--white);
-    font-size: 18px;
-    border-radius: 20px;
-  
-}
-
-.container_popup .popup_content .bill_btns .btns:hover {
-    box-shadow: 0px 0px 10px rgba(1, 1, 1, 0.5);
-}
-
-.popup_content .bill_btns .proceed{
-    background-color: var(--primary);
-    height: 100%;
-    width: 70%;
-    margin-right: 10px;
-}
-
-.container_popup .popup_content .bill_btns  .cancel {
-    background-color: orange;
-    width: 30%;
-    height: 100%;
-}
-
-.container_popup .popup_content .status:hover {
-    cursor: pointer;
-    box-shadow: 0px 0px 10px rgba(1, 1, 1, 0.5);
-}
-
-
 
 @media (max-width: 1050px){
     .main.active .details {
@@ -573,6 +467,9 @@ ul {
     .main .details .listProducts .item {
         width: 50%;
     }
+    .list_categories {
+        display: none !important;
+    }
 }
  @media (max-width: 650px) {
     .main.active .details {
@@ -587,9 +484,19 @@ ul {
     .main .details .listProducts .item {
         width: 100%;
     }
+    
        
 }
 @media (max-width: 550px) {
+    
+    .main.active .search label input {
+        width: calc(100% - 60px);
+        margin-left: 60px;
+    }
+    
+    .main.active .search label ion-icon {
+        left: 70px;
+    }
     .main.active .details {
         grid-template-columns: repeat(1,1fr);
     }
@@ -604,6 +511,21 @@ ul {
 }
 
 @media (max-width: 480px) {
+    .contai_order_iphone {
+        position: fixed;
+        top:0px;
+        width: 100%;
+        z-index: 10000;
+        height: calc(100% - 50px) !important;
+    }
+    .container_order {
+        margin-bottom: 50px;
+    }
+
+    .bottom_cart_iphone {
+        
+        display: flex !important;
+    }
     .details {
         height: fit-content;
     }

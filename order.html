@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>ZEOPOS | Orders</title>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap-grid.min.css">
     <link rel="stylesheet" href="./assets/css/index.css">
     <link rel="stylesheet" href="./assets/css/order.css">
     <link rel="stylesheet" href="node_modules/js-datepicker/dist/datepicker.min.css">
@@ -15,37 +17,34 @@
 </head>
 </head>
 <body>
-    <div class="container">
+    <div class="container_custom">
+        <div class="toggle active">
+            <ion-icon name="menu-outline"></ion-icon> 
+        </div>
         <div class="viewProfile">
             <p>Nam Anh</p>
-            <p>View</p>
-            <p>Setting</p><br>
+            <p><a href="/company.html">Setting</a></p>
             <p class="logout">Logout</p>
         </div>
         <div class="navigation active">
             <ul id="menu">     
             </ul>
             <div class="profile">
-                <img class="avatar" src="/img/img1.jpg" alt="">
+                <ion-icon class="avatar" name="person-circle-outline"></ion-icon>
             </div>
             
         </div>
         
        <!-- main -->
         <div class="main active">
-            <!-- <div class="topbar">
-                <div class="toggle">
-                    <ion-icon name="menu-outline"></ion-icon>
-                </div>
-            </div> -->
-            <!--order list  -->
+           
             <div class="details">
                 <div class="recentOrders">
                     <div class="cardHeaders">
                         <h2>Recent Orders</h2>
                         <div>
-                            From: <input type="date" class="date startDate" placeholder="Start Date">
-                            To: <input type="date" class="date endDate" placeholder="End Date">
+                            <span>From:</span> <input type="date" class="date startDate" placeholder="Start Date">
+                            <span>To:</span> <input type="date" class="date endDate" placeholder="End Date">
                             <button id="searchDates">Search</button>
                         </div> 
                     </div>
@@ -58,6 +57,7 @@
                                     <td style="text-align: right;">Price</td>
                                     <td>Payment</td>
                                     <td>Status</td>
+                                    <td>Action</td>
                                 </tr>
                             </thead>
                             <tbody id="list_order">
@@ -65,10 +65,21 @@
                         </table>
                     </div>
 
-                    <div class="listBtn pages">  
-                        <ul></ul>
+                    <div class="listBtn w-100 pages"> 
+                        <div class="total d-flex justify-content-between w-50">
+                            <h6>Total</h6>
+                            <h6 class="pe-2">30031238123</h6>
+                        </div> 
+                        <div><ul></ul></div>
+                        
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="container_popup">
+            <div class="popup_content">
+                
             </div>
         </div>
     </div>

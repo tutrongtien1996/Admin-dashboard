@@ -46,6 +46,7 @@ if(btn_login){
 if(btn_register){
     btn_register.onclick = async () =>{
         if (await userUsecase.processRegister()) {
+            localStorage.setItem("register", "true")
             window.location.href = '/index.html';
         } else {
             commonPresenter.alertFail("Register failed")

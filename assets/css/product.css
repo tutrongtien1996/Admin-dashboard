@@ -2,21 +2,26 @@
     grid-template-columns: 1fr 0fr;
 }
 
+#addDataSample {
+    display: none;
+    position: absolute;
+    left: 100%;
+    width: 80px;
+    transform: translate(-120px, 12px);
+    border-radius: 5px;
+    color: white;
+    padding: 3px;
+    background-color: var(--primary);
+}
+#addDataSample:hover {
+    font-size: 10px;
+}
+
 .cardHeaders {
     position: relative;
 }
 
-.cardHeaders .add {
-    position: absolute;
-    left: 100%;
-    top: 13px;
-    transform: translateX(-100%);
-    border-radius: 5px !important;
-}
 
-.cardHeaders .add:hover {
-    font-size: 10px;
-}
 .cardHeaders > a:hover {
     box-shadow: 0px 0px 10px rgba(1, 1, 1, 0.5);
 
@@ -160,15 +165,7 @@ thead, tbody tr {
     overflow: scroll;
 }
 
-.status{
-    font-size: 10px;
-    border: none;
-}
-.status:hover {
-    cursor: pointer;
-    box-shadow: 0px 0px 10px rgba(1, 1, 1, 0.5);
-    font-size: 14px;
-}
+
 
 thead td:nth-child(3),
  tbody td:nth-child(3) {
@@ -312,10 +309,35 @@ thead td:nth-child(3),
     width: 100px;
 }
 
-.status.add {
-    padding: 2px 5px;
-    background-color: var(--primary);
-    border-radius: 3px;
-    color: var(--white);
+
+@media (max-width: 576px){
+    .recentOrders {
+        padding: 25px 0px !important;
+       
+    }
+    .details {
+        display: block;
+    }
+    .details .cardHeaders h2 {
+        display: none;
+    }
+    .table {
+        margin-top: 40px;
+    }
+    .table thead td:nth-child(1),
+    .table tbody td:nth-child(1){
+        display: none;
+    }
+   
 }
 
+@media (max-width: 480px){
+    .main .table thead td:nth-child(3),
+    .main .table tbody td:nth-child(3){
+        display: none;
+    }
+    .main.active .table thead td:nth-child(3),
+    .main.active .table tbody td:nth-child(3){
+        display: block;
+    }
+}

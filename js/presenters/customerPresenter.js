@@ -40,14 +40,52 @@ function renderListCustomers(list){
     showProfile();
 }
 
+
+
 function start() {
     initCustomer();
     Helper.setFilter();
     customerUsecase.list(renderListCustomers);
     createCustomer();
+    initSearchDates();
+    initSearchNames();
 }
 start()
 
+function initSearchNames(){
+    let nameKey = document.querySelector('input[name="search_name"]');
+    nameKey.onkeyup = () => {
+        var startDate = "all";
+        if(startDate && (nameKey.value.trim() != "")){
+            Helper.filter.start_date = startDate;
+        }
+        if(nameKey){
+            Helper.filter.name = nameKey.value.trim();
+        }
+        if(nameKey.value.trim() == ""){
+            Helper.filter.start_date = Util.getCurrentDay();
+        }
+        customerUsecase.list(renderListCustomers);
+    }   
+}
+
+
+
+function initSearchDates(){
+    var searchDates = document.getElementById('searchDates');
+    searchDates.onclick =  () => {
+        
+        var startDate = document.getElementsByClassName('startDate')[0].value;
+        var endDate = document.getElementsByClassName('endDate')[0].value;
+        if(startDate){
+            Helper.filter.start_date = startDate
+        }
+        if(endDate){
+            Helper.filter.end_date = endDate;
+        }
+        customerUsecase.list(renderListCustomers);
+    }
+}
 
 function getDataCustomer(){
     customer.name = document.querySelector('input[name="name"]').value;
@@ -56,19 +94,44 @@ function getDataCustomer(){
 }
 
 function createCustomer() {
-    let create = document.querySelector("#create_customer")
+    let addElement = document.querySelector("#addBtn");
+    addElement.onclick = () => {
+        let container_popup_elememt = document.querySelector(".container_popup");
+        let content_popup_element = document.querySelector(".popup_content");
+        content_popup_element.classList.remove("edit")
+        content_popup_element.classList.add("edit")
 
-    create.onclick = () => {
-        getDataCustomer();
+        content_popup_element.innerHTML = getPopup(customer_popup.create);
+        container_popup_elememt.style.display = "block"
 
-        axios.post(API_URL + '/admin/customers', customer, Helper.requestOption)
-        .then((response) => {
+        
+        let create_popup_element = document.querySelector(".popup_content .proccess");
+        let cancel_popup_element = document.querySelector(".popup_content .cancel");
+
+        cancel_popup_element.onclick = () => {
+            content_popup_element.innerHTML = ""
+            content_popup_element.classList.remove("edit")
+
+            container_popup_elememt.style.display = "none"
             customerUsecase.list(renderListCustomers);
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+        }
+
+        create_popup_element.onclick = () => {
+            getDataCustomer();
+            axios.post(API_URL + '/admin/customers', customer, Helper.requestOption)
+            .then((response) => {
+                content_popup_element.innerHTML = ""
+            content_popup_element.classList.remove("edit")
+
+            container_popup_elememt.style.display = "none"
+                customerUsecase.list(renderListCustomers);
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+        }
     }
+    
 }
 
 function deleteCustomer() {
@@ -102,8 +165,8 @@ function showProfile() {
             content_popup_element.innerHTML = getPopup(customer_popup.profile);
             content_popup_element.querySelector('.name').innerText = `${JSON.parse(item.dataset.customer).name}`;
             content_popup_element.querySelector('.phone_number').innerText = `${JSON.parse(item.dataset.customer).phone_number}`;
-            content_popup_element.querySelector('.address').innerText = `${JSON.parse(item.dataset.customer).phone_number}`;
-            content_popup_element.querySelector('.created_at').innerText = `${JSON.parse(item.dataset.customer).address}`;
+            content_popup_element.querySelector('.address').innerText = `${JSON.parse(item.dataset.customer).address}`;
+            content_popup_element.querySelector('.created_at').innerText = `${JSON.parse(item.dataset.customer).created_at}`;
             content_popup_element.querySelector('.status.edit').setAttribute("data-customer", item.dataset.customer);
             content_popup_element.querySelector('.status.delete').setAttribute("data-customer", item.dataset.customer);
             content_popup_element.querySelector('.status.cancel').setAttribute("data-customer", item.dataset.customer);
