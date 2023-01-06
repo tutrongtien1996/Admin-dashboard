@@ -1,0 +1,16 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 86 80" width="172" height="160">
+  <!-- svg-source:excalidraw -->
+  
+  <defs>
+    <style class="style-fonts">
+      @font-face {
+        font-family: "Virgil";
+        src: url("https://excalidraw.com/Virgil.woff2");
+      }
+      @font-face {
+        font-family: "Cascadia";
+        src: url("https://excalidraw.com/Cascadia.woff2");
+      }
+    </style>
+  </defs>
+  <rect x="0" y="0" width="86" height="80" fill="#ffffff"></rect><g stroke-linecap="round" transform="translate(10 10) rotate(0 33 30)"><path d="M16.92 1.28 L54.95 -0.21 L62.3 5.21 L64.08 9.58 L67.96 13.5 L64.34 47.12 L60.48 55.27 L58.12 60.27 L49.15 61.92 L10.58 60.29 L5.44 54.69 L1.24 46.96 L-0.24 11.6 L5.54 2.91 L9.44 -0.26 L16.64 1.18" stroke="none" stroke-width="0" fill="#15aabf"></path><path d="M15 0 M15 0 C23.79 1.42, 30.11 -1.5, 51 0 M15 0 C23.48 -0.59, 32.24 -0.17, 51 0 M51 0 C60.64 1.5, 64.22 5.24, 66 15 M51 0 C63.05 0.75, 66.37 4.37, 66 15 M66 15 C65.53 20.93, 66.59 29.12, 66 45 M66 15 C65.47 21.36, 65.35 29.01, 66 45 M66 45 C67.94 55.87, 59.8 59.12, 51 60 M66 45 C67.19 53.25, 62.98 58.4, 51 60 M51 60 C39.26 59.79, 24.24 61.64, 15 60 M51 60 C38.18 60.48, 23.73 59.23, 15 60 M15 60 C3.17 59.98, 0.24 55.18, 0 45 M15 60 C3.01 59.3, -2.24 55.74, 0 45 M0 45 C0.85 34.77, -0.35 21.79, 0 15 M0 45 C0.52 37.96, -0.27 30.4, 0 15 M0 15 C1.57 5.3, 6.35 0.86, 15 0 M0 15 C-0.3 6.12, 6 -0.72, 15 0" stroke="#0b7285" stroke-width="1" fill="none"></path></g><g transform="translate(20.5 15) rotate(0 22.5 25)"><text x="22.5" y="18" font-family="Virgil, Segoe UI Emoji" font-size="20px" fill="#fff" text-anchor="middle" style="white-space: pre;" direction="ltr">ZEO</text><text x="22.5" y="43" font-family="Virgil, Segoe UI Emoji" font-size="20px" fill="#fff" text-anchor="middle" style="white-space: pre;" direction="ltr">Pos</text></g></svg>
