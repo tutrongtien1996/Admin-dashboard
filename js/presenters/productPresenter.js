@@ -45,12 +45,11 @@ function renderListproducts(list){
     }
     renderProducts.innerHTML = html;
     if(renderProducts.innerText == ""){
-        console.log("da vao")
         let addElement = document.querySelector("#addDataSample");
         addElement.style.display = "block";
         addElement.onclick = () => {
             sharedPresenter.handleDataSample();
-            addElement.style.display = "none"
+            // addElement.style.display = "none"
         }
     }
     deleteproduct()
