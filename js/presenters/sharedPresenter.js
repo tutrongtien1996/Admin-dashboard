@@ -12,7 +12,8 @@ export const sharedPresenter = {
         document.querySelector(".popup_contai_sample").style.display = "block"
         document.querySelector(".popup_contai_sample .process").onclick = async () => {
             
-            await sharedPresenter.addDataSample()
+            let business_id = businessElement.value;
+            await sharedPresenter.addDataSample(business_id)
             document.querySelector(".popup_contai_sample").style.display = "none";
             location.reload();  
         }
@@ -23,8 +24,8 @@ export const sharedPresenter = {
         } 
     },
 
-    addDataSample: async function (){
-            let business_id = 1
+    addDataSample: async function (id){
+            let business_id = id;
             let sample_products = await SampleProductRepository.list(business_id);
             await SampleProductRepository.createProducts(sample_products);
             localStorage.removeItem("register")
