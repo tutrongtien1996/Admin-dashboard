@@ -1,4 +1,5 @@
 import { SampleProductRepository } from "../repositories/sampleProductRepository.js";
+import { PaymentMethodRepository } from "../repositories/paymentMethodRepository.js";
 
 export const sharedPresenter = {
     handleDataSample: async function (){
@@ -13,9 +14,11 @@ export const sharedPresenter = {
         document.querySelector(".popup_contai_sample .process").onclick = async () => {
             
             let business_id = businessElement.value;
-            await sharedPresenter.addDataSample(business_id)
+            await sharedPresenter.addDataSample(business_id);
+            await sharedPresenter.paymentSample();
             document.querySelector(".popup_contai_sample").style.display = "none";
             location.reload();  
+            localStorage.removeItem("register")
         }
 
         document.querySelector(".popup_contai_sample .cancel").onclick = () => {
@@ -27,7 +30,11 @@ export const sharedPresenter = {
     addDataSample: async function (id){
             let business_id = id;
             let sample_products = await SampleProductRepository.list(business_id);
-            await SampleProductRepository.createProducts(sample_products);
-            localStorage.removeItem("register")
+            await SampleProductRepository.createProducts(sample_products); 
+    },
+
+    paymentSample: async function(){
+        let pament_sample = await PaymentMethodRepository.listSample();
+        await PaymentMethodRepository.createPayments(pament_sample);
     }
 }
